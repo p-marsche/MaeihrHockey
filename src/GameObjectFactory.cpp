@@ -291,6 +291,7 @@ GameObject::Ptr GameObjectFactory::createObject(tson::Object& obj)
 void GameObjectFactory::addSpriteRenderer(tson::Object& obj, GameObject& go, sf::RenderWindow& window)
 {
     std::string textureKey = TsonPropertyReader::getTexture(obj);
+    AssetManager::getInstance().loadTexture(textureKey, Config::imagesPath + textureKey);
     auto spriteComp = go.addComponent<SpriteRenderComponent>(go, window, textureKey, "GameObjects", sf::IntRect(0, 0, 0, 0));
 }
 
