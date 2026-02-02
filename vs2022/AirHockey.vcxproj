@@ -156,7 +156,7 @@
     <ClInclude Include="..\src\GameObjectEvents.hpp" />
     <ClInclude Include="..\src\IEvent.hpp" />
     <ClInclude Include="..\src\GameObjectManager.hpp" />
-    <ClInclude Include="..\src\ObjectFactory.hpp" />
+    <ClInclude Include="..\src\TsonPropertyReader.hpp" />
     <ClInclude Include="..\src\PhysicsComponentEvents.hpp" />
     <ClInclude Include="..\src\PhysicsManager.hpp" />
     <ClInclude Include="..\src\RenderComponentEvents.hpp" />
@@ -196,7 +196,7 @@
     <ClCompile Include="..\src\EventBus.cpp" />
     <ClCompile Include="..\src\GameObjectEvents.cpp" />
     <ClCompile Include="..\src\GameObjectManager.cpp" />
-    <ClCompile Include="..\src\ObjectFactory.cpp" />
+    <ClCompile Include="..\src\TsonPropertyReader.cpp" />
     <ClCompile Include="..\src\PhysicsComponentEvents.cpp" />
     <ClCompile Include="..\src\PhysicsManager.cpp" />
     <ClCompile Include="..\src\PlayerMoveComponent.cpp" />

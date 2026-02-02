@@ -5,7 +5,7 @@
 #include "ColliderComponent.hpp"
 #include "EventBus.hpp"
 #include "GameObjectEvents.hpp"
-#include "ObjectFactory.hpp"
+#include "TsonPropertyReader.hpp"
 #include "PhysicsManager.hpp"
 #include "PlayerMoveComponent.hpp"
 #include "RigidBodyComponent.hpp"
@@ -14,10 +14,10 @@
 namespace mmt_gd
 {
 	GameObject::Ptr GameObjectFactory::createPuck(sf::RenderWindow& window
-													, tson::Object& obj)
+		, tson::Object& obj)
 	{
 		auto puck = createObject(obj);
-		
+
 		addSpriteRenderer(obj, *puck, window);
 
 		auto rigidBody = puck->addComponent<RigidBodyComponent>(*puck, b2_dynamicBody);
@@ -48,9 +48,9 @@ namespace mmt_gd
 	}
 
 	GameObject::Ptr GameObjectFactory::createPaddle(sf::RenderWindow& window
-													, tson::Object& obj)
+		, tson::Object& obj)
 	{
-		int playerIndex = ObjectFactory::getPlayerIndex(obj);
+		int playerIndex = TsonPropertyReader::getPlayerIndex(obj);
 		auto paddle = createObject(obj);
 
 		addSpriteRenderer(obj, *paddle, window);
@@ -83,11 +83,11 @@ namespace mmt_gd
 	}
 
 	GameObject::Ptr GameObjectFactory::createWall(sf::RenderWindow& window
-													, tson::Object& obj)
+		, tson::Object& obj)
 	{
 		auto wall = createObject(obj);
 
-		/*std::string textureKey = ObjectFactory::getTexture(obj);
+		/*std::string textureKey = TsonPropertyReader::getTexture(obj);
 		sf::Texture tex = AssetManager::getInstance().getTexture(textureKey);
 		auto spriteComp = wall->addComponent<SpriteRenderComponent>(
 			*paddle, window, tex, "GameObjects",
@@ -119,11 +119,11 @@ namespace mmt_gd
 	}
 
 	GameObject::Ptr GameObjectFactory::createNeutralzone(sf::RenderWindow& window
-															, tson::Object& obj)
+		, tson::Object& obj)
 	{
 		auto neutral = createObject(obj);
 
-		/*std::string textureKey = ObjectFactory::getTexture(obj);
+		/*std::string textureKey = TsonPropertyReader::getTexture(obj);
 		sf::Texture tex = AssetManager::getInstance().getTexture(textureKey);
 		auto spriteComp = wall->addComponent<SpriteRenderComponent>(
 			*paddle, window, tex, "GameObjects",
@@ -155,11 +155,11 @@ namespace mmt_gd
 	}
 
 	GameObject::Ptr GameObjectFactory::createPenaltyarea(sf::RenderWindow& window
-															, tson::Object& obj)
+		, tson::Object& obj)
 	{
 		auto penalty = createObject(obj);
 
-		/*std::string textureKey = ObjectFactory::getTexture(obj);
+		/*std::string textureKey = TsonPropertyReader::getTexture(obj);
 		sf::Texture tex = AssetManager::getInstance().getTexture(textureKey);
 		auto spriteComp = wall->addComponent<SpriteRenderComponent>(
 			*paddle, window, tex, "GameObjects",
@@ -191,11 +191,11 @@ namespace mmt_gd
 	}
 
 	GameObject::Ptr GameObjectFactory::createGoalsensor(sf::RenderWindow& window
-														, tson::Object& obj)
+		, tson::Object& obj)
 	{
 		auto goal = createObject(obj);
 
-		/*std::string textureKey = ObjectFactory::getTexture(obj);
+		/*std::string textureKey = TsonPropertyReader::getTexture(obj);
 		sf::Texture tex = AssetManager::getInstance().getTexture(textureKey);
 		auto spriteComp = wall->addComponent<SpriteRenderComponent>(
 			*paddle, window, tex, "GameObjects",
@@ -227,11 +227,11 @@ namespace mmt_gd
 	}
 
 	GameObject::Ptr GameObjectFactory::createGoalbarrier(sf::RenderWindow& window
-															, tson::Object& obj)
+		, tson::Object& obj)
 	{
 		auto gb = createObject(obj);
 
-		/*std::string textureKey = ObjectFactory::getTexture(obj);
+		/*std::string textureKey = TsonPropertyReader::getTexture(obj);
 		sf::Texture tex = AssetManager::getInstance().getTexture(textureKey);
 		auto spriteComp = wall->addComponent<SpriteRenderComponent>(
 			*paddle, window, tex, "GameObjects",
@@ -272,7 +272,7 @@ namespace mmt_gd
 
 	void GameObjectFactory::addSpriteRenderer(tson::Object& obj, GameObject& go, sf::RenderWindow& window)
 	{
-		std::string textureKey = ObjectFactory::getTexture(obj);
+		std::string textureKey = TsonPropertyReader::getTexture(obj);
 		auto spriteComp = go.addComponent<SpriteRenderComponent>(
 			go, window, textureKey, "GameObjects",
 			sf::IntRect(0, 0, 0, 0));
@@ -281,7 +281,7 @@ namespace mmt_gd
 	b2FixtureDef GameObjectFactory::createFixtureDef(tson::Object& obj)
 	{
 		const auto size = PhysicsManager::s2b(t2s(obj.getSize()));
-		const auto shapeType = ObjectFactory::getShape(obj);
+		const auto shapeType = TsonPropertyReader::getShape(obj);
 		b2FixtureDef fixtureDef;
 		if (shapeType == "Circle")
 		{
@@ -296,8 +296,8 @@ namespace mmt_gd
 			shape.SetAsBox(size.x / 2, size.y / 2, b2Vec2{ size.x / 2, size.y / 2 }, 0);
 			fixtureDef.shape = &shape;
 		}
-		fixtureDef.density = ObjectFactory::getDensity(obj);
-		fixtureDef.isSensor = ObjectFactory::isSensor(obj);
+		fixtureDef.density = TsonPropertyReader::getDensity(obj);
+		fixtureDef.isSensor = TsonPropertyReader::isSensor(obj);
 
 		return fixtureDef;
 	}

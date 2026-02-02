@@ -177,13 +177,19 @@
     <ClInclude Include="..\src\IAnimationComponent.hpp">
       <Filter>Header Files\Animations</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\ObjectFactory.hpp">
+    <ClInclude Include="..\src\TsonPropertyReader.hpp">
       <Filter>Header Files\Map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ColliderComponent.hpp">
       <Filter>Header Files\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="GameObjectFactory.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AssetManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Config.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -263,13 +269,19 @@
     <ClCompile Include="..\src\TransformAnimationSmoothFollow.cpp">
       <Filter>Source Files\Animations</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ObjectFactory.cpp">
+    <ClCompile Include="..\src\TsonPropertyReader.cpp">
       <Filter>Source Files\Map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ColliderComponent.cpp">
       <Filter>Source Files\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="GameObjectFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AssetManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Config.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
