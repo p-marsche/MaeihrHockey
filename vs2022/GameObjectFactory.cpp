@@ -16,38 +16,15 @@ namespace mmt_gd
 	GameObject::Ptr GameObjectFactory::createPuck(sf::RenderWindow& window
 													, tson::Object& obj)
 	{
-		auto puck = GameObject::create(ObjectFactory::getName(obj));
-		sf::Vector2f pos = ObjectFactory::getPosition(obj);
-		puck->setPosition(pos);
+		auto puck = createObject(obj);
 		
-		std::string textureKey = ObjectFactory::getTexture(obj);
-		sf::Texture tex = AssetManager::getInstance().getTexture(textureKey);
-		auto spriteComp = puck->addComponent<SpriteRenderComponent>(
-			*puck, window, tex, "GameObjects",
-			sf::IntRect(0, 0, 0, 0));
+		addSpriteRenderer(obj, *puck, window);
 
 		auto rigidBody = puck->addComponent<RigidBodyComponent>(*puck, b2_dynamicBody);
 		rigidBody->getB2Body()->SetFixedRotation(true);
 		rigidBody->getB2Body()->SetLinearDamping(0.3f);
 
-		const auto size = PhysicsManager::s2b(ObjectFactory::getSize(obj));
-		const auto shapeType = ObjectFactory::getShape(obj);
-		b2FixtureDef fixtureDef;
-		if (shapeType == "Circle")
-		{
-			b2CircleShape shape;
-			shape.m_p.SetZero();
-			shape.m_radius = size.x / 2;
-			fixtureDef.shape = &shape;
-		}
-		else
-		{
-			b2PolygonShape shape;
-			shape.SetAsBox(size.x / 2, size.y / 2, b2Vec2{ size.x / 2, size.y / 2 }, 0);
-			fixtureDef.shape = &shape;
-		}
-		fixtureDef.density = ObjectFactory::getDensity(obj);
-
+		b2FixtureDef fixtureDef = createFictureDef(obj);
 		b2Filter filter;
 		filter.categoryBits = CollisionLayers::OBJECTS;
 		filter.maskBits = CollisionLayers::GOAL_SENSOR | CollisionLayers::OBJECTS | CollisionLayers::WALL;
@@ -74,39 +51,15 @@ namespace mmt_gd
 													, tson::Object& obj)
 	{
 		int playerIndex = ObjectFactory::getPlayerIndex(obj);
-		auto paddle = GameObject::create(ObjectFactory::getName(obj));
-		sf::Vector2f pos = ObjectFactory::getPosition(obj);
-		paddle->setPosition(pos);
+		auto paddle = createObject(obj);
 
-		std::string textureKey = ObjectFactory::getTexture(obj);
-		sf::Texture tex = AssetManager::getInstance().getTexture(textureKey);
-		auto spriteComp = paddle->addComponent<SpriteRenderComponent>(
-			*paddle, window, tex, "GameObjects",
-			sf::IntRect(0, 0, 0, 0));
+		addSpriteRenderer(obj, *paddle, window);
 
 		auto rigidBody = paddle->addComponent<RigidBodyComponent>(*paddle, b2_dynamicBody);
 		rigidBody->getB2Body()->SetFixedRotation(true);
 		rigidBody->getB2Body()->SetLinearDamping(0.3f);
 
-		b2PolygonShape shape;
-		const auto size = PhysicsManager::s2b(ObjectFactory::getSize(obj));
-		const auto shapeType = ObjectFactory::getShape(obj);
-		b2FixtureDef fixtureDef;
-		if (shapeType == "Circle")
-		{
-			b2CircleShape shape;
-			shape.m_p.SetZero();
-			shape.m_radius = size.x / 2;
-			fixtureDef.shape = &shape;
-		}
-		else
-		{
-			b2PolygonShape shape;
-			shape.SetAsBox(size.x / 2, size.y / 2, b2Vec2{ size.x / 2, size.y / 2 }, 0);
-			fixtureDef.shape = &shape;
-		}
-		fixtureDef.density = ObjectFactory::getDensity(obj);
-
+		b2FixtureDef fixtureDef = createFictureDef(obj);
 		b2Filter filter;
 		filter.categoryBits = CollisionLayers::OBJECTS;
 		filter.maskBits = CollisionLayers::FAKE_WALL | CollisionLayers::OBJECTS | CollisionLayers::WALL | CollisionLayers::PENALTY;
@@ -132,9 +85,7 @@ namespace mmt_gd
 	GameObject::Ptr GameObjectFactory::createWall(sf::RenderWindow& window
 													, tson::Object& obj)
 	{
-		auto wall = GameObject::create(ObjectFactory::getName(obj));
-		sf::Vector2f pos = ObjectFactory::getPosition(obj);
-		wall->setPosition(pos);
+		auto wall = createObject(obj);
 
 		/*std::string textureKey = ObjectFactory::getTexture(obj);
 		sf::Texture tex = AssetManager::getInstance().getTexture(textureKey);
@@ -144,24 +95,7 @@ namespace mmt_gd
 
 		auto rigidBody = wall->addComponent<RigidBodyComponent>(*wall, b2_staticBody);
 
-		const auto size = PhysicsManager::s2b(ObjectFactory::getSize(obj));
-		const auto shapeType = ObjectFactory::getShape(obj);
-		b2FixtureDef fixtureDef;
-		if (shapeType == "Circle")
-		{
-			b2CircleShape shape;
-			shape.m_p.SetZero();
-			shape.m_radius = size.x / 2;
-			fixtureDef.shape = &shape;
-		}
-		else
-		{
-			b2PolygonShape shape;
-			shape.SetAsBox(size.x / 2, size.y / 2, b2Vec2{ size.x / 2, size.y / 2 }, 0);
-			fixtureDef.shape = &shape;
-		}
-		fixtureDef.density = ObjectFactory::getDensity(obj);
-
+		b2FixtureDef fixtureDef = createFictureDef(obj);
 		b2Filter filter;
 		filter.categoryBits = CollisionLayers::WALL;
 		filter.maskBits = CollisionLayers::OBJECTS;
@@ -187,9 +121,7 @@ namespace mmt_gd
 	GameObject::Ptr GameObjectFactory::createNeutralzone(sf::RenderWindow& window
 															, tson::Object& obj)
 	{
-		auto neutral = GameObject::create(ObjectFactory::getName(obj));
-		sf::Vector2f pos = ObjectFactory::getPosition(obj);
-		neutral->setPosition(pos);
+		auto neutral = createObject(obj);
 
 		/*std::string textureKey = ObjectFactory::getTexture(obj);
 		sf::Texture tex = AssetManager::getInstance().getTexture(textureKey);
@@ -199,24 +131,7 @@ namespace mmt_gd
 
 		auto rigidBody = neutral->addComponent<RigidBodyComponent>(*neutral, b2_staticBody);
 
-		const auto size = PhysicsManager::s2b(ObjectFactory::getSize(obj));
-		const auto shapeType = ObjectFactory::getShape(obj);
-		b2FixtureDef fixtureDef;
-		if (shapeType == "Circle")
-		{
-			b2CircleShape shape;
-			shape.m_p.SetZero();
-			shape.m_radius = size.x / 2;
-			fixtureDef.shape = &shape;
-		}
-		else
-		{
-			b2PolygonShape shape;
-			shape.SetAsBox(size.x / 2, size.y / 2, b2Vec2{ size.x / 2, size.y / 2 }, 0);
-			fixtureDef.shape = &shape;
-		}
-		fixtureDef.density = ObjectFactory::getDensity(obj);
-
+		b2FixtureDef fixtureDef = createFictureDef(obj);
 		b2Filter filter;
 		filter.categoryBits = CollisionLayers::FAKE_WALL;
 		filter.maskBits = CollisionLayers::OBJECTS;
@@ -242,9 +157,7 @@ namespace mmt_gd
 	GameObject::Ptr GameObjectFactory::createPenaltyarea(sf::RenderWindow& window
 															, tson::Object& obj)
 	{
-		auto penalty = GameObject::create(ObjectFactory::getName(obj));
-		sf::Vector2f pos = ObjectFactory::getPosition(obj);
-		penalty->setPosition(pos);
+		auto penalty = createObject(obj);
 
 		/*std::string textureKey = ObjectFactory::getTexture(obj);
 		sf::Texture tex = AssetManager::getInstance().getTexture(textureKey);
@@ -254,24 +167,7 @@ namespace mmt_gd
 
 		auto rigidBody = penalty->addComponent<RigidBodyComponent>(*penalty, b2_staticBody);
 
-		const auto size = PhysicsManager::s2b(ObjectFactory::getSize(obj));
-		const auto shapeType = ObjectFactory::getShape(obj);
-		b2FixtureDef fixtureDef;
-		if (shapeType == "Circle")
-		{
-			b2CircleShape shape;
-			shape.m_p.SetZero();
-			shape.m_radius = size.x / 2;
-			fixtureDef.shape = &shape;
-		}
-		else
-		{
-			b2PolygonShape shape;
-			shape.SetAsBox(size.x / 2, size.y / 2, b2Vec2{ size.x / 2, size.y / 2 }, 0);
-			fixtureDef.shape = &shape;
-		}
-		fixtureDef.density = ObjectFactory::getDensity(obj);
-
+		b2FixtureDef fixtureDef = createFictureDef(obj);
 		b2Filter filter;
 		filter.categoryBits = CollisionLayers::PENALTY;
 		filter.maskBits = CollisionLayers::OBJECTS;
@@ -297,9 +193,7 @@ namespace mmt_gd
 	GameObject::Ptr GameObjectFactory::createGoalsensor(sf::RenderWindow& window
 														, tson::Object& obj)
 	{
-		auto goal = GameObject::create(ObjectFactory::getName(obj));
-		sf::Vector2f pos = ObjectFactory::getPosition(obj);
-		goal->setPosition(pos);
+		auto goal = createObject(obj);
 
 		/*std::string textureKey = ObjectFactory::getTexture(obj);
 		sf::Texture tex = AssetManager::getInstance().getTexture(textureKey);
@@ -309,25 +203,7 @@ namespace mmt_gd
 
 		auto rigidBody = goal->addComponent<RigidBodyComponent>(*goal, b2_staticBody);
 
-		const auto size = PhysicsManager::s2b(ObjectFactory::getSize(obj));
-		const auto shapeType = ObjectFactory::getShape(obj);
-		b2FixtureDef fixtureDef;
-		if (shapeType == "Circle")
-		{
-			b2CircleShape shape;
-			shape.m_p.SetZero();
-			shape.m_radius = size.x / 2;
-			fixtureDef.shape = &shape;
-		}
-		else
-		{
-			b2PolygonShape shape;
-			shape.SetAsBox(size.x / 2, size.y / 2, b2Vec2{ size.x / 2, size.y / 2 }, 0);
-			fixtureDef.shape = &shape;
-		}
-		fixtureDef.density = ObjectFactory::getDensity(obj);
-		fixtureDef.isSensor = ObjectFactory::isSensor(obj);
-
+		b2FixtureDef fixtureDef = createFictureDef(obj);
 		b2Filter filter;
 		filter.categoryBits = CollisionLayers::GOAL_SENSOR;
 		filter.maskBits = CollisionLayers::OBJECTS;
@@ -353,9 +229,7 @@ namespace mmt_gd
 	GameObject::Ptr GameObjectFactory::createGoalbarrier(sf::RenderWindow& window
 															, tson::Object& obj)
 	{
-		auto gb = GameObject::create(ObjectFactory::getName(obj));
-		sf::Vector2f pos = ObjectFactory::getPosition(obj);
-		gb->setPosition(pos);
+		auto gb = createObject(obj);
 
 		/*std::string textureKey = ObjectFactory::getTexture(obj);
 		sf::Texture tex = AssetManager::getInstance().getTexture(textureKey);
@@ -365,24 +239,7 @@ namespace mmt_gd
 
 		auto rigidBody = gb->addComponent<RigidBodyComponent>(*gb, b2_staticBody);
 
-		const auto size = PhysicsManager::s2b(ObjectFactory::getSize(obj));
-		const auto shapeType = ObjectFactory::getShape(obj);
-		b2FixtureDef fixtureDef;
-		if (shapeType == "Circle")
-		{
-			b2CircleShape shape;
-			shape.m_p.SetZero();
-			shape.m_radius = size.x / 2;
-			fixtureDef.shape = &shape;
-		}
-		else
-		{
-			b2PolygonShape shape;
-			shape.SetAsBox(size.x / 2, size.y / 2, b2Vec2{ size.x / 2, size.y / 2 }, 0);
-			fixtureDef.shape = &shape;
-		}
-		fixtureDef.density = ObjectFactory::getDensity(obj);
-
+		b2FixtureDef fixtureDef = createFictureDef(obj);
 		b2Filter filter;
 		filter.categoryBits = CollisionLayers::WALL;
 		filter.maskBits = CollisionLayers::OBJECTS;
@@ -403,5 +260,54 @@ namespace mmt_gd
 		EventBus::getInstance().fireEvent(std::make_shared<GameObjectCreateEvent>(gb));
 
 		return gb;
+	}
+
+	GameObject::Ptr GameObjectFactory::createObject(tson::Object& obj)
+	{
+		auto go = GameObject::create(obj.getName());
+		sf::Vector2f pos = t2s(obj.getPosition());
+		go->setPosition(pos);
+		return go;
+	}
+
+	void GameObjectFactory::addSpriteRenderer(tson::Object& obj, GameObject& go, sf::RenderWindow& window)
+	{
+		std::string textureKey = ObjectFactory::getTexture(obj);
+		sf::Texture tex = AssetManager::getInstance().getTexture(textureKey);
+		auto spriteComp = go.addComponent<SpriteRenderComponent>(
+			go, window, tex, "GameObjects",
+			sf::IntRect(0, 0, 0, 0));
+	}
+
+	b2FixtureDef GameObjectFactory::createFictureDef(tson::Object& obj)
+	{
+		const auto size = PhysicsManager::s2b(t2s(obj.getSize()));
+		const auto shapeType = ObjectFactory::getShape(obj);
+		b2FixtureDef fixtureDef;
+		if (shapeType == "Circle")
+		{
+			b2CircleShape shape;
+			shape.m_p.SetZero();
+			shape.m_radius = size.x / 2;
+			fixtureDef.shape = &shape;
+		}
+		else
+		{
+			b2PolygonShape shape;
+			shape.SetAsBox(size.x / 2, size.y / 2, b2Vec2{ size.x / 2, size.y / 2 }, 0);
+			fixtureDef.shape = &shape;
+		}
+		fixtureDef.density = ObjectFactory::getDensity(obj);
+		fixtureDef.isSensor = ObjectFactory::isSensor(obj);
+
+		return fixtureDef;
+	}
+
+
+
+
+	sf::Vector2f GameObjectFactory::t2s(tson::Vector2i vec)
+	{
+		return sf::Vector2f(vec.x, vec.y);
 	}
 }
