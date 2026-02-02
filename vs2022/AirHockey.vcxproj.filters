@@ -183,6 +183,9 @@
     <ClInclude Include="..\src\ColliderComponent.hpp">
       <Filter>Header Files\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="GameObjectFactory.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="../src/stdafx.cpp">
@@ -265,6 +268,9 @@
     </ClCompile>
     <ClCompile Include="..\src\ColliderComponent.cpp">
       <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectFactory.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

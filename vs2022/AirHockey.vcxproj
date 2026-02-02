@@ -81,7 +81,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>FINALFRONTIER_DLL_EXPORTS;_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SFMLROOT)\include;$(TGUIROOT)\include;$(SolutionDir)..\external\box2d-2.4.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SFMLROOT)\include;$(TGUIROOT)\include;$(SolutionDir)..\external\box2d-2.4.1\include;$(SolutionDir)..\src</AdditionalIncludeDirectories>
       <BrowseInformation>true</BrowseInformation>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -102,7 +102,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>FINALFRONTIER_DLL_EXPORTS;_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SFMLROOT)\include;$(TGUIROOT)\include;$(SolutionDir)..\external\box2d-2.4.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SFMLROOT)\include;$(TGUIROOT)\include;$(SolutionDir)..\external\box2d-2.4.1\include;$(SolutionDir)..\src</AdditionalIncludeDirectories>
       <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
@@ -124,7 +124,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>FINALFRONTIER_DLL_EXPORTS;_CRT_SECURE_NO_WARNINGS;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SFMLROOT)\include;$(TGUIROOT)\include;$(SolutionDir)..\external\box2d-2.4.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SFMLROOT)\include;$(TGUIROOT)\include;$(SolutionDir)..\external\box2d-2.4.1\include;$(SolutionDir)..\src</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -177,6 +177,7 @@
     <ClInclude Include="..\src\Trigonometry.h" />
     <ClInclude Include="..\src\VectorAlgebra2D.h" />
     <ClInclude Include="..\src\VectorAlgebra3D.h" />
+    <ClInclude Include="GameObjectFactory.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="../src/main.cpp" />
@@ -210,6 +211,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="GameObjectFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\VectorAlgebra2D.inl" />
