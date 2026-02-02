@@ -13,6 +13,11 @@ namespace mmt_gd
 class ObjectFactory
 {
 public:
+    static float getDensity(tson::Object& obj);
+    static int   getPlayerIndex(tson::Object& obj);
+    static std::string getShape(tson::Object& obj);
+    static std::string getTexture(tson::Object& obj);
+    static bool        isSensor(tson::Object& obj);
     static void ObjectFactory::propertyMissingNotice(std::string objName, std::string property);
 
     template <typename T>

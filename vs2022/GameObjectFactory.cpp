@@ -303,9 +303,6 @@ namespace mmt_gd
 		return fixtureDef;
 	}
 
-
-
-
 	sf::Vector2f GameObjectFactory::t2s(tson::Vector2i vec)
 	{
 		return sf::Vector2f(vec.x, vec.y);
