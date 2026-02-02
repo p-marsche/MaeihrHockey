@@ -183,7 +183,19 @@
     <ClInclude Include="..\src\ColliderComponent.hpp">
       <Filter>Header Files\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\Config.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AssetManager.hpp">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
     <ClInclude Include="GameObjectFactory.hpp">
+      <Filter>Header Files\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GoalHandler.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GoalEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -269,7 +281,19 @@
     <ClCompile Include="..\src\ColliderComponent.cpp">
       <Filter>Source Files\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AssetManager.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
     <ClCompile Include="GameObjectFactory.cpp">
+      <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GoalHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GoalEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
