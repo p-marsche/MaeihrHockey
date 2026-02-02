@@ -10,6 +10,7 @@ namespace mmt_gd
     class GameObjectFactory
     {
     public:
+        static void createGameObject(sf::RenderWindow&, tson::Object& obj);
         static GameObject::Ptr createPuck(sf::RenderWindow& window, tson::Object& obj);
         static GameObject::Ptr createPaddle(sf::RenderWindow& window, tson::Object& obj);
         static GameObject::Ptr createWall(sf::RenderWindow& window, tson::Object& obj);

@@ -13,6 +13,11 @@
 
 namespace mmt_gd
 {
+	void GameObjectFactory::createGameObject(sf::RenderWindow&, tson::Object& obj)
+	{
+
+	}
+
 	GameObject::Ptr GameObjectFactory::createPuck(sf::RenderWindow& window
 		, tson::Object& obj)
 	{

@@ -3,9 +3,8 @@
 #include "TileMapLoader.hpp"
 
 #include "GameObjectEvents.hpp"
+#include "GameObjectFactory.hpp"
 #include "TsonPropertyReader.hpp"
-#include "TileLayerRenderComponent.hpp"
-#include "Tileson.hpp"
 
 #include <iostream>
 
@@ -126,7 +125,6 @@ void TileMapLoader::loadObjectLayers(const std::unique_ptr<tson::Map>& map)
         // go over all objects per layer and construct them
         for (auto& object : layer.getObjects())
         {
-            //TsonPropertyReader::processTsonObject(object, layer, resourcePath, spriteManager);
         }
     }
 }
