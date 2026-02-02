@@ -12,7 +12,7 @@ class SpriteRenderComponent final : public IRenderComponent
 public:
     using Ptr = std::shared_ptr<SpriteRenderComponent>;
 
-    SpriteRenderComponent(GameObject& gameObject, sf::RenderWindow& renderWindow, sf::Texture& texture, std::string layerName,
+    SpriteRenderComponent(GameObject& gameObject, sf::RenderWindow& renderWindow, std::string textureName, std::string layerName,
                           sf::IntRect textureRect = sf::IntRect());
 
     ~SpriteRenderComponent() override;
@@ -37,7 +37,7 @@ public:
     }
 
 private:
-    sf::Texture m_texture;
+    std::string m_textureName;
     sf::Sprite  m_sprite;
     std::string m_layerName;
     sf::IntRect m_textureRect;

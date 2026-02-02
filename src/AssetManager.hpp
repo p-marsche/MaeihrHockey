@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Config.hpp"
+
 namespace mmt_gd
 {
 class AssetNotFoundException : std::exception

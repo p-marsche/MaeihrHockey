@@ -273,9 +273,8 @@ namespace mmt_gd
 	void GameObjectFactory::addSpriteRenderer(tson::Object& obj, GameObject& go, sf::RenderWindow& window)
 	{
 		std::string textureKey = ObjectFactory::getTexture(obj);
-		sf::Texture tex = AssetManager::getInstance().getTexture(textureKey);
 		auto spriteComp = go.addComponent<SpriteRenderComponent>(
-			go, window, tex, "GameObjects",
+			go, window, textureKey, "GameObjects",
 			sf::IntRect(0, 0, 0, 0));
 	}
 

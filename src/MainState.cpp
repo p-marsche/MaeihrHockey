@@ -35,8 +35,8 @@ void MainState::init()
     const auto    map = tileson.parse(fs::path("arena-v1.tmj"));
     if (map->getStatus() == tson::ParseStatus::OK)
     {
-        TileMapLoader::loadTileLayers(map, "../assets", m_spriteManager);
-        TileMapLoader::loadObjectLayers(map, "../assets", m_spriteManager);
+        TileMapLoader::loadTileLayers(map, m_spriteManager);
+        TileMapLoader::loadObjectLayers(map);
     }
     else
     {

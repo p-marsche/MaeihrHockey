@@ -41,7 +41,6 @@ void SpriteManager::shutdown()
     m_layerOrder.clear();
     m_layerToComp.clear();
     m_compToLayer.clear();
-    m_tileSets.clear();
     m_camera = nullptr;
 
     // unsubscribe from events

@@ -11,8 +11,6 @@ class IRenderComponent;
 class SpriteManager
 {
 public:
-    using TileSetMap = std::unordered_map<std::string, std::shared_ptr<sf::Texture>>;
-
     explicit SpriteManager(sf::RenderWindow& renderWindow) : m_renderWindow(renderWindow)
     {
     }
@@ -61,16 +59,6 @@ public:
         return m_tileSize;
     }
 
-    void setTileSets(const TileSetMap& tileSets)
-    {
-        m_tileSets = tileSets;
-    }
-
-    const TileSetMap& getTileSets() const
-    {
-        return m_tileSets;
-    }
-
     sf::RenderWindow& getWindow() const
     {
         return m_renderWindow;
@@ -82,7 +70,6 @@ private:
     sf::RenderWindow& m_renderWindow;
 
     sf::Vector2i m_tileSize{};
-    TileSetMap   m_tileSets;
 
     IRenderComponent* m_camera = nullptr;
 

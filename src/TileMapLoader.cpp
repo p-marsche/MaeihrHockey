@@ -1,40 +1,30 @@
 #include "stdafx.h"
+
+#include "TileMapLoader.hpp"
+
 #include "GameObjectEvents.hpp"
 #include "ObjectFactory.hpp"
 #include "TileLayerRenderComponent.hpp"
 #include "Tileson.hpp"
-#include <iostream>
 
-#include "TileMapLoader.hpp"
+#include <iostream>
 
 
 namespace mmt_gd
 {
-void TileMapLoader::loadTileSetTextures(const std::unique_ptr<tson::Map>& map,
-                                        const fs::path&                   resourcePath,
-                                        SpriteManager&                    spriteManager,
-                                        SpriteManager::TileSetMap&        tileSets)
+void TileMapLoader::loadTileSetTextures(const std::unique_ptr<tson::Map>& map)
 {
     for (const auto& tileSet : map->getTilesets())
     {
         std::cout << "Load tileset: " << tileSet.getName() << " width filename: " << tileSet.getImagePath()
                   << " and tile size: " << tileSet.getTileSize().x << ", " << tileSet.getTileSize().y << '\n';
 
-        const auto texture = std::make_shared<sf::Texture>();
-
-        if (!texture->loadFromFile((resourcePath / tileSet.getImagePath()).string()))
-        {
-            sf::err() << "Could not load texture " << resourcePath / tileSet.getImagePath() << '\n';
-            continue;
-        }
-        tileSets[tileSet.getName()] = texture;
+        AssetManager::getInstance().loadTexture(tileSet.getName(), tileSet.getImagePath().string());
     }
-    spriteManager.setTileSets(tileSets);
 }
 
 void TileMapLoader::createTileSprite(
     const std::unique_ptr<tson::Map>& map,
-    SpriteManager::TileSetMap&        tileSets,
     std::vector<TileLayer>&           tileLayers,
     int                               layerIdx,
     const tson::Layer&                layer,
@@ -44,12 +34,10 @@ void TileMapLoader::createTileSprite(
     // get tileSet and tileSet texture
     const auto* const  tileSet = map->getTilesetByGid(gid);
     const sf::Vector2i tileSize(map->getTileSize().x, map->getTileSize().y);
-    const auto&        texture = tileSets[tileSet->getName()];
-
-    assert(texture != nullptr);
+    const auto&        texture = AssetManager::getInstance().getTexture(tileSet->getName());
 
     // horizontal tile count in tileSet texture
-    const int tileCountX = texture->getSize().x / tileSize.x;
+    const int tileCountX = texture.getSize().x / tileSize.x;
 
     // calculate position of tile
     sf::Vector2f position;
@@ -66,22 +54,21 @@ void TileMapLoader::createTileSprite(
 
     // create tile and put it into a layer
     const auto sprite = std::make_shared<sf::Sprite>();
-    sprite->setTexture(*texture);
+    sprite->setTexture(texture);
     sprite->setTextureRect(source);
     sprite->setPosition(position.x, position.y);
 
     tileLayers[layerIdx].m_tiles.push_back({i, sprite});
 }
 
-void TileMapLoader::loadTileLayers(const std::unique_ptr<tson::Map>& map, const fs::path& resourcePath, SpriteManager& spriteManager)
+void TileMapLoader::loadTileLayers(const std::unique_ptr<tson::Map>& map, SpriteManager& spriteManager)
 {
     std::cout << "Load tileMap with size: " << map->getSize().x << "x" << map->getSize().y
               << " and tile size: " << map->getTileSize().x << "x" << map->getTileSize().y << '\n';
 
     spriteManager.setTileSize({map->getTileSize().x, map->getTileSize().y});
 
-    SpriteManager::TileSetMap tileSets;
-    loadTileSetTextures(map, resourcePath, spriteManager, tileSets);
+    loadTileSetTextures(map);
 
     // go through all layers
     std::vector<TileLayer> tileLayers;
@@ -111,7 +98,7 @@ void TileMapLoader::loadTileLayers(const std::unique_ptr<tson::Map>& map, const 
                 continue;
             }
 
-            createTileSprite(map, tileSets, tileLayers, layerIdx, layer, i, gid);
+            createTileSprite(map, tileLayers, layerIdx, layer, i, gid);
         }
     }
 
@@ -131,9 +118,7 @@ void TileMapLoader::loadTileLayers(const std::unique_ptr<tson::Map>& map, const 
 }
 
 
-void TileMapLoader::loadObjectLayers(const std::unique_ptr<tson::Map>& map,
-                                     const fs::path&                   resourcePath,
-                                     const SpriteManager&              spriteManager)
+void TileMapLoader::loadObjectLayers(const std::unique_ptr<tson::Map>& map)
 {
     // go through all object layers
     for (auto& layer : map->getLayers())
