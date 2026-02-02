@@ -8,11 +8,24 @@ namespace mmt_gd
     class GameObjectFactory
     {
     public:
-        static GameObject::Ptr createPuck(sf::RenderWindow& window);
-        static GameObject::Ptr createPaddle(sf::RenderWindow& window);
-        static GameObject::Ptr createWall(sf::RenderWindow& window);
-        static GameObject::Ptr createNeutralzone(sf::RenderWindow& window);
-        static GameObject::Ptr createGoalsensor(sf::RenderWindow& window);
-        static GameObject::Ptr createGoalbarrier(sf::RenderWindow& window);
+        static GameObject::Ptr createPuck(sf::RenderWindow& window, tson::Object& obj);
+        static GameObject::Ptr createPaddle(sf::RenderWindow& window, tson::Object& obj);
+        static GameObject::Ptr createWall(sf::RenderWindow& window, tson::Object& obj);
+        static GameObject::Ptr createNeutralzone(sf::RenderWindow& window, tson::Object& obj);
+        static GameObject::Ptr createPenaltyarea(sf::RenderWindow& window, tson::Object& obj);
+        static GameObject::Ptr createGoalsensor(sf::RenderWindow& window, tson::Object& obj);
+        static GameObject::Ptr createGoalbarrier(sf::RenderWindow& window, tson::Object& obj);
     };
+
+
+    enum CollisionLayers
+    {
+        WALL            = 0x0000,
+        FAKE_WALL       = 0x0001,
+        PENALTY         = 0x0002,
+        GOAL_SENSOR     = 0x0004,
+        OBJECTS         = 0x0008
+    };
+
+
 } // namespace mmt_gd

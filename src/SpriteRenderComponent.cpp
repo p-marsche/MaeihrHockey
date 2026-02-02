@@ -12,11 +12,11 @@ namespace mmt_gd
 {
 SpriteRenderComponent::SpriteRenderComponent(GameObject&       gameObject,
                                              sf::RenderWindow& renderWindow,
-                                             std::string       textureFile,
+                                             std::string       textureKey,
                                              std::string       layerName,
                                              sf::IntRect       textureRect) :
 IRenderComponent(gameObject, renderWindow),
-m_textureFile(std::move(textureFile)),
+m_textureKey(std::move(textureKey)),
 m_layerName(std::move(layerName)),
 m_textureRect(textureRect),
 m_hasTextureRect(textureRect.width > 0 && textureRect.height > 0)
@@ -31,14 +31,7 @@ SpriteRenderComponent::~SpriteRenderComponent()
 
 bool SpriteRenderComponent::init()
 {
-    sf::Image image;
-    if (!image.loadFromFile(m_textureFile))
-    {
-        sf::err() << "Could not load texture from " << m_textureFile << '\n';
-        return false;
-    }
-    image.createMaskFromColor(sf::Color::Black);
-    m_texture.loadFromImage(image);
+    auto m_texture = AssetManager::getInstance().getTexture(m_textureKey);
     m_sprite.setTexture(m_texture);
 
     // Apply texture rect AFTER setTexture (which resets to full texture)
