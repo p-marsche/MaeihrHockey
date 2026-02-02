@@ -36,7 +36,7 @@ void MainState::init()
     if (map->getStatus() == tson::ParseStatus::OK)
     {
         TileMapLoader::loadTileLayers(map, m_spriteManager);
-        TileMapLoader::loadObjectLayers(map);
+        TileMapLoader::loadObjectLayers(map, m_spriteManager);
     }
     else
     {

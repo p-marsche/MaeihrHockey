@@ -117,7 +117,7 @@ void TileMapLoader::loadTileLayers(const std::unique_ptr<tson::Map>& map, Sprite
 }
 
 
-void TileMapLoader::loadObjectLayers(const std::unique_ptr<tson::Map>& map)
+void TileMapLoader::loadObjectLayers(const std::unique_ptr<tson::Map>& map, SpriteManager& spriteManager)
 {
     // go through all object layers
     for (auto& layer : map->getLayers())
@@ -125,6 +125,7 @@ void TileMapLoader::loadObjectLayers(const std::unique_ptr<tson::Map>& map)
         // go over all objects per layer and construct them
         for (auto& object : layer.getObjects())
         {
+            GameObjectFactory::createGameObject(spriteManager.getWindow(), object);
         }
     }
 }
