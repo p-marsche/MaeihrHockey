@@ -2,6 +2,8 @@
 
 #include "GameObject.hpp"
 #include <SFML/Graphics.hpp>
+#include "Tileson.hpp"
+
 
 namespace mmt_gd
 {
@@ -19,7 +21,7 @@ namespace mmt_gd
     private:
         static GameObject::Ptr createObject(tson::Object& obj);
         static void addSpriteRenderer(tson::Object& obj, GameObject& go, sf::RenderWindow& window);
-        static b2FixtureDef createFictureDef(tson::Object& obj);
+        static b2FixtureDef createFixtureDef(tson::Object& obj);
         static sf::Vector2f t2s(tson::Vector2i vec);
     };
 

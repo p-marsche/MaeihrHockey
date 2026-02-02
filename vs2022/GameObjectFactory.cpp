@@ -22,9 +22,9 @@ namespace mmt_gd
 
 		auto rigidBody = puck->addComponent<RigidBodyComponent>(*puck, b2_dynamicBody);
 		rigidBody->getB2Body()->SetFixedRotation(true);
-		rigidBody->getB2Body()->SetLinearDamping(0.3f);
+		rigidBody->getB2Body()->SetLinearDamping(0.1f);
 
-		b2FixtureDef fixtureDef = createFictureDef(obj);
+		b2FixtureDef fixtureDef = createFixtureDef(obj);
 		b2Filter filter;
 		filter.categoryBits = CollisionLayers::OBJECTS;
 		filter.maskBits = CollisionLayers::GOAL_SENSOR | CollisionLayers::OBJECTS | CollisionLayers::WALL;
@@ -59,7 +59,7 @@ namespace mmt_gd
 		rigidBody->getB2Body()->SetFixedRotation(true);
 		rigidBody->getB2Body()->SetLinearDamping(0.3f);
 
-		b2FixtureDef fixtureDef = createFictureDef(obj);
+		b2FixtureDef fixtureDef = createFixtureDef(obj);
 		b2Filter filter;
 		filter.categoryBits = CollisionLayers::OBJECTS;
 		filter.maskBits = CollisionLayers::FAKE_WALL | CollisionLayers::OBJECTS | CollisionLayers::WALL | CollisionLayers::PENALTY;
@@ -95,7 +95,7 @@ namespace mmt_gd
 
 		auto rigidBody = wall->addComponent<RigidBodyComponent>(*wall, b2_staticBody);
 
-		b2FixtureDef fixtureDef = createFictureDef(obj);
+		b2FixtureDef fixtureDef = createFixtureDef(obj);
 		b2Filter filter;
 		filter.categoryBits = CollisionLayers::WALL;
 		filter.maskBits = CollisionLayers::OBJECTS;
@@ -131,7 +131,7 @@ namespace mmt_gd
 
 		auto rigidBody = neutral->addComponent<RigidBodyComponent>(*neutral, b2_staticBody);
 
-		b2FixtureDef fixtureDef = createFictureDef(obj);
+		b2FixtureDef fixtureDef = createFixtureDef(obj);
 		b2Filter filter;
 		filter.categoryBits = CollisionLayers::FAKE_WALL;
 		filter.maskBits = CollisionLayers::OBJECTS;
@@ -167,7 +167,7 @@ namespace mmt_gd
 
 		auto rigidBody = penalty->addComponent<RigidBodyComponent>(*penalty, b2_staticBody);
 
-		b2FixtureDef fixtureDef = createFictureDef(obj);
+		b2FixtureDef fixtureDef = createFixtureDef(obj);
 		b2Filter filter;
 		filter.categoryBits = CollisionLayers::PENALTY;
 		filter.maskBits = CollisionLayers::OBJECTS;
@@ -203,7 +203,7 @@ namespace mmt_gd
 
 		auto rigidBody = goal->addComponent<RigidBodyComponent>(*goal, b2_staticBody);
 
-		b2FixtureDef fixtureDef = createFictureDef(obj);
+		b2FixtureDef fixtureDef = createFixtureDef(obj);
 		b2Filter filter;
 		filter.categoryBits = CollisionLayers::GOAL_SENSOR;
 		filter.maskBits = CollisionLayers::OBJECTS;
@@ -239,7 +239,7 @@ namespace mmt_gd
 
 		auto rigidBody = gb->addComponent<RigidBodyComponent>(*gb, b2_staticBody);
 
-		b2FixtureDef fixtureDef = createFictureDef(obj);
+		b2FixtureDef fixtureDef = createFixtureDef(obj);
 		b2Filter filter;
 		filter.categoryBits = CollisionLayers::WALL;
 		filter.maskBits = CollisionLayers::OBJECTS;
@@ -279,7 +279,7 @@ namespace mmt_gd
 			sf::IntRect(0, 0, 0, 0));
 	}
 
-	b2FixtureDef GameObjectFactory::createFictureDef(tson::Object& obj)
+	b2FixtureDef GameObjectFactory::createFixtureDef(tson::Object& obj)
 	{
 		const auto size = PhysicsManager::s2b(t2s(obj.getSize()));
 		const auto shapeType = ObjectFactory::getShape(obj);
