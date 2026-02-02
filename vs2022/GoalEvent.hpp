@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GameObjectManager.hpp"
+#include "GameObject.hpp"
 #include "IEvent.hpp"
 
 namespace mmt_gd
@@ -11,12 +11,26 @@ namespace mmt_gd
     {
     public:
         using BasicDataEvent::BasicDataEvent;
-        
+
         static const EventType Type;
 
         EventType getEventType() override
         {
             return Type;
         }
+    };
+
+    class PuckspawnCreationEvent final : public BasicDataEvent<GameObject::Ptr>
+    {
+    public:
+        using BasicDataEvent::BasicDataEvent;
+
+        static const EventType Type;
+
+        EventType getEventType() override
+        {
+            return Type;
+        }
+    };
 } // namespace mmt_gd
 
