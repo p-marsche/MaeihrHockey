@@ -19,18 +19,5 @@ namespace mmt_gd
             return Type;
         }
     };
-
-    class PuckspawnCreationEvent final : public BasicDataEvent<GameObject::Ptr>
-    {
-    public:
-        using BasicDataEvent::BasicDataEvent;
-
-        static const EventType Type;
-
-        EventType getEventType() override
-        {
-            return Type;
-        }
-    };
 } // namespace mmt_gd
 
