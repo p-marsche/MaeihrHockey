@@ -9,7 +9,7 @@ namespace mmt_gd
     {
     public:
         static GameObject::Ptr createPuck(sf::RenderWindow& window, tson::Object& obj);
-        static GameObject::Ptr createPaddle(sf::RenderWindow& window, tson::Object& obj, int paddleID);
+        static GameObject::Ptr createPaddle(sf::RenderWindow& window, tson::Object& obj);
         static GameObject::Ptr createWall(sf::RenderWindow& window, tson::Object& obj);
         static GameObject::Ptr createNeutralzone(sf::RenderWindow& window, tson::Object& obj);
         static GameObject::Ptr createPenaltyarea(sf::RenderWindow& window, tson::Object& obj);

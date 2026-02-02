@@ -16,7 +16,7 @@ namespace mmt_gd
 	GameObject::Ptr GameObjectFactory::createPuck(sf::RenderWindow& window
 													, tson::Object& obj)
 	{
-		auto puck = GameObject::create("Puck");
+		auto puck = GameObject::create(ObjectFactory::getName(obj));
 		sf::Vector2f pos = ObjectFactory::getPosition(obj);
 		puck->setPosition(pos);
 		
@@ -30,27 +30,27 @@ namespace mmt_gd
 		rigidBody->getB2Body()->SetFixedRotation(true);
 		rigidBody->getB2Body()->SetLinearDamping(0.3f);
 
-		b2PolygonShape shape;
 		const auto size = PhysicsManager::s2b(ObjectFactory::getSize(obj));
 		const auto shapeType = ObjectFactory::getShape(obj);
+		b2FixtureDef fixtureDef;
 		if (shapeType == "Circle")
 		{
 			b2CircleShape shape;
 			shape.m_p.SetZero();
 			shape.m_radius = size.x / 2;
+			fixtureDef.shape = &shape;
 		}
 		else
 		{
 			b2PolygonShape shape;
 			shape.SetAsBox(size.x / 2, size.y / 2, b2Vec2{ size.x / 2, size.y / 2 }, 0);
+			fixtureDef.shape = &shape;
 		}
-		b2FixtureDef fixtureDef;
-		fixtureDef.shape = &shape;
 		fixtureDef.density = ObjectFactory::getDensity(obj);
 
 		b2Filter filter;
 		filter.categoryBits = CollisionLayers::OBJECTS;
-		filter.maskBits = CollisionLayers::GOAL_SENSOR || CollisionLayers::OBJECTS || CollisionLayers::WALL;
+		filter.maskBits = CollisionLayers::GOAL_SENSOR | CollisionLayers::OBJECTS | CollisionLayers::WALL;
 		fixtureDef.filter = filter;
 
 		auto collider = puck->addComponent<ColliderComponent>(*puck, *rigidBody, fixtureDef);
@@ -62,7 +62,7 @@ namespace mmt_gd
 
 		if (!puck->init())
 		{
-			sf::err() << "Could not initialize player ship\n";
+			sf::err() << "Could not initialize puck\n";
 		}
 
 		EventBus::getInstance().fireEvent(std::make_shared<GameObjectCreateEvent>(puck));
@@ -71,11 +71,10 @@ namespace mmt_gd
 	}
 
 	GameObject::Ptr GameObjectFactory::createPaddle(sf::RenderWindow& window
-													, tson::Object& obj
-													, int paddleID)
+													, tson::Object& obj)
 	{
 		int playerIndex = ObjectFactory::getPlayerIndex(obj);
-		auto paddle = GameObject::create("Paddle" + std::to_string(paddleID));
+		auto paddle = GameObject::create(ObjectFactory::getName(obj));
 		sf::Vector2f pos = ObjectFactory::getPosition(obj);
 		paddle->setPosition(pos);
 
@@ -92,24 +91,25 @@ namespace mmt_gd
 		b2PolygonShape shape;
 		const auto size = PhysicsManager::s2b(ObjectFactory::getSize(obj));
 		const auto shapeType = ObjectFactory::getShape(obj);
+		b2FixtureDef fixtureDef;
 		if (shapeType == "Circle")
 		{
 			b2CircleShape shape;
 			shape.m_p.SetZero();
 			shape.m_radius = size.x / 2;
+			fixtureDef.shape = &shape;
 		}
 		else
 		{
 			b2PolygonShape shape;
 			shape.SetAsBox(size.x / 2, size.y / 2, b2Vec2{ size.x / 2, size.y / 2 }, 0);
+			fixtureDef.shape = &shape;
 		}
-		b2FixtureDef fixtureDef;
-		fixtureDef.shape = &shape;
 		fixtureDef.density = ObjectFactory::getDensity(obj);
 
 		b2Filter filter;
 		filter.categoryBits = CollisionLayers::OBJECTS;
-		filter.maskBits = CollisionLayers::GOAL_SENSOR || CollisionLayers::OBJECTS || CollisionLayers::WALL;
+		filter.maskBits = CollisionLayers::FAKE_WALL | CollisionLayers::OBJECTS | CollisionLayers::WALL | CollisionLayers::PENALTY;
 		fixtureDef.filter = filter;
 
 		auto collider = paddle->addComponent<ColliderComponent>(*paddle, *rigidBody, fixtureDef);
@@ -121,7 +121,7 @@ namespace mmt_gd
 
 		if (!paddle->init())
 		{
-			sf::err() << "Could not initialize player ship\n";
+			sf::err() << "Could not initialize paddle \n";
 		}
 
 		EventBus::getInstance().fireEvent(std::make_shared<GameObjectCreateEvent>(paddle));
@@ -132,30 +132,276 @@ namespace mmt_gd
 	GameObject::Ptr GameObjectFactory::createWall(sf::RenderWindow& window
 													, tson::Object& obj)
 	{
+		auto wall = GameObject::create(ObjectFactory::getName(obj));
+		sf::Vector2f pos = ObjectFactory::getPosition(obj);
+		wall->setPosition(pos);
 
+		/*std::string textureKey = ObjectFactory::getTexture(obj);
+		sf::Texture tex = AssetManager::getInstance().getTexture(textureKey);
+		auto spriteComp = wall->addComponent<SpriteRenderComponent>(
+			*paddle, window, tex, "GameObjects",
+			sf::IntRect(0, 0, 0, 0));*/
+
+		auto rigidBody = wall->addComponent<RigidBodyComponent>(*wall, b2_staticBody);
+
+		const auto size = PhysicsManager::s2b(ObjectFactory::getSize(obj));
+		const auto shapeType = ObjectFactory::getShape(obj);
+		b2FixtureDef fixtureDef;
+		if (shapeType == "Circle")
+		{
+			b2CircleShape shape;
+			shape.m_p.SetZero();
+			shape.m_radius = size.x / 2;
+			fixtureDef.shape = &shape;
+		}
+		else
+		{
+			b2PolygonShape shape;
+			shape.SetAsBox(size.x / 2, size.y / 2, b2Vec2{ size.x / 2, size.y / 2 }, 0);
+			fixtureDef.shape = &shape;
+		}
+		fixtureDef.density = ObjectFactory::getDensity(obj);
+
+		b2Filter filter;
+		filter.categoryBits = CollisionLayers::WALL;
+		filter.maskBits = CollisionLayers::OBJECTS;
+		fixtureDef.filter = filter;
+
+		auto collider = wall->addComponent<ColliderComponent>(*wall, *rigidBody, fixtureDef);
+
+		// add onCollision func later if we actually need it
+		/*collider->registerOnCollisionFunction([](ColliderComponent& self, ColliderComponent& other) {
+
+		});*/
+
+		if (!wall->init())
+		{
+			sf::err() << "Could not initialize wall \n";
+		}
+
+		EventBus::getInstance().fireEvent(std::make_shared<GameObjectCreateEvent>(wall));
+
+		return wall;
 	}
 
 	GameObject::Ptr GameObjectFactory::createNeutralzone(sf::RenderWindow& window
 															, tson::Object& obj)
 	{
+		auto neutral = GameObject::create(ObjectFactory::getName(obj));
+		sf::Vector2f pos = ObjectFactory::getPosition(obj);
+		neutral->setPosition(pos);
 
+		/*std::string textureKey = ObjectFactory::getTexture(obj);
+		sf::Texture tex = AssetManager::getInstance().getTexture(textureKey);
+		auto spriteComp = wall->addComponent<SpriteRenderComponent>(
+			*paddle, window, tex, "GameObjects",
+			sf::IntRect(0, 0, 0, 0));*/
+
+		auto rigidBody = neutral->addComponent<RigidBodyComponent>(*neutral, b2_staticBody);
+
+		const auto size = PhysicsManager::s2b(ObjectFactory::getSize(obj));
+		const auto shapeType = ObjectFactory::getShape(obj);
+		b2FixtureDef fixtureDef;
+		if (shapeType == "Circle")
+		{
+			b2CircleShape shape;
+			shape.m_p.SetZero();
+			shape.m_radius = size.x / 2;
+			fixtureDef.shape = &shape;
+		}
+		else
+		{
+			b2PolygonShape shape;
+			shape.SetAsBox(size.x / 2, size.y / 2, b2Vec2{ size.x / 2, size.y / 2 }, 0);
+			fixtureDef.shape = &shape;
+		}
+		fixtureDef.density = ObjectFactory::getDensity(obj);
+
+		b2Filter filter;
+		filter.categoryBits = CollisionLayers::FAKE_WALL;
+		filter.maskBits = CollisionLayers::OBJECTS;
+		fixtureDef.filter = filter;
+
+		auto collider = neutral->addComponent<ColliderComponent>(*neutral, *rigidBody, fixtureDef);
+
+		// add onCollision func later if we actually need it
+		/*collider->registerOnCollisionFunction([](ColliderComponent& self, ColliderComponent& other) {
+
+		});*/
+
+		if (!neutral->init())
+		{
+			sf::err() << "Could not initialize wall \n";
+		}
+
+		EventBus::getInstance().fireEvent(std::make_shared<GameObjectCreateEvent>(neutral));
+
+		return neutral;
 	}
 
 	GameObject::Ptr GameObjectFactory::createPenaltyarea(sf::RenderWindow& window
 															, tson::Object& obj)
 	{
+		auto penalty = GameObject::create(ObjectFactory::getName(obj));
+		sf::Vector2f pos = ObjectFactory::getPosition(obj);
+		penalty->setPosition(pos);
 
+		/*std::string textureKey = ObjectFactory::getTexture(obj);
+		sf::Texture tex = AssetManager::getInstance().getTexture(textureKey);
+		auto spriteComp = wall->addComponent<SpriteRenderComponent>(
+			*paddle, window, tex, "GameObjects",
+			sf::IntRect(0, 0, 0, 0));*/
+
+		auto rigidBody = penalty->addComponent<RigidBodyComponent>(*penalty, b2_staticBody);
+
+		const auto size = PhysicsManager::s2b(ObjectFactory::getSize(obj));
+		const auto shapeType = ObjectFactory::getShape(obj);
+		b2FixtureDef fixtureDef;
+		if (shapeType == "Circle")
+		{
+			b2CircleShape shape;
+			shape.m_p.SetZero();
+			shape.m_radius = size.x / 2;
+			fixtureDef.shape = &shape;
+		}
+		else
+		{
+			b2PolygonShape shape;
+			shape.SetAsBox(size.x / 2, size.y / 2, b2Vec2{ size.x / 2, size.y / 2 }, 0);
+			fixtureDef.shape = &shape;
+		}
+		fixtureDef.density = ObjectFactory::getDensity(obj);
+
+		b2Filter filter;
+		filter.categoryBits = CollisionLayers::PENALTY;
+		filter.maskBits = CollisionLayers::OBJECTS;
+		fixtureDef.filter = filter;
+
+		auto collider = penalty->addComponent<ColliderComponent>(*penalty, *rigidBody, fixtureDef);
+
+		// add onCollision func later if we actually need it
+		/*collider->registerOnCollisionFunction([](ColliderComponent& self, ColliderComponent& other) {
+
+		});*/
+
+		if (!penalty->init())
+		{
+			sf::err() << "Could not initialize wall \n";
+		}
+
+		EventBus::getInstance().fireEvent(std::make_shared<GameObjectCreateEvent>(penalty));
+
+		return penalty;
 	}
 
 	GameObject::Ptr GameObjectFactory::createGoalsensor(sf::RenderWindow& window
 														, tson::Object& obj)
 	{
+		auto goal = GameObject::create(ObjectFactory::getName(obj));
+		sf::Vector2f pos = ObjectFactory::getPosition(obj);
+		goal->setPosition(pos);
 
+		/*std::string textureKey = ObjectFactory::getTexture(obj);
+		sf::Texture tex = AssetManager::getInstance().getTexture(textureKey);
+		auto spriteComp = wall->addComponent<SpriteRenderComponent>(
+			*paddle, window, tex, "GameObjects",
+			sf::IntRect(0, 0, 0, 0));*/
+
+		auto rigidBody = goal->addComponent<RigidBodyComponent>(*goal, b2_staticBody);
+
+		const auto size = PhysicsManager::s2b(ObjectFactory::getSize(obj));
+		const auto shapeType = ObjectFactory::getShape(obj);
+		b2FixtureDef fixtureDef;
+		if (shapeType == "Circle")
+		{
+			b2CircleShape shape;
+			shape.m_p.SetZero();
+			shape.m_radius = size.x / 2;
+			fixtureDef.shape = &shape;
+		}
+		else
+		{
+			b2PolygonShape shape;
+			shape.SetAsBox(size.x / 2, size.y / 2, b2Vec2{ size.x / 2, size.y / 2 }, 0);
+			fixtureDef.shape = &shape;
+		}
+		fixtureDef.density = ObjectFactory::getDensity(obj);
+		fixtureDef.isSensor = ObjectFactory::isSensor(obj);
+
+		b2Filter filter;
+		filter.categoryBits = CollisionLayers::GOAL_SENSOR;
+		filter.maskBits = CollisionLayers::OBJECTS;
+		fixtureDef.filter = filter;
+
+		auto collider = goal->addComponent<ColliderComponent>(*goal, *rigidBody, fixtureDef);
+
+		// add onCollision func later if we actually need it
+		/*collider->registerOnCollisionFunction([](ColliderComponent& self, ColliderComponent& other) {
+
+		});*/
+
+		if (!goal->init())
+		{
+			sf::err() << "Could not initialize wall \n";
+		}
+
+		EventBus::getInstance().fireEvent(std::make_shared<GameObjectCreateEvent>(goal));
+
+		return goal;
 	}
 
 	GameObject::Ptr GameObjectFactory::createGoalbarrier(sf::RenderWindow& window
 															, tson::Object& obj)
 	{
+		auto gb = GameObject::create(ObjectFactory::getName(obj));
+		sf::Vector2f pos = ObjectFactory::getPosition(obj);
+		gb->setPosition(pos);
 
+		/*std::string textureKey = ObjectFactory::getTexture(obj);
+		sf::Texture tex = AssetManager::getInstance().getTexture(textureKey);
+		auto spriteComp = wall->addComponent<SpriteRenderComponent>(
+			*paddle, window, tex, "GameObjects",
+			sf::IntRect(0, 0, 0, 0));*/
+
+		auto rigidBody = gb->addComponent<RigidBodyComponent>(*gb, b2_staticBody);
+
+		const auto size = PhysicsManager::s2b(ObjectFactory::getSize(obj));
+		const auto shapeType = ObjectFactory::getShape(obj);
+		b2FixtureDef fixtureDef;
+		if (shapeType == "Circle")
+		{
+			b2CircleShape shape;
+			shape.m_p.SetZero();
+			shape.m_radius = size.x / 2;
+			fixtureDef.shape = &shape;
+		}
+		else
+		{
+			b2PolygonShape shape;
+			shape.SetAsBox(size.x / 2, size.y / 2, b2Vec2{ size.x / 2, size.y / 2 }, 0);
+			fixtureDef.shape = &shape;
+		}
+		fixtureDef.density = ObjectFactory::getDensity(obj);
+
+		b2Filter filter;
+		filter.categoryBits = CollisionLayers::WALL;
+		filter.maskBits = CollisionLayers::OBJECTS;
+		fixtureDef.filter = filter;
+
+		auto collider = gb->addComponent<ColliderComponent>(*gb, *rigidBody, fixtureDef);
+
+		// add onCollision func later if we actually need it
+		/*collider->registerOnCollisionFunction([](ColliderComponent& self, ColliderComponent& other) {
+
+		});*/
+
+		if (!gb->init())
+		{
+			sf::err() << "Could not initialize wall \n";
+		}
+
+		EventBus::getInstance().fireEvent(std::make_shared<GameObjectCreateEvent>(gb));
+
+		return gb;
 	}
 }
