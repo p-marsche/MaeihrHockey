@@ -13,9 +13,15 @@ namespace mmt_gd
 class ObjectFactory
 {
 public:
-    static GameObject::Ptr processTsonObject(tson::Object&        object,
-                                             const tson::Layer&   layer,
-                                             const fs::path&      path,
-                                             const SpriteManager& spriteManager);
+    static void ObjectFactory::propertyMissingNotice(std::string objName, std::string property);
+
+    template <typename T>
+    static T getProperty(tson::Object& obj, std::string propertyName)
+    {
+        tson::PropertyCollection& properties = obj.getProperties();
+        if (!properties.hasProperty(propertyName))
+            propertyMissingNotice(obj.getName(), propertyName);
+        return obj.getProperties().getValue<T>(propertyName);
+    }
 };
 } //namespace mmt_gd
