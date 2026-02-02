@@ -138,8 +138,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="../src/stdafx.h" />
+    <ClInclude Include="..\src\AssetManager.hpp" />
     <ClInclude Include="..\src\BulletPool.hpp" />
     <ClInclude Include="..\src\ColliderComponent.hpp" />
+    <ClInclude Include="..\src\Config.hpp" />
     <ClInclude Include="..\src\GameState.hpp" />
     <ClInclude Include="..\src\ITransformAnimation.hpp" />
     <ClInclude Include="..\src\MainState.hpp" />
@@ -187,7 +189,9 @@
     <ClCompile Include="../src/GameObject.cpp" />
     <ClCompile Include="../src/GameStateManager.cpp" />
     <ClCompile Include="../src/InputManager.cpp" />
+    <ClCompile Include="..\src\AssetManager.cpp" />
     <ClCompile Include="..\src\ColliderComponent.cpp" />
+    <ClCompile Include="..\src\Config.cpp" />
     <ClCompile Include="..\src\DebugDraw.cpp" />
     <ClCompile Include="..\src\EventBus.cpp" />
     <ClCompile Include="..\src\GameObjectEvents.cpp" />
