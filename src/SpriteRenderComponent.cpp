@@ -1,7 +1,6 @@
 #include "stdafx.h"
 
 #include "SpriteRenderComponent.hpp"
-
 #include "EventBus.hpp"
 #include "GameObject.hpp"
 #include "RenderComponentEvents.hpp"
@@ -12,11 +11,11 @@ namespace mmt_gd
 {
 SpriteRenderComponent::SpriteRenderComponent(GameObject&       gameObject,
                                              sf::RenderWindow& renderWindow,
-                                             std::string       textureKey,
+                                             sf::Texture&        texture,
                                              std::string       layerName,
                                              sf::IntRect       textureRect) :
 IRenderComponent(gameObject, renderWindow),
-m_textureKey(std::move(textureKey)),
+m_texture(texture),
 m_layerName(std::move(layerName)),
 m_textureRect(textureRect),
 m_hasTextureRect(textureRect.width > 0 && textureRect.height > 0)
@@ -31,7 +30,6 @@ SpriteRenderComponent::~SpriteRenderComponent()
 
 bool SpriteRenderComponent::init()
 {
-    auto m_texture = AssetManager::getInstance().getTexture(m_textureKey);
     m_sprite.setTexture(m_texture);
 
     // Apply texture rect AFTER setTexture (which resets to full texture)

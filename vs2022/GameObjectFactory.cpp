@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "GameObjectFactory.hpp"
 
+#include "AssetManager.hpp"
 #include "ColliderComponent.hpp"
 #include "EventBus.hpp"
 #include "GameObjectEvents.hpp"
@@ -9,8 +10,6 @@
 #include "PlayerMoveComponent.hpp"
 #include "RigidBodyComponent.hpp"
 #include "SpriteRenderComponent.hpp"
-
-#include "TilesonParser.hpp"
 
 namespace mmt_gd
 {
@@ -21,8 +20,10 @@ namespace mmt_gd
 		sf::Vector2f pos = ObjectFactory::getPosition(obj);
 		puck->setPosition(pos);
 		
+		std::string textureKey = ObjectFactory::getTexture(obj);
+		sf::Texture tex = AssetManager::getInstance().getTexture(textureKey);
 		auto spriteComp = puck->addComponent<SpriteRenderComponent>(
-			*puck, window, "../assets/Hunter1.bmp", "GameObjects",
+			*puck, window, tex, "GameObjects",
 			sf::IntRect(0, 0, 0, 0));
 
 		auto rigidBody = puck->addComponent<RigidBodyComponent>(*puck, b2_dynamicBody);
@@ -70,15 +71,18 @@ namespace mmt_gd
 	}
 
 	GameObject::Ptr GameObjectFactory::createPaddle(sf::RenderWindow& window
-													, tson::Object& obj )
+													, tson::Object& obj
+													, int paddleID)
 	{
 		int playerIndex = ObjectFactory::getPlayerIndex(obj);
-		auto paddle = GameObject::create("Paddle" + std::to_string(playerIndex);
+		auto paddle = GameObject::create("Paddle" + std::to_string(paddleID));
 		sf::Vector2f pos = ObjectFactory::getPosition(obj);
 		paddle->setPosition(pos);
 
+		std::string textureKey = ObjectFactory::getTexture(obj);
+		sf::Texture tex = AssetManager::getInstance().getTexture(textureKey);
 		auto spriteComp = paddle->addComponent<SpriteRenderComponent>(
-			*paddle, window, "../assets/Hunter1.bmp", "GameObjects",
+			*paddle, window, tex, "GameObjects",
 			sf::IntRect(0, 0, 0, 0));
 
 		auto rigidBody = paddle->addComponent<RigidBodyComponent>(*paddle, b2_dynamicBody);
@@ -144,8 +148,7 @@ namespace mmt_gd
 	}
 
 	GameObject::Ptr GameObjectFactory::createGoalsensor(sf::RenderWindow& window
-														, tson::Object& obj
-														, int idx)
+														, tson::Object& obj)
 	{
 
 	}
