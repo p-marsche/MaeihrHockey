@@ -21,6 +21,6 @@ public:
 
     static void loadTileLayers(const std::unique_ptr<tson::Map>& map, SpriteManager& spriteManager);
 
-    static void loadObjectLayers(const std::unique_ptr<tson::Map>& map);
+    static void loadObjectLayers(const std::unique_ptr<tson::Map>& map, SpriteManager& spriteManager);
 };
 } // namespace mmt_gd

@@ -10,7 +10,7 @@ class Object;
 
 namespace mmt_gd
 {
-class ObjectFactory
+class TsonPropertyReader
 {
 public:
     static float getDensity(tson::Object& obj);
@@ -18,7 +18,7 @@ public:
     static std::string getShape(tson::Object& obj);
     static std::string getTexture(tson::Object& obj);
     static bool        isSensor(tson::Object& obj);
-    static void ObjectFactory::propertyMissingNotice(std::string objName, std::string property);
+    static void TsonPropertyReader::propertyMissingNotice(std::string objName, std::string property);
 
     template <typename T>
     static T getProperty(tson::Object& obj, std::string propertyName)

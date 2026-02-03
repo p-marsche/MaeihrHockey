@@ -26,32 +26,37 @@ AssetManager& AssetManager::getInstance()
 
 void AssetManager::loadTexture(std::string name, std::string filename)
 {
-    m_textures.try_emplace(name, std::make_unique<sf::Texture>());
-    m_textures[name]->loadFromFile(Config::texturesPath + filename);
+    auto ret = m_textures.try_emplace(name, std::make_unique<sf::Texture>());
+    if (ret.second)
+        m_textures[name]->loadFromFile(Config::texturesPath + filename);
 }
 
 void AssetManager::loadSoundBuffer(std::string name, std::string filename)
 {
-    m_soundBuffers.try_emplace(name, std::make_unique<sf::SoundBuffer>());
-    m_soundBuffers[name]->loadFromFile(Config::soundsPath + filename);
+    auto ret = m_soundBuffers.try_emplace(name, std::make_unique<sf::SoundBuffer>());
+    if (ret.second)
+        m_soundBuffers[name]->loadFromFile(Config::soundsPath + filename);
 }
 
 void AssetManager::loadFont(std::string name, std::string filename)
 {
-    m_fonts.try_emplace(name, std::make_unique<sf::Font>());
-    m_fonts[name]->loadFromFile(Config::fontsPath + filename);
+    auto ret = m_fonts.try_emplace(name, std::make_unique<sf::Font>());
+    if (ret.second)
+        m_fonts[name]->loadFromFile(Config::fontsPath + filename);
 }
 
 void AssetManager::loadMusic(std::string name, std::string filename)
 {
-    m_music.try_emplace(name, std::make_unique<sf::Music>());
-    m_music[name]->openFromFile(Config::musicPath + filename);
+    auto ret = m_music.try_emplace(name, std::make_unique<sf::Music>());
+    if (ret.second)
+        m_music[name]->openFromFile(Config::musicPath + filename);
 }
 
 void AssetManager::loadImage(std::string name, std::string filename)
 {
-    m_images.try_emplace(name, std::make_unique<sf::Image>());
-    m_images[name]->loadFromFile(Config::imagesPath + filename);
+    auto ret = m_images.try_emplace(name, std::make_unique<sf::Image>());
+    if (ret.second)
+        m_images[name]->loadFromFile(Config::imagesPath + filename);
 }
 
 void AssetManager::replaceTexture(std::string name, std::string filename)

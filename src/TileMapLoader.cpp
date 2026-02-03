@@ -3,9 +3,8 @@
 #include "TileMapLoader.hpp"
 
 #include "GameObjectEvents.hpp"
-#include "ObjectFactory.hpp"
-#include "TileLayerRenderComponent.hpp"
-#include "Tileson.hpp"
+#include "GameObjectFactory.hpp"
+#include "TsonPropertyReader.hpp"
 
 #include <iostream>
 
@@ -118,7 +117,7 @@ void TileMapLoader::loadTileLayers(const std::unique_ptr<tson::Map>& map, Sprite
 }
 
 
-void TileMapLoader::loadObjectLayers(const std::unique_ptr<tson::Map>& map)
+void TileMapLoader::loadObjectLayers(const std::unique_ptr<tson::Map>& map, SpriteManager& spriteManager)
 {
     // go through all object layers
     for (auto& layer : map->getLayers())
@@ -126,7 +125,7 @@ void TileMapLoader::loadObjectLayers(const std::unique_ptr<tson::Map>& map)
         // go over all objects per layer and construct them
         for (auto& object : layer.getObjects())
         {
-            ObjectFactory::processTsonObject(object, layer, resourcePath, spriteManager);
+            GameObjectFactory::createGameObject(spriteManager.getWindow(), object);
         }
     }
 }

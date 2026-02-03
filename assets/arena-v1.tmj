@@ -637,11 +637,11 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }],
- "nextlayerid":3,
+ "nextlayerid":6,
  "nextobjectid":39,
  "orientation":"orthogonal",
  "renderorder":"right-down",
@@ -649,8 +649,17 @@
  "tileheight":128,
  "tilesets":[
         {
+         "columns":3,
          "firstgid":1,
-         "source":"..\/..\/MMP2a not repo\/arena v1.tsx"
+         "image":"tmp tileset v1.png",
+         "imageheight":384,
+         "imagewidth":384,
+         "margin":0,
+         "name":"arena v1",
+         "spacing":0,
+         "tilecount":9,
+         "tileheight":128,
+         "tilewidth":128
         }],
  "tilewidth":128,
  "type":"map",

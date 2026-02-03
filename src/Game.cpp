@@ -93,7 +93,7 @@ bool Game::init()
 
     m_inputManager->setRenderWindow(&m_window);
 
-    m_gameStateManager.setState("MenuState");
+    m_gameStateManager.setState("MainState"); // DONT FORGET TO CHANGE BACK
 
     return true;
 }
