@@ -60,6 +60,7 @@ void Game::initInputManager()
     m_inputManager->bind("Exit", sf::Keyboard::Escape);
     m_inputManager->bind("Select", sf::Keyboard::Space);
     m_inputManager->bind("Reset", sf::Keyboard::F5);
+    m_inputManager->bind("Goal", sf::Keyboard::Q);
 
     // May move to view later on
     m_inputManager->bind("up", sf::Keyboard::W, 0);
@@ -130,7 +131,7 @@ void Game::draw()
 {
     PROFILE_FUNCTION();
 
-    m_window.clear();
+    m_window.clear(sf::Color::Cyan);
 
     m_gameStateManager.draw();
 

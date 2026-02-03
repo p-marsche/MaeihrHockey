@@ -8,9 +8,14 @@
 
 namespace mmt_gd
 {
+constexpr float RESET_DELAY = 1.0f;
+
 	GoalHandler::GoalHandler()
 		: m_puck(nullptr)
 		, m_spawns(std::array<sf::Vector2f, 2>())
+		, m_goalNoticed(false)
+		, m_respawnSide(0)
+		, m_resetTimer(0)
 	{
 		// subscribe to creation events
 		const EventBus::ListenerId
@@ -36,7 +41,8 @@ namespace mmt_gd
 				{
 					const auto goalEvent = std::static_pointer_cast<GoalEvent>(event);
 					int playerIndex = goalEvent->getData();
-					handleGoal(playerIndex);
+                    m_goalNoticed   = true;
+                    m_respawnSide   = playerIndex;
 				});
 		m_listeners.push_back(goalListenerId);
 	}
@@ -51,11 +57,28 @@ namespace mmt_gd
 		m_spawns.at(playerIndex - 1) = spawn;
 	}
 
+	void GoalHandler::update(const float deltaTime)
+	{
+		if (m_goalNoticed)
+		{
+            if (m_resetTimer < RESET_DELAY)
+                m_resetTimer += deltaTime;
+            else
+            {
+                handleGoal(m_respawnSide);
+                m_goalNoticed = false;
+                m_respawnSide = 0;
+                m_resetTimer  = 0;
+			}
+		}
+	}
+
 	void GoalHandler::handleGoal(int spawnIndex)
 	{
 		sf::Vector2f newPos = m_spawns.at(spawnIndex - 1);
-		m_puck->getComponent<RigidBodyComponent>()->getB2Body()
-			->SetTransform(PhysicsManager::s2b(newPos), 0);
+        auto         body   = m_puck->getComponent<RigidBodyComponent>()->getB2Body();
+        body->SetTransform(PhysicsManager::s2b(newPos), 0);
+        body->SetLinearVelocity(b2Vec2_zero);
 
 		// set acative paddles fixed min distance from middle line?
 	}

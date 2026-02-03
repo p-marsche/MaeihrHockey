@@ -100,8 +100,11 @@ void MainState::update(const float deltaTime)
     EventBus::getInstance().processEvents(deltaTime);
     m_gameObjectManager.update(deltaTime);
     m_physicsManager.update(deltaTime);
+    if (InputManager::getInstance().isKeyPressed("Goal"))
+        EventBus::getInstance().fireEvent(std::make_shared<GoalEvent>(1));
 
     updateTimer(deltaTime);
+    m_goalHandler.update(deltaTime);
 }
 
 void MainState::updateTimer(const float deltaTime)
@@ -126,7 +129,7 @@ void MainState::updateTimer(const float deltaTime)
 void MainState::handleGoal(int playerIndex)
 {
     if (playerIndex < 1 || playerIndex > 2)
-        std::cout << "Scoring player non exitent" << std::endl;
+        std::cout << "Scoring player non existent" << std::endl;
 
     int currScore;
     if (playerIndex == 1)
@@ -134,6 +137,12 @@ void MainState::handleGoal(int playerIndex)
         currScore = stoi(m_guiGroup->get<tgui::Label>("Score2")->getText().toStdString());
         currScore++;
         m_guiGroup->get<tgui::Label>("Score2")->setText(tgui::String(currScore));
+    }
+    else if (playerIndex == 2)
+    {
+        currScore = stoi(m_guiGroup->get<tgui::Label>("Score1")->getText().toStdString());
+        currScore++;
+        m_guiGroup->get<tgui::Label>("Score1")->setText(tgui::String(currScore));
     }
 }
 
