@@ -94,10 +94,10 @@ void MainState::update(const float deltaTime)
         m_gameStateManager->setState("MenuState");
         return;
     }
-    if (InputManager::getInstance().isKeyPressed("Test"))
+    /*if (InputManager::getInstance().isKeyPressed("Test"))
     {
         EventBus::getInstance().fireEvent(std::make_shared<GoalEvent>(1));
-    }
+    }*/
 
     EventBus::getInstance().processEvents(deltaTime);
     m_gameObjectManager.update(deltaTime);
