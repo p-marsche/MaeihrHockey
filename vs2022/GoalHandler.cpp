@@ -14,7 +14,7 @@ namespace mmt_gd
 	{
 		// subscribe to creation events
 		const EventBus::ListenerId
-			id = EventBus::getInstance()
+			creationListenerId = EventBus::getInstance()
 			.addListener(GameObjectCreateEvent::Type,
 				[this](const IEvent::Ptr& event)
 				{
@@ -28,9 +28,9 @@ namespace mmt_gd
 					else if (id == "PuckSpawnRight")
 						this->setSpawn((go->getPosition()), 2);
 				});
-		m_listeners.push_back(id);
+		m_listeners.push_back(creationListenerId);
 
-		const auto id = EventBus::getInstance()
+		const auto goalListenerId = EventBus::getInstance()
 			.addListener(GoalEvent::Type,
 				[this](const IEvent::Ptr& event)
 				{
@@ -38,7 +38,7 @@ namespace mmt_gd
 					int playerIndex = goalEvent->getData();
 					handleGoal(playerIndex);
 				});
-		m_listeners.push_back(id);
+		m_listeners.push_back(goalListenerId);
 	}
 
 	void GoalHandler::setPuck(GameObject::Ptr puck)
