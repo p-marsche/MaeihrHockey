@@ -297,21 +297,21 @@ void GameObjectFactory::addSpriteRenderer(tson::Object& obj, GameObject& go, sf:
 
 b2FixtureDef GameObjectFactory::createFixtureDef(tson::Object& obj)
 {
-    const auto   size      = PhysicsManager::s2b(t2s(obj.getSize()));
+    const auto   size      = PhysicsManager::t2b(obj.getSize());
     const auto   shapeType = TsonPropertyReader::getShape(obj);
     b2FixtureDef fixtureDef;
     if (shapeType == "Circle")
     {
-        b2CircleShape shape;
-        shape.m_p.SetZero();
-        shape.m_radius   = size.x / 2;
-        fixtureDef.shape = &shape;
+        b2CircleShape* shape = new b2CircleShape();
+        shape->m_p.SetZero();
+        shape->m_radius   = size.x / 2;
+        fixtureDef.shape = shape;
     }
     else
     {
-        b2PolygonShape shape;
-        shape.SetAsBox(size.x / 2, size.y / 2, b2Vec2{size.x / 2, size.y / 2}, 0);
-        fixtureDef.shape = &shape;
+        b2PolygonShape* shape = new b2PolygonShape();
+        shape->SetAsBox(size.x / 2, size.y / 2, b2Vec2{size.x / 2, size.y / 2}, 0);
+        fixtureDef.shape = shape;
     }
     fixtureDef.density  = TsonPropertyReader::getDensity(obj);
     fixtureDef.isSensor = TsonPropertyReader::isSensor(obj);
