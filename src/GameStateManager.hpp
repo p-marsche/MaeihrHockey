@@ -14,6 +14,7 @@ public:
     /**
      * \brief registers a state with a given name
      */
+
     void registerState(const std::string& name, GameState::Ptr state);
 
     /**

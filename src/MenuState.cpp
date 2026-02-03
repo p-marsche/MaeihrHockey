@@ -15,6 +15,7 @@ using namespace std;
 void MenuState::init()
 {
     PROFILE_FUNCTION();
+    m_guiGroup->setVisible(true);
 
     if (m_isInit)
     {
@@ -69,7 +70,9 @@ void MenuState::exit()
 {
     PROFILE_FUNCTION();
 
-    m_game->getGui().removeAllWidgets();
+    m_guiGroup->setVisible(false);
+
+    //m_game->getGui().removeAllWidgets();
     GameState::exit();
 }
 } // namespace mmt_gd
