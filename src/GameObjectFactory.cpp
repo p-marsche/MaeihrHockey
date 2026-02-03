@@ -33,7 +33,10 @@ void GameObjectFactory::createGameObject(sf::RenderWindow& window, tson::Object&
     else if (objType == "PuckSpawn")
         ptr = createPuckSpawn(window, obj);
     else
+    {
         std::cerr << "ERROR: GameObjectFactory::createGameObject: Unknown object type \"" << objType << "\"";
+        return;
+    }
 
     if (ptr == nullptr)
         std::cerr << "ERROR: GameObjectFactory::createGameObject: Failed to create object of type \"" << objType << "\"";
@@ -308,7 +311,16 @@ void GameObjectFactory::addSpriteRenderer(tson::Object& obj, GameObject& go, sf:
 {
     std::string textureKey = TsonPropertyReader::getTexture(obj);
     AssetManager::getInstance().loadTexture(textureKey, Config::imagesPath + textureKey);
-    auto spriteComp = go.addComponent<SpriteRenderComponent>(go, window, textureKey, "GameObjects", sf::IntRect(0, 0, 0, 0));
+    auto spriteComp = go.addComponent<SpriteRenderComponent>(go,
+                                                             window,
+                                                             AssetManager::getInstance().getTexture(textureKey),
+                                                             "GameObjects",
+                                                             sf::IntRect(0, 0, 0, 0));
+    auto  textureSize = AssetManager::getInstance().getTexture(textureKey).getSize();
+    float scale      = t2s(obj.getSize()).x / textureSize.x;
+    spriteComp->getSprite().setOrigin(textureSize.x / 2, textureSize.y / 2);
+    spriteComp->setScale(scale, scale);
+    go.setPosition(go.getPosition() + sf::Vector2f(textureSize.x / 2, textureSize.y / 2) * scale);
 }
 
 b2FixtureDef GameObjectFactory::createFixtureDef(tson::Object& obj)

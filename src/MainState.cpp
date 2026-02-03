@@ -84,6 +84,8 @@ void MainState::init()
     m_spriteManager.setCamera(renderComponent.get());
 
 
+    // define layers
+    m_spriteManager.setLayerOrder({"Background", "GameObjects"});
 }
 
 void MainState::update(const float deltaTime)

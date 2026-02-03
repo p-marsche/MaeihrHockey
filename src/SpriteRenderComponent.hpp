@@ -12,8 +12,11 @@ class SpriteRenderComponent final : public IRenderComponent
 public:
     using Ptr = std::shared_ptr<SpriteRenderComponent>;
 
-    SpriteRenderComponent(GameObject& gameObject, sf::RenderWindow& renderWindow, std::string textureName, std::string layerName,
-                          sf::IntRect textureRect = sf::IntRect());
+    SpriteRenderComponent(GameObject&       gameObject,
+                          sf::RenderWindow& renderWindow,
+                          sf::Texture&       texture,
+                          std::string       layerName,
+                          sf::IntRect       textureRect = sf::IntRect());
 
     ~SpriteRenderComponent() override;
 
@@ -32,15 +35,25 @@ public:
 
     void setTextureRect(const sf::IntRect& rect)
     {
-        m_textureRect = rect;
+        m_textureRect    = rect;
         m_hasTextureRect = true;
     }
 
+    void setScale(const sf::Vector2f& scale)
+    {
+        m_sprite.setScale(scale);
+    }
+
+    void setScale(float scaleX, float scaleY)
+    {
+        m_sprite.setScale(scaleX, scaleY);
+    }
+
 private:
-    std::string m_textureName;
-    sf::Sprite  m_sprite;
-    std::string m_layerName;
-    sf::IntRect m_textureRect;
-    bool m_hasTextureRect = false;
+    sf::Texture& m_texture;
+    sf::Sprite   m_sprite;
+    std::string  m_layerName;
+    sf::IntRect  m_textureRect;
+    bool         m_hasTextureRect = false;
 };
 } // namespace mmt_gd
