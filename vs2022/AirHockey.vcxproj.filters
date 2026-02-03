@@ -61,6 +61,12 @@
     <Filter Include="Source Files\Animations">
       <UniqueIdentifier>{06ab3e91-e435-4694-853d-d496d0686ad2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\MatchLogic">
+      <UniqueIdentifier>{cb9c13fd-8b78-4444-90b7-50492a3ee45c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MatchLogic">
+      <UniqueIdentifier>{1baf4e2a-5f98-4152-aee6-bfdd1e8c3196}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="../src/stdafx.h">
@@ -177,7 +183,7 @@
     <ClInclude Include="..\src\IAnimationComponent.hpp">
       <Filter>Header Files\Animations</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\ObjectFactory.hpp">
+    <ClInclude Include="..\src\TsonPropertyReader.hpp">
       <Filter>Header Files\Map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ColliderComponent.hpp">
@@ -186,17 +192,17 @@
     <ClInclude Include="..\src\Config.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\AssetManager.hpp">
-      <Filter>Header Files\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjectFactory.hpp">
-      <Filter>Header Files\GameObject</Filter>
+    <ClInclude Include="GoalEvent.hpp">
+      <Filter>Header Files\Events</Filter>
     </ClInclude>
     <ClInclude Include="GoalHandler.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\MatchLogic</Filter>
     </ClInclude>
-    <ClInclude Include="GoalEvent.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\src\GameObjectFactory.hpp">
+      <Filter>Header Files\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AssetManager.hpp">
+      <Filter>Header Files\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -275,7 +281,7 @@
     <ClCompile Include="..\src\TransformAnimationSmoothFollow.cpp">
       <Filter>Source Files\Animations</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ObjectFactory.cpp">
+    <ClCompile Include="..\src\TsonPropertyReader.cpp">
       <Filter>Source Files\Map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ColliderComponent.cpp">
@@ -284,17 +290,17 @@
     <ClCompile Include="..\src\Config.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AssetManager.cpp">
-      <Filter>Source Files\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjectFactory.cpp">
-      <Filter>Source Files\GameObject</Filter>
+    <ClCompile Include="GoalEvent.cpp">
+      <Filter>Source Files\Events</Filter>
     </ClCompile>
     <ClCompile Include="GoalHandler.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\MatchLogic</Filter>
     </ClCompile>
-    <ClCompile Include="GoalEvent.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\src\GameObjectFactory.cpp">
+      <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AssetManager.cpp">
+      <Filter>Source Files\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

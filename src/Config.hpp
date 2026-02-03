@@ -10,5 +10,6 @@ struct Config
     static const std::string fontsPath;
     static const std::string musicPath;
     static const std::string imagesPath;
+    static const std::string guiPath;
 };
 } // namespace mmt_gd

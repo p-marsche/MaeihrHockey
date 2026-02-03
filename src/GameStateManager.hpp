@@ -14,7 +14,6 @@ public:
     /**
      * \brief registers a state with a given name
      */
-    void setGui()
 
     void registerState(const std::string& name, GameState::Ptr state);
 
@@ -35,6 +34,5 @@ private:
     std::unordered_map<std::string, GameState::Ptr> m_states;
     GameState*                                      m_currentState = nullptr;
     GameState*                                      m_futureState  = nullptr;
-    tgui::Gui                                       m_gui;
 };
 } // namespace mmt_gd
