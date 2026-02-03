@@ -142,6 +142,7 @@
     <ClInclude Include="..\src\BulletPool.hpp" />
     <ClInclude Include="..\src\ColliderComponent.hpp" />
     <ClInclude Include="..\src\Config.hpp" />
+    <ClInclude Include="..\src\GameObjectFactory.hpp" />
     <ClInclude Include="..\src\GameState.hpp" />
     <ClInclude Include="..\src\ITransformAnimation.hpp" />
     <ClInclude Include="..\src\MainState.hpp" />
@@ -156,7 +157,7 @@
     <ClInclude Include="..\src\GameObjectEvents.hpp" />
     <ClInclude Include="..\src\IEvent.hpp" />
     <ClInclude Include="..\src\GameObjectManager.hpp" />
-    <ClInclude Include="..\src\ObjectFactory.hpp" />
+    <ClInclude Include="..\src\TsonPropertyReader.hpp" />
     <ClInclude Include="..\src\PhysicsComponentEvents.hpp" />
     <ClInclude Include="..\src\PhysicsManager.hpp" />
     <ClInclude Include="..\src\RenderComponentEvents.hpp" />
@@ -179,7 +180,6 @@
     <ClInclude Include="..\src\Trigonometry.h" />
     <ClInclude Include="..\src\VectorAlgebra2D.h" />
     <ClInclude Include="..\src\VectorAlgebra3D.h" />
-    <ClInclude Include="GameObjectFactory.hpp" />
     <ClInclude Include="GoalEvent.hpp" />
     <ClInclude Include="GoalHandler.hpp" />
   </ItemGroup>
@@ -197,8 +197,9 @@
     <ClCompile Include="..\src\DebugDraw.cpp" />
     <ClCompile Include="..\src\EventBus.cpp" />
     <ClCompile Include="..\src\GameObjectEvents.cpp" />
+    <ClCompile Include="..\src\GameObjectFactory.cpp" />
     <ClCompile Include="..\src\GameObjectManager.cpp" />
-    <ClCompile Include="..\src\ObjectFactory.cpp" />
+    <ClCompile Include="..\src\TsonPropertyReader.cpp" />
     <ClCompile Include="..\src\PhysicsComponentEvents.cpp" />
     <ClCompile Include="..\src\PhysicsManager.cpp" />
     <ClCompile Include="..\src\PlayerMoveComponent.cpp" />
@@ -217,7 +218,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="GameObjectFactory.cpp" />
     <ClCompile Include="GoalEvent.cpp" />
     <ClCompile Include="GoalHandler.cpp" />
   </ItemGroup>
