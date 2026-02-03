@@ -9,7 +9,7 @@
 #include "TileMapLoader.hpp"
 #include "Tileson.hpp"
 #include "TransformAnimationComponent.hpp"
-#include "TransformAnimationSmoothFollow.hpp"
+#include "TransformAnimationConstantMotion.hpp"
 
 #include <memory>
 #include <thread>
@@ -32,7 +32,7 @@ void MainState::init()
 
     // Load tile map
     tson::Tileson tileson;
-    const auto    map = tileson.parse(fs::path("arena-v1.tmj"));
+    const auto    map = tileson.parse(fs::path("../assets/arena-v1.tmj"));
     if (map->getStatus() == tson::ParseStatus::OK)
     {
         TileMapLoader::loadTileLayers(map, m_spriteManager);
@@ -42,6 +42,20 @@ void MainState::init()
     {
         sf::err() << "Could not load tile map\n";
     }
+
+    // create camera
+    const auto camera          = GameObject::create("Camera");
+    const auto renderComponent = camera->addComponent<CameraRenderComponent>(*camera,
+                                                                             m_game->getWindow(),
+                                                                             m_game->getWindow().getView());
+    camera->addComponent<TransformAnimationComponent>(*camera,
+                                                      std::make_shared<TransformAnimationConstantMotion>(sf::Vector2f(0, 0), 0));
+
+    if (!camera->init())
+        FF_ERROR_MSG("Could not initialize camera");
+
+    m_gameObjectManager.addGameObject(camera);
+    m_spriteManager.setCamera(renderComponent.get());
 }
 
 void MainState::update(const float deltaTime)
