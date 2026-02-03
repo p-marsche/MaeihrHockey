@@ -61,8 +61,7 @@ void MainState::init()
     const auto renderComponent = camera->addComponent<CameraRenderComponent>(*camera,
                                                                              m_game->getWindow(),
                                                                              m_game->getWindow().getView());
-    camera->addComponent<TransformAnimationComponent>(*camera,
-                                                      std::make_shared<TransformAnimationConstantMotion>(sf::Vector2f(0, 0), 0));
+    camera->setPosition(sf::Vector2f(m_game->getWindow().getSize().x / 2, m_game->getWindow().getSize().y / 2));
 
     if (!camera->init())
         FF_ERROR_MSG("Could not initialize camera");
