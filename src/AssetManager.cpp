@@ -185,5 +185,6 @@ AssetManager::~AssetManager()
     m_music.clear();
     m_soundBuffers.clear();
     m_fonts.clear();
+    m_images.clear();
 }
 } // namespace mmt_gd

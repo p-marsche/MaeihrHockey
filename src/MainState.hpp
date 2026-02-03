@@ -10,13 +10,15 @@ namespace mmt_gd
 class FINALFRONTIER_API MainState final : public GameState
 {
 public:
-    MainState(GameStateManager* gameStateManager, Game* game);
+    MainState(GameStateManager* gameStateManager, Game* game, tgui::Gui* gui);
 
     void init() override;
     void exit() override;
 
     void update(float deltaTime) override;
     void draw() override;
+
+    void initGui() override;
 
 private:
     SpriteManager     m_spriteManager;

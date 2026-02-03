@@ -12,6 +12,7 @@ public:
     using GameState::GameState;
 
     void init() override;
+    void initGui() override { };
 
     void update(float delta) override;
     void draw() override;

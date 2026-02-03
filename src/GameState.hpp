@@ -1,6 +1,7 @@
 #pragma once
 
 #include "FinalFrontier/dll_export.hpp"
+#include "Config.hpp";
 
 #include <memory>
 
@@ -14,7 +15,11 @@ class FINALFRONTIER_API GameState
 public:
     using Ptr = std::shared_ptr<GameState>;
 
-    GameState(GameStateManager* gameStateManager, Game* game) : m_gameStateManager(gameStateManager), m_game(game)
+    GameState(GameStateManager* gameStateManager, Game* game, tgui::Gui* gui) 
+        :
+    m_gameStateManager(gameStateManager),
+    m_game(game),
+    m_gui(gui)
     {
     }
 
@@ -34,9 +39,12 @@ public:
 
     virtual void update(float delta) = 0;
     virtual void draw()              = 0;
+    virtual void initGui()           = 0;
 
 protected:
     GameStateManager* m_gameStateManager;
     Game*             m_game;
+    tgui::Gui*        m_gui;
+    tgui::Group::Ptr  m_guiGroup = nullptr;
 };
 } // namespace mmt_gd

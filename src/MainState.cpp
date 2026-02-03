@@ -2,6 +2,7 @@
 
 #include "MainState.hpp"
 
+#include "AssetManager.hpp"
 #include "CameraRenderComponent.hpp"
 #include "ColliderComponent.hpp"
 #include "Game.hpp"
@@ -16,15 +17,27 @@
 
 namespace mmt_gd
 {
-MainState::MainState(GameStateManager* gameStateManager, Game* game) :
-GameState(gameStateManager, game),
+MainState::MainState(GameStateManager* gameStateManager, Game* game, tgui::Gui* gui) :
+GameState(gameStateManager, game, gui),
 m_spriteManager(game->getWindow())
 {
+    initGui();
+}
+
+void MainState::initGui()
+{
+    m_guiGroup = tgui::Group::create();
+    
+
+
+    m_gui->add(m_guiGroup);
 }
 
 void MainState::init()
 {
     PROFILE_FUNCTION();
+
+    m_guiGroup->setVisible(true);
 
     m_gameObjectManager.init();
     m_spriteManager.init();
@@ -81,6 +94,7 @@ void MainState::draw()
 void MainState::exit()
 {
     PROFILE_FUNCTION();
+    m_guiGroup->setVisible(false);
     m_physicsManager.shutdown();
     m_spriteManager.shutdown();
     m_gameObjectManager.shutdown();
