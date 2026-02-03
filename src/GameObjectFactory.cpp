@@ -77,7 +77,7 @@ GameObject::Ptr GameObjectFactory::createPuck(sf::RenderWindow& window, tson::Ob
 
 GameObject::Ptr GameObjectFactory::createPaddle(sf::RenderWindow& window, tson::Object& obj)
 {
-    //int  playerIndex = TsonPropertyReader::getPlayerIndex(obj);
+    int  playerIndex = TsonPropertyReader::getPlayerIndex(obj);
     auto paddle      = createObject(obj);
 
     addSpriteRenderer(obj, *paddle, window);

@@ -26,6 +26,13 @@ void InputManager::process(const sf::Event& event)
                 m_eventFrame.m_keys[event.key.code] = false;
             }
             break;
+        case sf::Event::JoystickConnected:
+            std::cout << "Joystick connected " << event.joystickConnect.joystickId << " ("
+                      << sf::Joystick::getButtonCount(0) << " buttons)" << std::endl;
+            break;
+        case sf::Event::JoystickDisconnected:
+            std::cout << "Joystick disconnected " << event.joystickConnect.joystickId << std::endl;
+            break;
         default:
             break;
     }
