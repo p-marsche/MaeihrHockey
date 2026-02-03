@@ -201,7 +201,7 @@
                         {
                          "name":"PlayerIndex",
                          "type":"int",
-                         "value":1
+                         "value":0
                         }, 
                         {
                          "name":"Sensor",
@@ -229,6 +229,11 @@
                          "name":"Density",
                          "type":"float",
                          "value":0
+                        }, 
+                        {
+                         "name":"PlayerIndex",
+                         "type":"int",
+                         "value":1
                         }, 
                         {
                          "name":"Sensor",
@@ -431,7 +436,7 @@
                         {
                          "name":"PlayerIndex",
                          "type":"int",
-                         "value":1
+                         "value":0
                         }, 
                         {
                          "name":"Sensor",
@@ -470,7 +475,7 @@
                         {
                          "name":"PlayerIndex",
                          "type":"int",
-                         "value":2
+                         "value":1
                         }, 
                         {
                          "name":"Sensor",
@@ -508,7 +513,7 @@
                         {
                          "name":"PlayerIndex",
                          "type":"int",
-                         "value":1
+                         "value":0
                         }, 
                         {
                          "name":"Sensor",
@@ -546,7 +551,7 @@
                         {
                          "name":"PlayerIndex",
                          "type":"int",
-                         "value":2
+                         "value":1
                         }, 
                         {
                          "name":"Sensor",
@@ -584,7 +589,7 @@
                         {
                          "name":"PlayerIndex",
                          "type":"int",
-                         "value":1
+                         "value":0
                         }, 
                         {
                          "name":"Sensor",
@@ -622,7 +627,7 @@
                         {
                          "name":"PlayerIndex",
                          "type":"int",
-                         "value":2
+                         "value":1
                         }, 
                         {
                          "name":"Sensor",
