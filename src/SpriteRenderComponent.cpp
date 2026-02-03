@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "SpriteRenderComponent.hpp"
+
 #include "AssetManager.hpp"
 #include "EventBus.hpp"
 #include "GameObject.hpp"
@@ -10,13 +11,14 @@
 
 namespace mmt_gd
 {
-SpriteRenderComponent::SpriteRenderComponent(GameObject&       gameObject,
-                                             sf::RenderWindow& renderWindow,
-                                             std::string       textureName,
-                                             std::string       layerName,
-                                             sf::IntRect       textureRect) :
+SpriteRenderComponent::SpriteRenderComponent(
+    GameObject&       gameObject,
+    sf::RenderWindow& renderWindow,
+    sf::Texture&       texture,
+    std::string       layerName,
+    sf::IntRect       textureRect) :
 IRenderComponent(gameObject, renderWindow),
-m_textureName(textureName),
+m_texture(texture),
 m_layerName(std::move(layerName)),
 m_textureRect(textureRect),
 m_hasTextureRect(textureRect.width > 0 && textureRect.height > 0)
@@ -31,7 +33,7 @@ SpriteRenderComponent::~SpriteRenderComponent()
 
 bool SpriteRenderComponent::init()
 {
-    m_sprite.setTexture(AssetManager::getInstance().getTexture(m_textureName));
+    m_sprite.setTexture(m_texture);
 
     // Apply texture rect AFTER setTexture (which resets to full texture)
     if (m_hasTextureRect)
