@@ -90,6 +90,9 @@ bool Game::init()
 
     //
     m_window.create(sf::VideoMode(m_config.m_resolution.x, m_config.m_resolution.y), m_config.m_windowName);
+    auto view = sf::View(sf::Vector2f(m_window.getSize().x / 2, m_window.getSize().y / 2),
+                         sf::Vector2f(1.5f * m_window.getSize().x, 1.5f * m_window.getSize().y));
+    m_window.setView(view);
     m_gui.setTarget(m_window);
 
     m_inputManager->setRenderWindow(&m_window);
@@ -127,7 +130,7 @@ void Game::draw()
 {
     PROFILE_FUNCTION();
 
-    m_window.clear();
+    m_window.clear(sf::Color::White);
 
     m_gameStateManager.draw();
 

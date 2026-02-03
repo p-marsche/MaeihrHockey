@@ -19,7 +19,7 @@ Label.Score2 {
     AutoSize = true;
     HorizontalAlignment = Center;
     IgnoreMouseEvents = true;
-    Position = ((Timer.left + Timer.width) + Timer.width, Timer.top);
+    Position = ((Timer.left + Timer.width) + timer.width, Timer.top);
     Renderer = &1;
     ScrollbarPolicy = Never;
     Size = (105, 160);
@@ -32,7 +32,8 @@ Label.Timer {
     AutoSize = true;
     HorizontalAlignment = Center;
     IgnoreMouseEvents = true;
-    Position = ((parent.width - width) / 2, 0);
+    Origin = (0.5, 0);
+    Position = (50%, 0);
     Renderer = &1;
     ScrollbarPolicy = Never;
     Size = (373, 160);
@@ -45,7 +46,7 @@ Label.Score1 {
     AutoSize = true;
     HorizontalAlignment = Center;
     IgnoreMouseEvents = true;
-    Position = (Timer.left - Timer.width - width, Timer.top);
+    Position = (Timer.left - timer.width, Timer.top);
     Renderer = &1;
     ScrollbarPolicy = Never;
     Size = (105, 160);

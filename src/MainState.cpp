@@ -37,7 +37,7 @@ void MainState::init()
     PROFILE_FUNCTION();
 
     m_guiGroup->setVisible(true);
-    m_timerSeconds = 300;
+    m_timerSeconds = 180;
     m_accumulator  = 0.f;
 
     m_gameObjectManager.init();
