@@ -27,9 +27,8 @@ m_spriteManager(game->getWindow())
 void MainState::initGui()
 {
     m_guiGroup = tgui::Group::create();
-    
-
-
+    std::string filename = "matchUI.txt";
+    m_guiGroup->loadWidgetsFromFile(Config::guiPath + filename);
     m_gui->add(m_guiGroup);
 }
 
@@ -38,6 +37,8 @@ void MainState::init()
     PROFILE_FUNCTION();
 
     m_guiGroup->setVisible(true);
+    m_timerSeconds = 300;
+    m_accumulator  = 0.f;
 
     m_gameObjectManager.init();
     m_spriteManager.init();
@@ -83,6 +84,27 @@ void MainState::update(const float deltaTime)
     EventBus::getInstance().processEvents(deltaTime);
     m_gameObjectManager.update(deltaTime);
     m_physicsManager.update(deltaTime);
+
+    updateTimer(deltaTime);
+}
+
+void MainState::updateTimer(const float deltaTime)
+{
+    m_accumulator += deltaTime;
+    while (m_accumulator > 1.0f)
+    {
+        m_timerSeconds--;
+
+        int seconds = m_timerSeconds % 60;
+        int minutes = m_timerSeconds / 60;
+        auto time    = tgui::String(minutes) + " : " + tgui::String(seconds);
+        m_guiGroup->get<tgui::Label>("Timer")->setText(time);
+
+        m_accumulator--;
+    }
+
+    if (m_timerSeconds < 1)
+        std::cout << "Game ends" << std::endl;
 }
 
 void MainState::draw()

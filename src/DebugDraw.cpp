@@ -10,7 +10,7 @@ namespace mmt_gd
 {
 DebugDraw::DebugDraw() : m_enabled(true)
 {
-    if (!m_font.loadFromFile("../assets/consolab.ttf"))
+    if (!m_font.loadFromFile("../assets/fonts/consolab.ttf"))
     {
         sf::err() << "Could not load font\n";
     }

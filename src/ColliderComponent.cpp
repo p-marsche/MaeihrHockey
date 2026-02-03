@@ -6,6 +6,7 @@
 #include "EventBus.hpp"
 #include "GameObject.hpp"
 #include "PhysicsComponentEvents.hpp"
+#include "PhysicsManager.hpp"
 
 namespace mmt_gd
 {
@@ -20,9 +21,18 @@ m_fixture(nullptr)
 
 void ColliderComponent::update(float deltaTime)
 {
-    //auto box = m_fixture->GetAABB(0);
-    //auto ex  = box.GetExtents();
-    //DebugDraw::getInstance().drawRectangle(m_gameObject.getPosition(), {ex.x * 2, ex.y * 2}, sf::Color::Green);
+    auto shape = m_fixture->GetShape();
+    if (shape->m_type == b2Shape::Type::e_circle)
+    {
+        auto circle = static_cast<const b2CircleShape*>(shape);
+        DebugDraw::getInstance().drawCircle(m_gameObject.getPosition(), circle->m_radius, sf::Color::Red);
+    }
+    else
+    {
+        auto box = m_fixture->GetAABB(0);
+        auto ex  = box.GetExtents();
+        DebugDraw::getInstance().drawRectangle(m_gameObject.getPosition(), {ex.x * 2, ex.y * 2}, sf::Color::Green);
+    }
 }
 
 void ColliderComponent::registerOnCollisionFunction(const OnCollisionFunction& func)
