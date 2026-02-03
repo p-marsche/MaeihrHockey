@@ -3,14 +3,14 @@
  "infinite":false,
  "layers":[
         {
-         "data":[3, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 2684354563,
-            1610612742, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 2684354566,
-            1, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 2147483649,
-            4, 2684354566, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 1610612742, 2147483652,
-            4, 2684354566, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 1610612742, 2147483652,
-            7, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 2147483655,
-            1610612742, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 2684354566,
-            1073741827, 1073741830, 1073741830, 1073741830, 1073741830, 1073741830, 1073741830, 1073741830, 1073741830, 1073741830, 1073741830, 1073741830, 1073741830, 1073741830, 3758096387],
+         "data":[1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2,
+            9, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 8,
+            11, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 14,
+            5, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 10,
+            5, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 10,
+            16, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 19,
+            9, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 8,
+            6, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 7],
          "height":8,
          "id":1,
          "name":"Background",
@@ -31,6 +31,11 @@
                  "id":1,
                  "name":"TopWall",
                  "properties":[
+                        {
+                         "name":"Density",
+                         "type":"float",
+                         "value":0
+                        }, 
                         {
                          "name":"Sensor",
                          "type":"bool",
@@ -54,6 +59,11 @@
                  "name":"BottomWall",
                  "properties":[
                         {
+                         "name":"Density",
+                         "type":"float",
+                         "value":0
+                        }, 
+                        {
                          "name":"Sensor",
                          "type":"bool",
                          "value":false
@@ -75,6 +85,11 @@
                  "id":4,
                  "name":"LeftWallTop",
                  "properties":[
+                        {
+                         "name":"Density",
+                         "type":"float",
+                         "value":0
+                        }, 
                         {
                          "name":"Sensor",
                          "type":"bool",
@@ -98,6 +113,11 @@
                  "name":"LeftWallBottom",
                  "properties":[
                         {
+                         "name":"Density",
+                         "type":"float",
+                         "value":0
+                        }, 
+                        {
                          "name":"Sensor",
                          "type":"bool",
                          "value":false
@@ -119,6 +139,11 @@
                  "id":10,
                  "name":"RightWallTop",
                  "properties":[
+                        {
+                         "name":"Density",
+                         "type":"float",
+                         "value":0
+                        }, 
                         {
                          "name":"Sensor",
                          "type":"bool",
@@ -142,6 +167,11 @@
                  "name":"RightWallBottom",
                  "properties":[
                         {
+                         "name":"Density",
+                         "type":"float",
+                         "value":0
+                        }, 
+                        {
                          "name":"Sensor",
                          "type":"bool",
                          "value":false
@@ -163,6 +193,11 @@
                  "id":15,
                  "name":"LeftGoal",
                  "properties":[
+                        {
+                         "name":"Density",
+                         "type":"float",
+                         "value":0
+                        }, 
                         {
                          "name":"PlayerIndex",
                          "type":"int",
@@ -191,6 +226,11 @@
                  "name":"RightGoal",
                  "properties":[
                         {
+                         "name":"Density",
+                         "type":"float",
+                         "value":0
+                        }, 
+                        {
                          "name":"Sensor",
                          "type":"bool",
                          "value":true
@@ -213,6 +253,11 @@
                  "id":17,
                  "name":"LeftPenaltyArea",
                  "properties":[
+                        {
+                         "name":"Density",
+                         "type":"float",
+                         "value":0
+                        }, 
                         {
                          "name":"Sensor",
                          "type":"bool",
@@ -237,6 +282,11 @@
                  "name":"RightPenaltyArea",
                  "properties":[
                         {
+                         "name":"Density",
+                         "type":"float",
+                         "value":0
+                        }, 
+                        {
                          "name":"Sensor",
                          "type":"bool",
                          "value":false
@@ -258,6 +308,11 @@
                  "id":22,
                  "name":"LeftGoalInvisibleWall",
                  "properties":[
+                        {
+                         "name":"Density",
+                         "type":"float",
+                         "value":0
+                        }, 
                         {
                          "name":"Sensor",
                          "type":"bool",
@@ -281,6 +336,11 @@
                  "name":"RightGoalInvisibleWall",
                  "properties":[
                         {
+                         "name":"Density",
+                         "type":"float",
+                         "value":0
+                        }, 
+                        {
                          "name":"Sensor",
                          "type":"bool",
                          "value":false
@@ -302,6 +362,11 @@
                  "id":25,
                  "name":"MiddleInvisibleWall",
                  "properties":[
+                        {
+                         "name":"Density",
+                         "type":"float",
+                         "value":0
+                        }, 
                         {
                          "name":"Sensor",
                          "type":"bool",
@@ -637,7 +702,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }],
@@ -649,15 +714,15 @@
  "tileheight":128,
  "tilesets":[
         {
-         "columns":3,
+         "columns":5,
          "firstgid":1,
-         "image":"tmp tileset v1.png",
-         "imageheight":384,
-         "imagewidth":384,
+         "image":"arena-tileset.png",
+         "imageheight":640,
+         "imagewidth":640,
          "margin":0,
-         "name":"arena v1",
+         "name":"arena-tileset",
          "spacing":0,
-         "tilecount":9,
+         "tilecount":25,
          "tileheight":128,
          "tilewidth":128
         }],
