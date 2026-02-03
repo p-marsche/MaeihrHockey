@@ -77,7 +77,7 @@ GameObject::Ptr GameObjectFactory::createPuck(sf::RenderWindow& window, tson::Ob
 
 GameObject::Ptr GameObjectFactory::createPaddle(sf::RenderWindow& window, tson::Object& obj)
 {
-    int  playerIndex = TsonPropertyReader::getPlayerIndex(obj);
+    //int  playerIndex = TsonPropertyReader::getPlayerIndex(obj);
     auto paddle      = createObject(obj);
 
     addSpriteRenderer(obj, *paddle, window);
@@ -141,6 +141,14 @@ GameObject::Ptr GameObjectFactory::createWall(sf::RenderWindow& window, tson::Ob
     }
 
     EventBus::getInstance().fireEvent(std::make_shared<GameObjectCreateEvent>(wall));
+
+    auto fixPos = PhysicsManager::b2s(wall->getComponent<ColliderComponent>()->getBody().getB2Body()->GetPosition());
+
+    /*std::cout << obj.getName() << std::endl;
+    std::cout << obj.getPosition().x << "  :  " << obj.getPosition().y << std::endl;
+    std::cout << "fixture: " <<  fixPos.x << "  :  " << fixPos.y << std::endl;
+    std::cout << obj.getSize().x << "  :  " << obj.getSize().y << std::endl;
+    std::cout << std::endl;*/
 
     return wall;
 }
@@ -299,11 +307,8 @@ GameObject::Ptr GameObjectFactory::createObject(tson::Object& obj)
     auto         go  = GameObject::create(obj.getName());
     sf::Vector2f pos = t2s(obj.getPosition());
     sf::Vector2f size = t2s(obj.getSize());
-    auto         newPos = sf::Vector2f(pos.x + size.x/2, pos.y + size.y/2);
+    auto         newPos = sf::Vector2f(pos.x + (size.x / 2), pos.y + (size.y / 2));
     go->setPosition(newPos);
-
-    //std::cout << obj.getName() << ": {" << obj.getPosition().x << ", " << obj.getPosition().y << "}" << std::endl;
-    //std::cout << obj.getSize().x << "   " << obj.getSize().y << std::endl;
     return go;
 }
 
@@ -317,7 +322,7 @@ void GameObjectFactory::addSpriteRenderer(tson::Object& obj, GameObject& go, sf:
                                                              "GameObjects",
                                                              sf::IntRect(0, 0, 0, 0));
     auto  textureSize = AssetManager::getInstance().getTexture(textureKey).getSize();
-    float scale      = t2s(obj.getSize()).x / textureSize.x;
+    float scale       = t2s(obj.getSize()).x / textureSize.x;
     spriteComp->getSprite().setOrigin(textureSize.x / 2, textureSize.y / 2);
     spriteComp->setScale(scale, scale);
 }
@@ -337,13 +342,11 @@ b2FixtureDef GameObjectFactory::createFixtureDef(tson::Object& obj)
     else
     {
         b2PolygonShape* shape = new b2PolygonShape();
-        shape->SetAsBox(size.x / 2, size.y / 2, b2Vec2{size.x / 2, size.y / 2}, 0);
+        shape->SetAsBox(size.x / 2, size.y / 2, b2Vec2{0, 0}, 0);
         fixtureDef.shape = shape;
     }
     fixtureDef.density  = TsonPropertyReader::getDensity(obj);
     fixtureDef.isSensor = TsonPropertyReader::isSensor(obj);
-
-    std::cout << obj.getName() << size.x << std::endl;
 
     return fixtureDef;
 }
