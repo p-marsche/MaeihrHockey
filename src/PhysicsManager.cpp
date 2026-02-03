@@ -13,7 +13,7 @@ namespace mmt_gd
 const float PhysicsManager::RATIO(30.0F);
 const float PhysicsManager::UNRATIO(1.F / RATIO);
 
-std::shared_ptr<b2World> PhysicsManager::m_world = std::make_shared<b2World>(b2Vec2(0.F, 5.F)); //~0 gravity
+std::shared_ptr<b2World> PhysicsManager::m_world = std::make_shared<b2World>(b2Vec2(0.F, 0.F)); //~0 gravity
 
 void PhysicsManager::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
 {
