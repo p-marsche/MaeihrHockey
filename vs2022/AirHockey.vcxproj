@@ -180,6 +180,8 @@
     <ClInclude Include="..\src\VectorAlgebra2D.h" />
     <ClInclude Include="..\src\VectorAlgebra3D.h" />
     <ClInclude Include="GameObjectFactory.hpp" />
+    <ClInclude Include="GoalEvent.hpp" />
+    <ClInclude Include="GoalHandler.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="../src/main.cpp" />
@@ -216,6 +218,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="GameObjectFactory.cpp" />
+    <ClCompile Include="GoalEvent.cpp" />
+    <ClCompile Include="GoalHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\VectorAlgebra2D.inl" />
