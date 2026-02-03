@@ -20,6 +20,7 @@ public:
 
     void initGui() override;
     void updateTimer(const float deltaTime);
+    void handleGoal(int playerIndex);
 
 private:
     SpriteManager     m_spriteManager;
@@ -27,5 +28,7 @@ private:
     PhysicsManager    m_physicsManager;
     int               m_timerSeconds;
     float             m_accumulator;
+    std::list<mmt_gd::EventBus::ListenerId> m_listeners;
+
 };
 } // namespace mmt_gd

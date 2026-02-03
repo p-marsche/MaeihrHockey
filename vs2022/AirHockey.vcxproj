@@ -144,6 +144,8 @@
     <ClInclude Include="..\src\Config.hpp" />
     <ClInclude Include="..\src\GameObjectFactory.hpp" />
     <ClInclude Include="..\src\GameState.hpp" />
+    <ClInclude Include="..\src\GoalEvent.hpp" />
+    <ClInclude Include="..\src\GoalHandler.hpp" />
     <ClInclude Include="..\src\ITransformAnimation.hpp" />
     <ClInclude Include="..\src\MainState.hpp" />
     <ClInclude Include="..\src\MenuState.hpp" />
@@ -180,8 +182,6 @@
     <ClInclude Include="..\src\Trigonometry.h" />
     <ClInclude Include="..\src\VectorAlgebra2D.h" />
     <ClInclude Include="..\src\VectorAlgebra3D.h" />
-    <ClInclude Include="GoalEvent.hpp" />
-    <ClInclude Include="GoalHandler.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="../src/main.cpp" />
@@ -199,6 +199,8 @@
     <ClCompile Include="..\src\GameObjectEvents.cpp" />
     <ClCompile Include="..\src\GameObjectFactory.cpp" />
     <ClCompile Include="..\src\GameObjectManager.cpp" />
+    <ClCompile Include="..\src\GoalEvent.cpp" />
+    <ClCompile Include="..\src\GoalHandler.cpp" />
     <ClCompile Include="..\src\TsonPropertyReader.cpp" />
     <ClCompile Include="..\src\PhysicsComponentEvents.cpp" />
     <ClCompile Include="..\src\PhysicsManager.cpp" />
@@ -218,8 +220,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="GoalEvent.cpp" />
-    <ClCompile Include="GoalHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\VectorAlgebra2D.inl" />

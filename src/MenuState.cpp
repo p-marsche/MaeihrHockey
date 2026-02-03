@@ -15,7 +15,7 @@ using namespace std;
 void MenuState::init()
 {
     PROFILE_FUNCTION();
-    m_guiGroup->setVisible(true);
+    //m_guiGroup->setVisible(true);
 
     if (m_isInit)
     {

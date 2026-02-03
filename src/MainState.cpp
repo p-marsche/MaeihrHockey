@@ -12,6 +12,9 @@
 #include "TransformAnimationComponent.hpp"
 #include "TransformAnimationConstantMotion.hpp"
 
+#include "EventBus.hpp"
+#include "GoalEvent.hpp"
+
 #include <memory>
 #include <thread>
 
@@ -22,6 +25,16 @@ GameState(gameStateManager, game, gui),
 m_spriteManager(game->getWindow())
 {
     initGui();
+
+    const auto goalListenerId = EventBus::getInstance()
+                                    .addListener(GoalEvent::Type,
+                                                 [this](const IEvent::Ptr& event)
+                                                 {
+                                                     const auto goalEvent = std::static_pointer_cast<GoalEvent>(event);
+                                                     int        playerIndex = goalEvent->getData();
+                                                     handleGoal(playerIndex);
+                                                 });
+    m_listeners.push_back(goalListenerId);
 }
 
 void MainState::initGui()
@@ -69,6 +82,8 @@ void MainState::init()
 
     m_gameObjectManager.addGameObject(camera);
     m_spriteManager.setCamera(renderComponent.get());
+
+
 }
 
 void MainState::update(const float deltaTime)
@@ -78,6 +93,10 @@ void MainState::update(const float deltaTime)
     {
         m_gameStateManager->setState("MenuState");
         return;
+    }
+    if (InputManager::getInstance().isKeyPressed("Test"))
+    {
+        EventBus::getInstance().fireEvent(std::make_shared<GoalEvent>(1));
     }
 
     EventBus::getInstance().processEvents(deltaTime);
@@ -104,6 +123,20 @@ void MainState::updateTimer(const float deltaTime)
 
     if (m_timerSeconds < 1)
         std::cout << "Game ends" << std::endl;
+}
+
+void MainState::handleGoal(int playerIndex)
+{
+    if (playerIndex < 1 || playerIndex > 2)
+        std::cout << "Scoring player non exitent" << std::endl;
+
+    int currScore;
+    if (playerIndex == 1)
+    {
+        currScore = stoi(m_guiGroup->get<tgui::Label>("Score2")->getText().toStdString());
+        currScore++;
+        m_guiGroup->get<tgui::Label>("Score2")->setText(tgui::String(currScore));
+    }
 }
 
 void MainState::draw()
