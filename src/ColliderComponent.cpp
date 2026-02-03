@@ -25,13 +25,15 @@ void ColliderComponent::update(float deltaTime)
     if (shape->m_type == b2Shape::Type::e_circle)
     {
         auto circle = static_cast<const b2CircleShape*>(shape);
-        DebugDraw::getInstance().drawCircle(m_gameObject.getPosition(), circle->m_radius, sf::Color::Red);
+        auto radius = (PhysicsManager::b2s(b2Vec2(circle->m_radius, 0))).x;
+        DebugDraw::getInstance().drawCircle(m_gameObject.getPosition(), radius, sf::Color::Red);
     }
     else
     {
         auto box = m_fixture->GetAABB(0);
         auto ex  = box.GetExtents();
-        DebugDraw::getInstance().drawRectangle(m_gameObject.getPosition(), {ex.x * 2, ex.y * 2}, sf::Color::Green);
+        auto sfVec = PhysicsManager::b2s(ex);
+        DebugDraw::getInstance().drawRectangle(m_gameObject.getPosition(), {sfVec.x * 2, sfVec.y * 2}, sf::Color::Red);
     }
 }
 

@@ -30,6 +30,8 @@ void GameObjectFactory::createGameObject(sf::RenderWindow& window, tson::Object&
         ptr = createPenaltyarea(window, obj);
     else if (objType == "Goal")
         ptr = createGoalsensor(window, obj);
+    else if (objType == "PuckSpawn")
+        ptr = createPuckSpawn(window, obj);
     else
         std::cerr << "ERROR: GameObjectFactory::createGameObject: Unknown object type \"" << objType << "\"";
 
@@ -280,11 +282,25 @@ GameObject::Ptr GameObjectFactory::createGoalbarrier(sf::RenderWindow& window, t
     return gb;
 }
 
+GameObject::Ptr GameObjectFactory::createPuckSpawn(sf::RenderWindow& window, tson::Object& obj)
+{
+    auto spawn = createObject(obj);
+
+    EventBus::getInstance().fireEvent(std::make_shared<GameObjectCreateEvent>(spawn));
+
+    return spawn;
+}
+
 GameObject::Ptr GameObjectFactory::createObject(tson::Object& obj)
 {
     auto         go  = GameObject::create(obj.getName());
     sf::Vector2f pos = t2s(obj.getPosition());
-    go->setPosition(pos);
+    sf::Vector2f size = t2s(obj.getSize());
+    auto         newPos = sf::Vector2f(pos.x + size.x/2, pos.y + size.y/2);
+    go->setPosition(newPos);
+
+    //std::cout << obj.getName() << ": {" << obj.getPosition().x << ", " << obj.getPosition().y << "}" << std::endl;
+    //std::cout << obj.getSize().x << "   " << obj.getSize().y << std::endl;
     return go;
 }
 
@@ -315,6 +331,8 @@ b2FixtureDef GameObjectFactory::createFixtureDef(tson::Object& obj)
     }
     fixtureDef.density  = TsonPropertyReader::getDensity(obj);
     fixtureDef.isSensor = TsonPropertyReader::isSensor(obj);
+
+    std::cout << obj.getName() << size.x << std::endl;
 
     return fixtureDef;
 }

@@ -131,7 +131,7 @@ void Game::draw()
 {
     PROFILE_FUNCTION();
 
-    m_window.clear(sf::Color::White);
+    m_window.clear();
 
     m_gameStateManager.draw();
 

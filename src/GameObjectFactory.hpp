@@ -18,6 +18,7 @@ namespace mmt_gd
         static GameObject::Ptr createPenaltyarea(sf::RenderWindow& window, tson::Object& obj);
         static GameObject::Ptr createGoalsensor(sf::RenderWindow& window, tson::Object& obj);
         static GameObject::Ptr createGoalbarrier(sf::RenderWindow& window, tson::Object& obj);
+        static GameObject::Ptr createPuckSpawn(sf::RenderWindow& window, tson::Object& obj);
 
     private:
         static GameObject::Ptr createObject(tson::Object& obj);
