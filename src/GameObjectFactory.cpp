@@ -320,7 +320,6 @@ void GameObjectFactory::addSpriteRenderer(tson::Object& obj, GameObject& go, sf:
     float scale      = t2s(obj.getSize()).x / textureSize.x;
     spriteComp->getSprite().setOrigin(textureSize.x / 2, textureSize.y / 2);
     spriteComp->setScale(scale, scale);
-    go.setPosition(go.getPosition() + sf::Vector2f(textureSize.x / 2, textureSize.y / 2) * scale);
 }
 
 b2FixtureDef GameObjectFactory::createFixtureDef(tson::Object& obj)

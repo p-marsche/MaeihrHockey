@@ -30,11 +30,11 @@ namespace mmt_gd
 
     enum CollisionLayers
     {
-        WALL            = 0x0000,
-        FAKE_WALL       = 0x0001,
-        PENALTY         = 0x0002,
-        GOAL_SENSOR     = 0x0004,
-        OBJECTS         = 0x0008
+        WALL            = 0x0001,
+        FAKE_WALL       = 0x0002,
+        PENALTY         = 0x0004,
+        GOAL_SENSOR     = 0x0008,
+        OBJECTS         = 0x0010
     };
 
 
