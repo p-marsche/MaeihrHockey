@@ -50,7 +50,7 @@ GameObject::Ptr GameObjectFactory::createPuck(sf::RenderWindow& window, tson::Ob
 
     auto rigidBody = puck->addComponent<RigidBodyComponent>(*puck, b2_dynamicBody);
     rigidBody->getB2Body()->SetFixedRotation(true);
-    rigidBody->getB2Body()->SetLinearDamping(0.1f);
+    rigidBody->getB2Body()->SetLinearDamping(0.05f);
 
     b2FixtureDef fixtureDef = createFixtureDef(obj);
     b2Filter     filter;
@@ -94,6 +94,8 @@ GameObject::Ptr GameObjectFactory::createPaddle(sf::RenderWindow& window, tson::
     fixtureDef.filter = filter;
 
     auto collider = paddle->addComponent<ColliderComponent>(*paddle, *rigidBody, fixtureDef);
+
+    paddle->addComponent<PlayerMoveComponent>(*paddle, *rigidBody, playerIndex);
 
     // add onCollision func later if we actually need it
     /*collider->registerOnCollisionFunction([](ColliderComponent& self, ColliderComponent& other) {
