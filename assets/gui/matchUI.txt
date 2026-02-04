@@ -1,17 +1,30 @@
-Renderer.1 {
-    BorderColor = transparent;
-    TextColor = black;
-    TextureBackground = None;
+Picture.Picture3 {
+    Position = (Score2.left - (width / 4), Picture2.top);
+    Size = (Score1.width * 2, 127);
 
-    Scrollbar {
-        ArrowBackgroundColor = rgba(160, 160, 160, 215);
-        ArrowBackgroundColorHover = rgba(170, 170, 170, 215);
-        ArrowColor = rgba(200, 200, 200, 215);
-        ArrowColorHover = rgba(225, 225, 225, 215);
-        ThumbColor = rgba(185, 185, 185, 215);
-        ThumbColorHover = rgba(195, 195, 195, 215);
-        TrackColor = rgba(160, 160, 160, 215);
-        TrackColorHover = rgba(170, 170, 170, 215);
+    Renderer {
+        Texture = "../../../UI_ideas/Tab (Active).png" Part(60, 0, 300, 127) Middle(60, 30, 180, 67) Smooth;
+        TransparentTexture = false;
+    }
+}
+
+Picture.Picture2 {
+    Position = (Score1.left - (width / 4), Score1.top - 6);
+    Size = (Score1.width * 2, 127);
+
+    Renderer {
+        Texture = "../../../UI_ideas/Tab (Active).png" Part(60, 0, 300, 127) Middle(60, 30, 180, 67) Smooth;
+        TransparentTexture = false;
+    }
+}
+
+Picture.Picture1 {
+    Position = ((Timer.left + (timer.width / 2)) - (width / 2), (Timer.top - (Timer.height / 2)) + (height / 4));
+    Size = (355, 150);
+
+    Renderer {
+        Texture = "../../../UI_ideas/Tab (Active).png" Part(45, 0, 355, 127) NoSmooth;
+        TransparentTexture = false;
     }
 }
 
@@ -19,37 +32,85 @@ Label.Score2 {
     AutoSize = true;
     HorizontalAlignment = Center;
     IgnoreMouseEvents = true;
-    Position = ((Timer.left + Timer.width) + Timer.width, Timer.top);
-    Renderer = &1;
+    Position = ((Timer.left + Timer.width) + Timer.width, Score1.top);
     ScrollbarPolicy = Never;
-    Size = (105, 160);
+    Size = (70.4, 107);
     Text = 0;
     TextSize = 80;
     VerticalAlignment = Center;
+
+    Renderer {
+        BorderColor = transparent;
+        TextColor = white;
+        TextureBackground = None;
+
+        Scrollbar {
+            ArrowBackgroundColor = rgba(160, 160, 160, 215);
+            ArrowBackgroundColorHover = rgba(170, 170, 170, 215);
+            ArrowColor = rgba(200, 200, 200, 215);
+            ArrowColorHover = rgba(225, 225, 225, 215);
+            ThumbColor = rgba(185, 185, 185, 215);
+            ThumbColorHover = rgba(195, 195, 195, 215);
+            TrackColor = rgba(160, 160, 160, 215);
+            TrackColorHover = rgba(170, 170, 170, 215);
+        }
+    }
 }
 
 Label.Timer {
     AutoSize = true;
     HorizontalAlignment = Center;
     IgnoreMouseEvents = true;
-    Position = ((parent.width - width) / 2, 0);
-    Renderer = &1;
+    Position = ((parent.width - width) / 2, 20);
     ScrollbarPolicy = Never;
-    Size = (373, 160);
+    Size = (248.4, 107);
     Text = "3 : 00";
     TextSize = 80;
     VerticalAlignment = Center;
+
+    Renderer {
+        BorderColor = transparent;
+        TextColor = white;
+        TextureBackground = None;
+
+        Scrollbar {
+            ArrowBackgroundColor = rgba(160, 160, 160, 215);
+            ArrowBackgroundColorHover = rgba(170, 170, 170, 215);
+            ArrowColor = rgba(200, 200, 200, 215);
+            ArrowColorHover = rgba(225, 225, 225, 215);
+            ThumbColor = rgba(185, 185, 185, 215);
+            ThumbColorHover = rgba(195, 195, 195, 215);
+            TrackColor = rgba(160, 160, 160, 215);
+            TrackColorHover = rgba(170, 170, 170, 215);
+        }
+    }
 }
 
 Label.Score1 {
     AutoSize = true;
     HorizontalAlignment = Center;
     IgnoreMouseEvents = true;
-    Position = (Timer.left - Timer.width - width, Timer.top);
-    Renderer = &1;
+    Position = ((Timer.left - Timer.width) - width, Timer.top + 20);
     ScrollbarPolicy = Never;
-    Size = (105, 160);
+    Size = (70.4, 107);
     Text = 0;
     TextSize = 80;
     VerticalAlignment = Center;
+
+    Renderer {
+        BorderColor = transparent;
+        TextColor = white;
+        TextureBackground = None;
+
+        Scrollbar {
+            ArrowBackgroundColor = rgba(160, 160, 160, 215);
+            ArrowBackgroundColorHover = rgba(170, 170, 170, 215);
+            ArrowColor = rgba(200, 200, 200, 215);
+            ArrowColorHover = rgba(225, 225, 225, 215);
+            ThumbColor = rgba(185, 185, 185, 215);
+            ThumbColorHover = rgba(195, 195, 195, 215);
+            TrackColor = rgba(160, 160, 160, 215);
+            TrackColorHover = rgba(170, 170, 170, 215);
+        }
+    }
 }

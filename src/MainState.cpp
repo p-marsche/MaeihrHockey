@@ -154,6 +154,11 @@ void MainState::handleGoal(int playerIndex)
         currScore++;
         m_guiGroup->get<tgui::Label>("Score1")->setText(tgui::String(currScore));
     }
+    if (currScore > 9)
+    {
+        exit();
+        init();
+    }
 }
 
 void MainState::draw()
