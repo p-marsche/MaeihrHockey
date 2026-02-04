@@ -201,6 +201,12 @@ void MainState::exit()
     for (auto& group : m_guiGroups)
         group.second->setVisible(false);
 
+    for (auto it = m_listeners.begin(); it != m_listeners.end(); ++it)
+    {
+        EventBus::getInstance().removeListener(*it);
+    }
+    m_listeners.clear();
+
     m_physicsManager.shutdown();
     m_spriteManager.shutdown();
     m_gameObjectManager.shutdown();
