@@ -8,6 +8,13 @@ namespace mmt_gd
 struct JoystickMap
 {
 public:
+    enum class Direction
+    {
+        Up,
+        Down,
+        Left,
+        Right
+    };
     static const int AXIS_VERTICAL   = 1;
     static const int AXIS_HORIZONTAL = 0;
     // actual values are +/-100, but room for error
@@ -20,5 +27,6 @@ public:
     // actual value is ~ -0,78
     static const int ZERO_POS = 10;
     static const int ZERO_NEG = -10;
+    static const int ZERO_SQAURED = ZERO_POS * ZERO_POS; ///< for comparisons with squared ("absolute") position
 };
 } // namespace mmt_gd

@@ -38,7 +38,7 @@ public:
      */
     void bind(const std::string& action, const sf::Keyboard::Key keyCode, const int playerIdx = 0);
 
-    void bind(const std::string& action, const int joystickAxis, const int directionValue, const int playerIdx = 0);
+    void bind(const std::string& action, const JoystickMap::Direction direction, const int playerIdx = 0);
 
     void bind(const std::string& action, const int joystickButton, const int playerIdx = 0);
 
@@ -80,7 +80,7 @@ private:
     bool    isKeyBound(sf::Keyboard::Key key);
     bool    isJoystickAxisBound(JoystickAxis axis);
     bool    isJoystickButtonBound(JoystickButton button);
-    void    resetAxis(const sf::Event& event);
+    void    processJoystickMoved(const sf::Event& event);
 
     struct FrameData
     {

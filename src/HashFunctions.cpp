@@ -10,7 +10,7 @@ size_t ActionHash::operator()(const Action& a) const
 }
 size_t AxisHash::operator()(const JoystickAxis& ja) const
 {
-    return (std::hash<int>()(ja.m_id)) ^ (std::hash<int>()(ja.m_axis)) ^ (std::hash<int>()(ja.m_direction));
+    return (std::hash<int>()(ja.m_id)) ^ (std::hash<int>()((int)ja.m_direction));
 }
 size_t ButtonHash::operator()(const JoystickButton& jb) const
 {

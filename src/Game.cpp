@@ -68,20 +68,20 @@ void Game::initInputManager()
     m_inputManager->bind("down", sf::Keyboard::S, 0);
     m_inputManager->bind("right", sf::Keyboard::D, 0);
 
-    m_inputManager->bind("up", JoystickMap::AXIS_VERTICAL, JoystickMap::UP, 0);
-    m_inputManager->bind("left", JoystickMap::AXIS_HORIZONTAL, JoystickMap::LEFT, 0);
-    m_inputManager->bind("down", JoystickMap::AXIS_VERTICAL, JoystickMap::DOWN, 0);
-    m_inputManager->bind("right", JoystickMap::AXIS_HORIZONTAL, JoystickMap::RIGHT, 0);
+    m_inputManager->bind("up", JoystickMap::Direction::Up, 0);
+    m_inputManager->bind("left", JoystickMap::Direction::Left, 0);
+    m_inputManager->bind("down", JoystickMap::Direction::Down, 0);
+    m_inputManager->bind("right", JoystickMap::Direction::Right, 0);
 
     m_inputManager->bind("up", sf::Keyboard::Up, 1);
     m_inputManager->bind("left", sf::Keyboard::Left, 1);
     m_inputManager->bind("down", sf::Keyboard::Down, 1);
     m_inputManager->bind("right", sf::Keyboard::Right, 1);
 
-    m_inputManager->bind("up", JoystickMap::AXIS_VERTICAL, JoystickMap::UP, 1);
-    m_inputManager->bind("left", JoystickMap::AXIS_HORIZONTAL, JoystickMap::LEFT, 1);
-    m_inputManager->bind("down", JoystickMap::AXIS_VERTICAL, JoystickMap::DOWN, 1);
-    m_inputManager->bind("right", JoystickMap::AXIS_HORIZONTAL, JoystickMap::RIGHT, 1);
+    m_inputManager->bind("up", JoystickMap::Direction::Up, 1);
+    m_inputManager->bind("left", JoystickMap::Direction::Left, 1);
+    m_inputManager->bind("down", JoystickMap::Direction::Down, 1);
+    m_inputManager->bind("right", JoystickMap::Direction::Right, 1);
 
     m_inputManager->bind("debugdraw", sf::Keyboard::F1, 0);
 }

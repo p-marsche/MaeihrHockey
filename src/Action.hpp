@@ -7,17 +7,16 @@ namespace mmt_gd
 struct JoystickAxis
 {
     int m_id;
-    int m_axis;
-    int m_direction;
+    JoystickMap::Direction m_direction;
 
     bool operator==(const JoystickAxis& other)
     {
-        return (m_id == other.m_id && m_axis == other.m_axis && m_direction == other.m_direction);
+        return (m_id == other.m_id && m_direction == other.m_direction);
     }
 
     bool operator==(const JoystickAxis& other) const
     {
-        return (m_id == other.m_id && m_axis == other.m_axis && m_direction == other.m_direction);
+        return (m_id == other.m_id && m_direction == other.m_direction);
     }
 };
 
