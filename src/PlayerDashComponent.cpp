@@ -32,7 +32,7 @@ void PlayerDashComponent::update(const float deltaTime)
         m_cdTimer -= deltaTime;
         return;
     }
-    if (InputManager::getInstance().isKeyDown("dash", m_playerIndex))
+    if (InputManager::getInstance().isActionJustPressed("dash", m_playerIndex))
     {
         auto sfVec = PhysicsManager::b2s(m_rigidBody.getB2Body()->GetLinearVelocity());
         auto dashVel = sf::Vector2f(sfVec.x * m_dashFactor, sfVec.y * m_dashFactor);
