@@ -64,8 +64,11 @@ void MainState::init()
     PROFILE_FUNCTION();
 
     m_guiGroups.at("Scoreboard")->setVisible(true);
+    m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score1")->setText(tgui::String(0));
+    m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score2")->setText(tgui::String(0));
     m_timerSeconds = 180;
     m_accumulator  = 0.f;
+    updateTimer(0);
 
     m_gameObjectManager.init();
     m_spriteManager.init();

@@ -111,6 +111,7 @@ bool Game::init()
                          sf::Vector2f(1.3f * m_window.getSize().x, 1.3f * m_window.getSize().y));    
     m_window.setView(view);
     m_gui.setTarget(m_window);
+    m_window.setFramerateLimit(120);
 
     m_inputManager->setRenderWindow(&m_window);
 

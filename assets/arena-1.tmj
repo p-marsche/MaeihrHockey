@@ -391,7 +391,7 @@
                 }, 
                 {
                  "ellipse":true,
-                 "height":128,
+                 "height":80,
                  "id":27,
                  "name":"Puck",
                  "properties":[
@@ -418,13 +418,13 @@
                  "rotation":0,
                  "type":"Puck",
                  "visible":true,
-                 "width":128,
-                 "x":896,
-                 "y":448
+                 "width":80,
+                 "x":920,
+                 "y":451.333333333333
                 }, 
                 {
                  "ellipse":true,
-                 "height":160,
+                 "height":120,
                  "id":30,
                  "name":"Player1-2",
                  "properties":[
@@ -456,14 +456,14 @@
                  "rotation":0,
                  "type":"Paddle",
                  "visible":true,
-                 "width":160,
+                 "width":120,
                  "x":576,
                  "y":432
                 },
             
                 {
                  "ellipse":true,
-                 "height":160,
+                 "height":120,
                  "id":34,
                  "name":"Player2-2",
                  "properties":[
@@ -495,13 +495,13 @@
                  "rotation":0,
                  "type":"Paddle",
                  "visible":true,
-                 "width":160,
+                 "width":120,
                  "x":1184,
                  "y":432
                 }, 
                 {
                  "ellipse":true,
-                 "height":160,
+                 "height":120,
                  "id":31,
                  "name":"Player1-1",
                  "properties":[
@@ -533,13 +533,13 @@
                  "rotation":0,
                  "type":"Paddle",
                  "visible":true,
-                 "width":160,
+                 "width":120,
                  "x":384,
                  "y":128
                 }, 
                 {
                  "ellipse":true,
-                 "height":160,
+                 "height":120,
                  "id":33,
                  "name":"Player2-1",
                  "properties":[
@@ -571,13 +571,13 @@
                  "rotation":0,
                  "type":"Paddle",
                  "visible":true,
-                 "width":160,
+                 "width":120,
                  "x":1380,
                  "y":128
                 }, 
                 {
                  "ellipse":true,
-                 "height":160,
+                 "height":120,
                  "id":32,
                  "name":"Player1-3",
                  "properties":[
@@ -609,13 +609,13 @@
                  "rotation":0,
                  "type":"Paddle",
                  "visible":true,
-                 "width":160,
+                 "width":120,
                  "x":384,
                  "y":736
                 }, 
                 {
                  "ellipse":true,
-                 "height":160,
+                 "height":120,
                  "id":35,
                  "name":"Player2-3",
                  "properties":[
@@ -647,7 +647,7 @@
                  "rotation":0,
                  "type":"Paddle",
                  "visible":true,
-                 "width":160,
+                 "width":120,
                  "x":1380,
                  "y":736
                 }, 
