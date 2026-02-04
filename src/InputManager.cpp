@@ -55,7 +55,7 @@ void InputManager::bind(const std::string& action, const sf::Keyboard::Key keyCo
             .emplace(action, Action(action, playerIdx));
     m_actionBinding[playerIdx][action].addInput(keyCode);
 
-    if (m_keyToAction.find(keyCode) != m_keyToAction.end())
+    if (isKeyBound(keyCode))
         std::clog << "WARNING: Double control binding. Removed old binding.";
     m_keyToAction[keyCode] = m_actionBinding[playerIdx][action];
 }
@@ -69,7 +69,7 @@ void InputManager::bind(const std::string& action, const int joystickButton, con
         m_actionBinding[playerIdx].emplace(action, Action(action, playerIdx));
     m_actionBinding[playerIdx][action].addInput(btn);
 
-    if (m_joystickButtonToAction.find(btn) != m_joystickButtonToAction.end())
+    if (isJoystickButtonBound(btn))
         std::clog << "WARNING: Double control binding. Removed old binding.";
     m_joystickButtonToAction[btn] = m_actionBinding[playerIdx][action];
 }
@@ -83,7 +83,7 @@ void InputManager::bind(const std::string& action, const int joystickAxis, const
         m_actionBinding[playerIdx].emplace(action, Action(action, playerIdx));
     m_actionBinding[playerIdx][action].addInput(axis);
 
-    if (m_joystickAxisToAction.find(axis) != m_joystickAxisToAction.end())
+    if (isJoystickAxisBound(axis))
         std::clog << "WARNING: Double control binding. Removed old binding.";
     m_joystickAxisToAction[axis] = m_actionBinding[playerIdx][action];
 }
@@ -103,6 +103,21 @@ Action* InputManager::getActionFromName(const std::string& action, const int pla
         return &(it->second);
     }
     return nullptr;
+}
+
+bool InputManager::isKeyBound(sf::Keyboard::Key key)
+{
+    return m_keyToAction.find(key) != m_keyToAction.end();
+}
+
+bool InputManager::isJoystickAxisBound(JoystickAxis axis)
+{
+    return m_joystickAxisToAction.find(axis) != m_joystickAxisToAction.end();
+}
+
+bool InputManager::isJoystickButtonBound(JoystickButton button)
+{
+    return m_joystickButtonToAction.find(button) != m_joystickButtonToAction.end();
 }
 
 bool InputManager::isActionJustPressed(const std::string& action, const int playerIdx)
