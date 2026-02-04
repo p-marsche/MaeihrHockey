@@ -3,6 +3,8 @@
 #include "Player.hpp"
 #include "PlayerMoveComponent.hpp"
 #include "RigidBodyComponent.hpp"
+#include "ColliderComponent.hpp"
+#include "GameObjectFactory.hpp"
 #include "EventBus.hpp"
 #include "GameObjectEvents.hpp"
 #include "InputManager.hpp"
@@ -10,6 +12,7 @@
 
 namespace mmt_gd
 {
+	using CL = CollisionLayers;
 	Player::Player(const int playerIndex)
 		: m_listeners()
 		, m_paddles()
@@ -32,6 +35,13 @@ namespace mmt_gd
 						addPaddle(go);
 				});
 		m_listeners.push_back(creationListenerId);
+
+		m_activeFilterMask.categoryBits = CollisionLayers::OBJECTS;
+        m_activeFilterMask.maskBits     = CollisionLayers::FAKE_WALL | CollisionLayers::OBJECTS | CollisionLayers::WALL;
+		
+		m_passiveFilterMask.categoryBits = CollisionLayers::OBJECTS;
+        m_passiveFilterMask.maskBits = CollisionLayers::FAKE_WALL | CollisionLayers::OBJECTS | CollisionLayers::WALL |
+									CollisionLayers::PENALTY;
 	}
 
 	void Player::startMatch()
@@ -58,6 +68,11 @@ namespace mmt_gd
 
         m_paddles[1]->addComponent<PlayerMoveComponent>(m_moveComps[1]);
         m_paddles[1]->addComponent<PlayerDashComponent>(m_dashComps[1]);
+        auto body2 = m_paddles[1]->getComponent<RigidBodyComponent>()->getB2Body();
+        body2->SetLinearDamping(0.2f);
+        auto fix2 = m_paddles[1]->getComponent<ColliderComponent>()->getFixture();
+        fix2->SetRestitution(0.2f);
+        fix2->SetFilterData(m_activeFilterMask);
         m_activeIndex = 1;
 	}
 
@@ -92,6 +107,12 @@ namespace mmt_gd
         auto go1 = m_paddles[m_activeIndex];
         go1->removeComponent(m_moveComps[m_activeIndex]);
         go1->removeComponent(m_dashComps[m_activeIndex]);
+        auto body1 = go1->getComponent<RigidBodyComponent>()->getB2Body();
+        body1->SetLinearDamping(0.1f);
+        auto fix1 = go1->getComponent<ColliderComponent>()->getFixture();
+        fix1->SetRestitution(0.9f);
+        fix1->SetFilterData(m_passiveFilterMask);
+
 
         if (m_activeIndex == m_paddles.size() - 1)
             m_activeIndex = 0;
@@ -101,6 +122,11 @@ namespace mmt_gd
 		auto go2 = m_paddles[m_activeIndex];
         go2->addComponent<PlayerMoveComponent>(m_moveComps[m_activeIndex]);
         go2->addComponent<PlayerDashComponent>(m_dashComps[m_activeIndex]);
+        auto body2 = go2->getComponent<RigidBodyComponent>()->getB2Body();
+        body2->SetLinearDamping(0.2f);
+        auto fix2 = go2->getComponent<ColliderComponent>()->getFixture();
+        fix2->SetRestitution(0.7f);
+        fix2->SetFilterData(m_activeFilterMask);
 	}
 
 	void Player::shutdown()

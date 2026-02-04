@@ -31,6 +31,7 @@ namespace mmt_gd
         std::vector<std::shared_ptr<PlayerMoveComponent>> m_moveComps;
         std::vector<std::shared_ptr<PlayerDashComponent>> m_dashComps;
 		std::list<mmt_gd::EventBus::ListenerId> m_listeners;
+        b2Filter                                m_activeFilterMask, m_passiveFilterMask;
 	};
 
 } //namespace mmt_gd

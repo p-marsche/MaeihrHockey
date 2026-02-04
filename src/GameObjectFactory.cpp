@@ -88,7 +88,7 @@ GameObject::Ptr GameObjectFactory::createPaddle(sf::RenderWindow& window, tson::
 
     auto rigidBody = paddle->addComponent<RigidBodyComponent>(*paddle, b2_dynamicBody);
     rigidBody->getB2Body()->SetFixedRotation(true);
-    rigidBody->getB2Body()->SetLinearDamping(0.3f);
+    rigidBody->getB2Body()->SetLinearDamping(0.2f);
 
     b2FixtureDef fixtureDef = createFixtureDef(obj);
     b2Filter     filter;

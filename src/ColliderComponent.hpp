@@ -39,6 +39,11 @@ public:
         return m_body;
     }
 
+    b2Fixture* getFixture() const
+    {
+        return m_fixture;
+    }
+
 private:
     RigidBodyComponent&            m_body;
     b2Fixture*                     m_fixture;
