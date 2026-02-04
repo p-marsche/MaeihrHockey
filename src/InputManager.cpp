@@ -64,11 +64,11 @@ void InputManager::bind(const std::string& action, const int joystickButton, con
 {
     ffAssertMsg(playerIdx < PlayerCount, "player out of bounds")
 
-        if (m_actionBinding[playerIdx].find(action) == m_actionBinding[playerIdx].end()) m_actionBinding[playerIdx]
-            .emplace(action, Action(action, playerIdx));
-    m_actionBinding[playerIdx][action].addInput(playerIdx, joystickButton);
+        auto btn = JoystickButton{playerIdx, joystickButton};
+    if (m_actionBinding[playerIdx].find(action) == m_actionBinding[playerIdx].end())
+        m_actionBinding[playerIdx].emplace(action, Action(action, playerIdx));
+    m_actionBinding[playerIdx][action].addInput(btn);
 
-    auto btn = JoystickButton{playerIdx, joystickButton};
     if (m_joystickButtonToAction.find(btn) != m_joystickButtonToAction.end())
         std::clog << "WARNING: Double control binding. Removed old binding.";
     m_joystickButtonToAction[btn] = m_actionBinding[playerIdx][action];
@@ -78,11 +78,11 @@ void InputManager::bind(const std::string& action, const int joystickAxis, const
 {
     ffAssertMsg(playerIdx < PlayerCount, "player out of bounds")
 
-        if (m_actionBinding[playerIdx].find(action) == m_actionBinding[playerIdx].end()) m_actionBinding[playerIdx]
-            .emplace(action, Action(action, playerIdx));
-    m_actionBinding[playerIdx][action].addInput(playerIdx, joystickAxis, directionValue);
+        auto axis = JoystickAxis{playerIdx, joystickAxis, directionValue};
+    if (m_actionBinding[playerIdx].find(action) == m_actionBinding[playerIdx].end())
+        m_actionBinding[playerIdx].emplace(action, Action(action, playerIdx));
+    m_actionBinding[playerIdx][action].addInput(axis);
 
-    auto axis = JoystickAxis{playerIdx, joystickAxis, directionValue};
     if (m_joystickAxisToAction.find(axis) != m_joystickAxisToAction.end())
         std::clog << "WARNING: Double control binding. Removed old binding.";
     m_joystickAxisToAction[axis] = m_actionBinding[playerIdx][action];
