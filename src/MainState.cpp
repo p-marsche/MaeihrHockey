@@ -10,7 +10,7 @@
 #include "TileMapLoader.hpp"
 #include "Tileson.hpp"
 #include "TransformAnimationComponent.hpp"
-#include "TransformAnimationConstantMotion.hpp"
+#include "TransformAnimationCameraShake.hpp"
 
 #include "EventBus.hpp"
 #include "GoalEvent.hpp"
@@ -20,6 +20,8 @@
 namespace mmt_gd
 {
 float constexpr GOAL_TIME = 1.8f;
+float constexpr CAMERA_SHAKE_ANGLE = 10.f;
+float constexpr CAMERA_SHAKE_DURATION = 10.f;
 
 MainState::MainState(GameStateManager* gameStateManager, Game* game, tgui::Gui* gui, int playerCount) :
 GameState(gameStateManager, game, gui),
@@ -38,6 +40,13 @@ m_players()
                                                      const auto goalEvent = std::static_pointer_cast<GoalEvent>(event);
                                                      int        playerIndex = goalEvent->getData();
                                                      handleGoal(playerIndex);
+                                                 });
+    m_listeners.push_back(goalListenerId);
+
+    const auto goalListenerCameraShake = EventBus::getInstance()
+                                    .addListener(GoalEvent::Type,
+                                                 [this](const IEvent::Ptr& event)
+                                                                             { activateCameraShake();
                                                  });
     m_listeners.push_back(goalListenerId);
 }
@@ -90,6 +99,9 @@ void MainState::init()
                                                                              m_game->getWindow(),
                                                                              m_game->getWindow().getView());
     camera->setPosition(sf::Vector2f(m_game->getWindow().getSize().x / 2, m_game->getWindow().getSize().y / 2));
+
+    m_cameraShake = std::make_shared<TransformAnimationCameraShake>(CAMERA_SHAKE_ANGLE, CAMERA_SHAKE_DURATION);
+    camera->addComponent<TransformAnimationComponent>(*camera, m_cameraShake);
 
     if (!camera->init())
         FF_ERROR_MSG("Could not initialize camera");
@@ -212,5 +224,20 @@ void MainState::exit()
     m_gameObjectManager.shutdown();
     for (auto p : m_players)
         p->shutdown();
+}
+
+void MainState::activateCameraShake()
+{
+    try
+    {
+        auto ptr = std::dynamic_pointer_cast<TransformAnimationCameraShake>(m_cameraShake);
+        if (ptr)
+        {
+            ptr->activate();
+        }
+    } catch (std::exception e)
+    {
+        std::cerr << "ERROR: Couldn't activate camera shake" << std::endl;
+    }
 }
 } // namespace mmt_gd
