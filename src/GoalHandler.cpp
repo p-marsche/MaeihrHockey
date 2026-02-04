@@ -8,7 +8,7 @@
 
 namespace mmt_gd
 {
-constexpr float RESET_DELAY = 1.0f;
+constexpr float RESET_DELAY = 2.0f;
 
 	GoalHandler::GoalHandler()
 		: m_puck(nullptr)

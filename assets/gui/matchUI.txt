@@ -3,7 +3,7 @@ Picture.Picture3 {
     Size = (Score1.width * 2, 127);
 
     Renderer {
-        Texture = "../../../UI_ideas/Tab (Active).png" Part(60, 0, 300, 127) Middle(60, 30, 180, 67) Smooth;
+        Texture = "Tab (Active).png" Part(60, 0, 300, 127) Middle(60, 30, 180, 67) Smooth;
         TransparentTexture = false;
     }
 }
@@ -13,7 +13,7 @@ Picture.Picture2 {
     Size = (Score1.width * 2, 127);
 
     Renderer {
-        Texture = "../../../UI_ideas/Tab (Active).png" Part(60, 0, 300, 127) Middle(60, 30, 180, 67) Smooth;
+        Texture = "Tab (Active).png" Part(60, 0, 300, 127) Middle(60, 30, 180, 67) Smooth;
         TransparentTexture = false;
     }
 }
@@ -23,7 +23,7 @@ Picture.Picture1 {
     Size = (355, 150);
 
     Renderer {
-        Texture = "../../../UI_ideas/Tab (Active).png" Part(45, 0, 355, 127) NoSmooth;
+        Texture = "Tab (Active).png" Part(45, 0, 355, 127) NoSmooth;
         TransparentTexture = false;
     }
 }

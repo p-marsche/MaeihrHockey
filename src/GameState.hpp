@@ -45,6 +45,6 @@ protected:
     GameStateManager* m_gameStateManager;
     Game*             m_game;
     tgui::Gui*        m_gui;
-    tgui::Group::Ptr  m_guiGroup = nullptr;
+    std::unordered_map<std::string, tgui::Group::Ptr>  m_guiGroups;
 };
 } // namespace mmt_gd

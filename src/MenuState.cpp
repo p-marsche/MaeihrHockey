@@ -70,7 +70,8 @@ void MenuState::exit()
 {
     PROFILE_FUNCTION();
 
-    m_guiGroup->setVisible(false);
+    for (auto& group : m_guiGroups)
+        group.second->setVisible(false);
 
     //m_game->getGui().removeAllWidgets();
     GameState::exit();

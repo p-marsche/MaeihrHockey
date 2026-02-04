@@ -31,8 +31,9 @@ private:
     GoalHandler                             m_goalHandler;
     std::vector<std::shared_ptr<Player>>    m_players;
     int                                     m_timerSeconds;
-    float                                   m_accumulator;
+    float                                   m_accumulator, m_goalTime;
     std::list<mmt_gd::EventBus::ListenerId> m_listeners;
+    bool                                    m_scored;
 
 };
 } // namespace mmt_gd

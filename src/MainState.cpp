@@ -19,6 +19,8 @@
 
 namespace mmt_gd
 {
+float constexpr GOAL_TIME = 1.8f;
+
 MainState::MainState(GameStateManager* gameStateManager, Game* game, tgui::Gui* gui, int playerCount) :
 GameState(gameStateManager, game, gui),
 m_spriteManager(game->getWindow()),
@@ -42,17 +44,26 @@ m_players()
 
 void MainState::initGui()
 {
-    m_guiGroup = tgui::Group::create();
+    auto guiGroup = tgui::Group::create();
     std::string filename = "matchUI.txt";
-    m_guiGroup->loadWidgetsFromFile(Config::guiPath + filename);
-    m_gui->add(m_guiGroup);
+    guiGroup->loadWidgetsFromFile(Config::guiPath + filename);
+    m_guiGroups.emplace("Scoreboard", guiGroup);
+    m_gui->add(guiGroup);
+    m_guiGroups.at("Scoreboard")->setVisible(false);
+
+    guiGroup = tgui::Group::create();
+    filename = "goal.txt";
+    guiGroup->loadWidgetsFromFile(Config::guiPath + filename);
+    m_guiGroups.emplace("Goal", guiGroup);
+    m_gui->add(guiGroup);
+    m_guiGroups.at("Goal")->setVisible(false);
 }
 
 void MainState::init()
 {
     PROFILE_FUNCTION();
 
-    m_guiGroup->setVisible(true);
+    m_guiGroups.at("Scoreboard")->setVisible(true);
     m_timerSeconds = 180;
     m_accumulator  = 0.f;
 
@@ -90,6 +101,8 @@ void MainState::init()
     // define layers
     m_spriteManager.setLayerOrder({"Background", "GameObjects"});
 
+    m_scored = false;
+
     for (auto& p : m_players)
         p->startMatch();
 }
@@ -124,9 +137,20 @@ void MainState::updateTimer(const float deltaTime)
         int minutes = m_timerSeconds / 60;
         std::string seperation = (seconds > 9) ? " : " : " : 0";
         auto time    = tgui::String(minutes) + seperation + tgui::String(seconds);
-        m_guiGroup->get<tgui::Label>("Timer")->setText(time);
+        m_guiGroups.at("Scoreboard")->get<tgui::Label>("Timer")->setText(time);
 
         m_accumulator--;
+    }
+
+    if (m_scored)
+    {
+        if (m_goalTime < GOAL_TIME)
+            m_goalTime += deltaTime;
+        else
+        {
+            m_scored = false;
+            m_guiGroups.at("Goal")->setVisible(false);
+        }
     }
 
     if (m_timerSeconds < 1)
@@ -141,19 +165,23 @@ void MainState::handleGoal(int playerIndex)
     if (playerIndex < 1 || playerIndex > 2)
         std::cout << "Scoring player non existent" << std::endl;
 
-    int currScore;
+    int currScore = 0;
     if (playerIndex == 1)
     {
-        currScore = stoi(m_guiGroup->get<tgui::Label>("Score2")->getText().toStdString());
+        currScore = stoi(m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score2")->getText().toStdString());
         currScore++;
-        m_guiGroup->get<tgui::Label>("Score2")->setText(tgui::String(currScore));
+        m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score2")->setText(tgui::String(currScore));
     }
     else if (playerIndex == 2)
     {
-        currScore = stoi(m_guiGroup->get<tgui::Label>("Score1")->getText().toStdString());
+        currScore = stoi(m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score1")->getText().toStdString());
         currScore++;
-        m_guiGroup->get<tgui::Label>("Score1")->setText(tgui::String(currScore));
+        m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score1")->setText(tgui::String(currScore));
     }
+    m_scored = true;
+    m_goalTime = 0.f;
+    m_guiGroups.at("Goal")->setVisible(true);
+
     if (currScore > 9)
     {
         exit();
@@ -170,7 +198,9 @@ void MainState::draw()
 void MainState::exit()
 {
     PROFILE_FUNCTION();
-    m_guiGroup->setVisible(false);
+    for (auto& group : m_guiGroups)
+        group.second->setVisible(false);
+
     m_physicsManager.shutdown();
     m_spriteManager.shutdown();
     m_gameObjectManager.shutdown();
