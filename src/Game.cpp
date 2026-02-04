@@ -60,18 +60,19 @@ void Game::initInputManager()
     m_inputManager->bind("Exit", sf::Keyboard::Escape);
     m_inputManager->bind("Select", sf::Keyboard::Space);
     m_inputManager->bind("Reset", sf::Keyboard::F5);
-    m_inputManager->bind("Goal", sf::Keyboard::Q);
 
     // May move to view later on
     m_inputManager->bind("up", sf::Keyboard::W, 0);
     m_inputManager->bind("left", sf::Keyboard::A, 0);
     m_inputManager->bind("down", sf::Keyboard::S, 0);
     m_inputManager->bind("right", sf::Keyboard::D, 0);
+    m_inputManager->bind("switch", sf::Keyboard::R, 0);
 
     m_inputManager->bind("up", sf::Keyboard::Up, 1);
     m_inputManager->bind("left", sf::Keyboard::Left, 1);
     m_inputManager->bind("down", sf::Keyboard::Down, 1);
     m_inputManager->bind("right", sf::Keyboard::Right, 1);
+    m_inputManager->bind("switch", sf::Keyboard::RShift, 1);
 
     m_inputManager->bind("debugdraw", sf::Keyboard::F1, 0);
 }

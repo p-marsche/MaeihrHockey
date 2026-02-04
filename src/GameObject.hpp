@@ -38,6 +38,17 @@ public:
     }
 
 
+    template <typename T>
+    std::shared_ptr<T> addComponent(std::shared_ptr<T> comp)
+    {
+        if (auto cmp = std::dynamic_pointer_cast<IComponent>(comp))
+        {
+            m_componentList.push_back(cmp);
+            return comp;
+        }
+        return {};
+    }
+
     /**
      * \brief Remove a component from the game object.
      */

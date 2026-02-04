@@ -13,6 +13,7 @@ namespace mmt_gd
 	Player::Player(const int playerIndex)
 		: m_listeners()
 		, m_paddles()
+		, m_moveComps()
 		, m_playerIndex(playerIndex)
 	{
 		const EventBus::ListenerId
@@ -47,16 +48,19 @@ namespace mmt_gd
         m_paddles.clear();
 
 		for (int i = 0; i < 3; ++i)
+        {
             m_paddles.push_back(temp[i]);
+            auto rb = m_paddles[i]->getComponent<RigidBodyComponent>();
+            m_moveComps.push_back(std::make_shared<PlayerMoveComponent>(*m_paddles[i], *rb, m_playerIndex));
+        }
 
-		auto rb = m_paddles[1]->getComponent<RigidBodyComponent>();
-        m_paddles[1]->addComponent<PlayerMoveComponent>(*m_paddles[1], *rb, m_playerIndex);
+        m_paddles[1]->addComponent<PlayerMoveComponent>(m_moveComps[1]);
         m_activeIndex = 1;
 	}
 
 	void Player::update(const float deltaTime)
 	{
-        if (InputManager::getInstance().isKeyPressed("Switch", m_playerIndex))
+        if (InputManager::getInstance().isKeyPressed("switch", m_playerIndex))
             switchPaddle();
 	}
 
@@ -83,16 +87,15 @@ namespace mmt_gd
 	void Player::switchPaddle()
 	{
         auto go1 = m_paddles[m_activeIndex];
-        GameObject::Ptr go2;
-        if (m_activeIndex == m_paddles.size() - 1)
-            go2 = m_paddles[0];
-        else
-            go2 = m_paddles[m_activeIndex + 1];
+        go1->removeComponent(m_moveComps[m_activeIndex]);
 
-        auto rb  = go2->getComponent<RigidBodyComponent>();
-        go2->addComponent<PlayerMoveComponent>(*go2, *rb, m_playerIndex);
-		auto move = go1->getComponent<PlayerMoveComponent>();
-        go1->removeComponent(move);
+        if (m_activeIndex == m_paddles.size() - 1)
+            m_activeIndex = 0;
+        else
+            m_activeIndex++;
+
+		auto go2 = m_paddles[m_activeIndex];
+        go2->addComponent<PlayerMoveComponent>(m_moveComps[m_activeIndex]);
 	}
 
 	void Player::shutdown()

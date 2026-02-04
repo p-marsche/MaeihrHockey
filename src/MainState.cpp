@@ -107,8 +107,6 @@ void MainState::update(const float deltaTime)
     EventBus::getInstance().processEvents(deltaTime);
     m_gameObjectManager.update(deltaTime);
     m_physicsManager.update(deltaTime);
-    if (InputManager::getInstance().isKeyPressed("Goal"))
-        EventBus::getInstance().fireEvent(std::make_shared<GoalEvent>(1));
 
     updateTimer(deltaTime);
     m_goalHandler.update(deltaTime);
