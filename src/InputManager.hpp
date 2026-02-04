@@ -44,44 +44,6 @@ public:
     void unbind(const std::string& action, const int playerIdx = 0);
 
     /**
-     * \return Returns true if the key button is currently down.
-     */
-    [[nodiscard]] bool isKeyDown(const int keyCode) const
-    {
-        ffAssertMsg(keyCode >= 0 && keyCode < sf::Keyboard::KeyCount,
-                    "KeyCode out of bounds") return m_currentFrame.m_keys[keyCode];
-    }
-
-    /**
-     * \return Returns true if the key button is currently up.
-     */
-    [[nodiscard]] bool isKeyUp(const int keyCode) const
-    {
-        ffAssertMsg(keyCode >= 0 && keyCode < sf::Keyboard::KeyCount,
-                    "KeyCode out of bounds") return !m_currentFrame.m_keys[keyCode];
-    }
-
-    /**
-     * \return Returns true if the key button has been pressed.
-     */
-    [[nodiscard]] bool isKeyPressed(const int keyCode) const
-    {
-        ffAssertMsg(keyCode >= 0 && keyCode < sf::Keyboard::KeyCount,
-                    "KeyCode out of bounds") return m_currentFrame.m_keys[keyCode] &&
-            !m_lastFrame.m_keys[keyCode];
-    }
-
-    /**
-     * \return Returns true if the key button has been released.
-     */
-    [[nodiscard]] bool isKeyReleased(const int key_code) const
-    {
-        ffAssertMsg(key_code >= 0 && key_code < sf::Keyboard::KeyCount,
-                    "KeyCode out of bounds") return !m_currentFrame.m_keys[key_code] &&
-            m_lastFrame.m_keys[key_code];
-    }
-
-    /**
      * \return Returns true if the button for the given Action is currently down.
      */
     bool isActionJustPressed(const std::string& action, int playerIdx = 0);
@@ -110,8 +72,10 @@ private:
     InputManager()  = default;
     ~InputManager() = default;
 
-
     Action* getActionFromName(const std::string& action, int playerIdx);
+    bool    isKeyBound(sf::Keyboard::Key key);
+    bool    isJoystickAxisBound(JoystickAxis axis);
+    bool    isJoystickButtonBound(JoystickButton button);
 
     struct FrameData
     {
