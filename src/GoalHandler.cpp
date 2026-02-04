@@ -79,8 +79,6 @@ constexpr float RESET_DELAY = 1.0f;
         auto         body   = m_puck->getComponent<RigidBodyComponent>()->getB2Body();
         body->SetTransform(PhysicsManager::s2b(newPos), 0);
         body->SetLinearVelocity(b2Vec2_zero);
-
-		// set acative paddles fixed min distance from middle line?
 	}
 
 	void GoalHandler::shutdown()

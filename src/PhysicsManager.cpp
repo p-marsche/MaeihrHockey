@@ -19,7 +19,6 @@ std::shared_ptr<b2World> PhysicsManager::m_world = std::make_shared<b2World>(b2V
 
 void PhysicsManager::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
 {
-   std::cout << "Right Goal" << std::endl;
 }
 
 void PhysicsManager::BeginContact(b2Contact* contact)
@@ -37,9 +36,6 @@ void PhysicsManager::BeginContact(b2Contact* contact)
     auto        idA       = colliderA->getGameObject().getId();
     auto        idB       = colliderB->getGameObject().getId();
     EventBus&   eb        = EventBus::getInstance();
-
-    /*if (idA == "LeftGoal" || idB == "LeftGoal")
-        std::cout << idA << " | " << idB << std::endl;*/
 
     if ((idA == "Puck" && idB == "LeftGoal") || (idA == "LeftGoal" && idB == "Puck"))
     {

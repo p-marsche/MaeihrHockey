@@ -98,7 +98,7 @@ GameObject::Ptr GameObjectFactory::createPaddle(sf::RenderWindow& window, tson::
 
     auto collider = paddle->addComponent<ColliderComponent>(*paddle, *rigidBody, fixtureDef);
 
-    paddle->addComponent<PlayerMoveComponent>(*paddle, *rigidBody, playerIndex);
+    //paddle->addComponent<PlayerMoveComponent>(*paddle, *rigidBody, playerIndex);
 
     // add onCollision func later if we actually need it
     /*collider->registerOnCollisionFunction([](ColliderComponent& self, ColliderComponent& other) {

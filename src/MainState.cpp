@@ -20,11 +20,15 @@
 
 namespace mmt_gd
 {
-MainState::MainState(GameStateManager* gameStateManager, Game* game, tgui::Gui* gui) :
+MainState::MainState(GameStateManager* gameStateManager, Game* game, tgui::Gui* gui, int playerCount) :
 GameState(gameStateManager, game, gui),
-m_spriteManager(game->getWindow())
+m_spriteManager(game->getWindow()),
+m_players()
 {
     initGui();
+
+    for (int i = 0; i < playerCount; ++i)
+        m_players.push_back(std::make_shared<Player>(i));
 
     const auto goalListenerId = EventBus::getInstance()
                                     .addListener(GoalEvent::Type,
@@ -59,7 +63,7 @@ void MainState::init()
 
     // Load tile map
     tson::Tileson tileson;
-    const auto    map = tileson.parse(fs::path("../assets/testing.tmj"));
+    const auto    map = tileson.parse(fs::path("../assets/arena-1.tmj"));
     if (map->getStatus() == tson::ParseStatus::OK)
     {
         TileMapLoader::loadTileLayers(map, m_spriteManager);
@@ -86,6 +90,9 @@ void MainState::init()
 
     // define layers
     m_spriteManager.setLayerOrder({"Background", "GameObjects"});
+
+    for (auto& p : m_players)
+        p->startMatch();
 }
 
 void MainState::update(const float deltaTime)
@@ -105,6 +112,8 @@ void MainState::update(const float deltaTime)
 
     updateTimer(deltaTime);
     m_goalHandler.update(deltaTime);
+    for (auto& p : m_players)
+        p->update(deltaTime);
 }
 
 void MainState::updateTimer(const float deltaTime)

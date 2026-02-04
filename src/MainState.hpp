@@ -5,13 +5,14 @@
 #include "PhysicsManager.hpp"
 #include "SpriteManager.hpp"
 #include "GoalHandler.hpp"
+#include "Player.hpp"
 
 namespace mmt_gd
 {
 class FINALFRONTIER_API MainState final : public GameState
 {
 public:
-    MainState(GameStateManager* gameStateManager, Game* game, tgui::Gui* gui);
+    MainState(GameStateManager* gameStateManager, Game* game, tgui::Gui* gui, int playerCount);
 
     void init() override;
     void exit() override;
@@ -24,12 +25,13 @@ public:
     void handleGoal(int playerIndex);
 
 private:
-    SpriteManager     m_spriteManager;
-    GameObjectManager m_gameObjectManager;
-    PhysicsManager    m_physicsManager;
-    GoalHandler       m_goalHandler;
-    int               m_timerSeconds;
-    float             m_accumulator;
+    SpriteManager                           m_spriteManager;
+    GameObjectManager                       m_gameObjectManager;
+    PhysicsManager                          m_physicsManager;
+    GoalHandler                             m_goalHandler;
+    std::vector<std::shared_ptr<Player>>    m_players;
+    int                                     m_timerSeconds;
+    float                                   m_accumulator;
     std::list<mmt_gd::EventBus::ListenerId> m_listeners;
 
 };

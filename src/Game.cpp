@@ -87,7 +87,7 @@ bool Game::init()
     //
     tgui::Gui* gui = &m_gui;
     m_gameStateManager.registerState("MenuState", make_shared<MenuState>(&m_gameStateManager, this, gui));
-    m_gameStateManager.registerState("MainState", make_shared<MainState>(&m_gameStateManager, this, gui));
+    m_gameStateManager.registerState("MainState", make_shared<MainState>(&m_gameStateManager, this, gui, 2));
 
     //
     m_window.create(sf::VideoMode(m_config.m_resolution.x, m_config.m_resolution.y), m_config.m_windowName);
