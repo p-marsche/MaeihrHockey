@@ -4,6 +4,7 @@
 #include "GameState.hpp"
 #include "PhysicsManager.hpp"
 #include "SpriteManager.hpp"
+#include "GoalHandler.hpp"
 
 namespace mmt_gd
 {
@@ -26,6 +27,7 @@ private:
     SpriteManager     m_spriteManager;
     GameObjectManager m_gameObjectManager;
     PhysicsManager    m_physicsManager;
+    GoalHandler       m_goalHandler;
     int               m_timerSeconds;
     float             m_accumulator;
     std::list<mmt_gd::EventBus::ListenerId> m_listeners;

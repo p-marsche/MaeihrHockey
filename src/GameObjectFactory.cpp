@@ -49,14 +49,17 @@ GameObject::Ptr GameObjectFactory::createPuck(sf::RenderWindow& window, tson::Ob
     addSpriteRenderer(obj, *puck, window);
 
     auto rigidBody = puck->addComponent<RigidBodyComponent>(*puck, b2_dynamicBody);
-    rigidBody->getB2Body()->SetFixedRotation(true);
-    rigidBody->getB2Body()->SetLinearDamping(0.05f);
+    auto body      = rigidBody->getB2Body();
+    body->SetFixedRotation(true);
+    body->SetLinearDamping(0.05f);
+    body->SetBullet(true);
 
     b2FixtureDef fixtureDef = createFixtureDef(obj);
     b2Filter     filter;
     filter.categoryBits = CollisionLayers::OBJECTS;
     filter.maskBits     = CollisionLayers::GOAL_SENSOR | CollisionLayers::OBJECTS | CollisionLayers::WALL;
     fixtureDef.filter   = filter;
+    fixtureDef.restitution = 1.0f;
 
     auto collider = puck->addComponent<ColliderComponent>(*puck, *rigidBody, fixtureDef);
 
@@ -242,6 +245,7 @@ GameObject::Ptr GameObjectFactory::createGoalsensor(sf::RenderWindow& window, ts
     filter.categoryBits = CollisionLayers::GOAL_SENSOR;
     filter.maskBits     = CollisionLayers::OBJECTS;
     fixtureDef.filter   = filter;
+    fixtureDef.isSensor = true;
 
     auto collider = goal->addComponent<ColliderComponent>(*goal, *rigidBody, fixtureDef);
 
