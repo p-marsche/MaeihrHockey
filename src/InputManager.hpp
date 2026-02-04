@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Action.hpp"
+#include "HashFunctions.hpp"
 #include "SFML/Window.hpp"
 
 #include <unordered_map>
@@ -34,72 +36,33 @@ public:
      * \param keyCode the keycode of the action
      * \param playerIdx the idx of the player
      */
-    void bind(const std::string& action, int keyCode, int playerIdx = 0);
+    void bind(const std::string& action, const sf::Keyboard::Key keyCode, const int playerIdx = 0);
 
-    void unbind(const std::string& action, int playerIdx = 0);
+    void bind(const std::string& action, const JoystickMap::Direction direction, const int playerIdx = 0);
 
-    /**
-     * \return Returns true if the key button is currently down.
-     */
-    [[nodiscard]] bool isKeyDown(const int keyCode) const
-    {
-        ffAssertMsg(keyCode >= 0 && keyCode < sf::Keyboard::KeyCount,
-                    "KeyCode out of bounds") return m_currentFrame.m_keys[keyCode];
-    }
+    void bind(const std::string& action, const int joystickButton, const int playerIdx = 0);
 
-    /**
-     * \return Returns true if the key button is currently up.
-     */
-    [[nodiscard]] bool isKeyUp(const int keyCode) const
-    {
-        ffAssertMsg(keyCode >= 0 && keyCode < sf::Keyboard::KeyCount,
-                    "KeyCode out of bounds") return !m_currentFrame.m_keys[keyCode];
-    }
-
-    /**
-     * \return Returns true if the key button has been pressed.
-     */
-    [[nodiscard]] bool isKeyPressed(const int keyCode) const
-    {
-        ffAssertMsg(keyCode >= 0 && keyCode < sf::Keyboard::KeyCount,
-                    "KeyCode out of bounds") return m_currentFrame.m_keys[keyCode] &&
-            !m_lastFrame.m_keys[keyCode];
-    }
-
-    /**
-     * \return Returns true if the key button has been released.
-     */
-    [[nodiscard]] bool isKeyReleased(const int key_code) const
-    {
-        ffAssertMsg(key_code >= 0 && key_code < sf::Keyboard::KeyCount,
-                    "KeyCode out of bounds") return !m_currentFrame.m_keys[key_code] &&
-            m_lastFrame.m_keys[key_code];
-    }
+    void unbind(const std::string& action, const int playerIdx = 0);
 
     /**
      * \return Returns true if the button for the given Action is currently down.
      */
-    bool isKeyDown(const std::string& action, int playerIdx = 0);
+    bool isActionJustPressed(const std::string& action, int playerIdx = 0);
 
     /**
      * \return Returns true if the button for the given Action is currently up.
      */
-    bool isKeyUp(const std::string& action, int playerIdx = 0);
+    bool isActionJustReleased(const std::string& action, int playerIdx = 0);
 
     /**
      * \return Returns true if the button for the given Action has been pressed.
      */
-    bool isKeyPressed(const std::string& action, int playerIdx = 0);
+    bool isActionPressed(const std::string& action, int playerIdx = 0);
 
     /**
      * \return Returns true if the button for the given Action has been released.
      */
-    bool isKeyReleased(const std::string& action, int playerIdx = 0);
-
-    /**
-     * \return Returns the current mouse position relative to the window
-     */
-    [[nodiscard]] sf::Vector2f getMousePosition() const;
+    bool isActionReleased(const std::string& action, int playerIdx = 0);
 
     void setRenderWindow(sf::RenderWindow* window)
     {
@@ -107,15 +70,21 @@ public:
     }
 
 private:
+    using ActionRef = std::weak_ptr<Action>;
+    using ActionPtr = std::shared_ptr<Action>;
+
     InputManager()  = default;
     ~InputManager() = default;
 
-
-    int getKeyForAction(const std::string& action, int playerIdx);
+    Action* getActionFromName(const std::string& action, int playerIdx);
+    bool    isKeyBound(sf::Keyboard::Key key);
+    bool    isJoystickAxisBound(JoystickAxis axis);
+    bool    isJoystickButtonBound(JoystickButton button);
+    void    processJoystickMoved(const sf::Event& event);
 
     struct FrameData
     {
-        bool m_keys[sf::Keyboard::KeyCount];
+        std::unordered_map<Action, bool, ActionHash> m_map;
     };
 
     FrameData m_lastFrame{};
@@ -124,7 +93,10 @@ private:
 
     sf::RenderWindow* m_renderWindow{nullptr};
 
-    static constexpr int                 PlayerCount = 4; ///< maximum allowed players. Can be increased if needed.
-    std::unordered_map<std::string, int> m_actionBinding[PlayerCount];
+    static constexpr int PlayerCount = 4; ///< maximum allowed players. Can be increased if needed.
+    std::unordered_map<std::string, ActionPtr>       m_actionBinding[PlayerCount];
+    std::unordered_map<sf::Keyboard::Key, ActionRef> m_keyToAction;
+    std::unordered_map<JoystickAxis, ActionRef, AxisHash>      m_joystickAxisToAction;
+    std::unordered_map<JoystickButton, ActionRef, ButtonHash>    m_joystickButtonToAction;
 };
 } // namespace mmt_gd

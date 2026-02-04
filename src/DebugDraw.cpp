@@ -265,7 +265,7 @@ void DebugDraw::drawText(const std::string& str, const sf::Vector2f& center, con
 
 void DebugDraw::update(float deltaTime)
 {
-    if (InputManager::getInstance().isKeyReleased("debugdraw"))
+    if (InputManager::getInstance().isActionReleased("debugdraw"))
     {
         setEnabled(!isEnabled());
     }

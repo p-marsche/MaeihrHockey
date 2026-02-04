@@ -97,7 +97,7 @@ void MainState::init()
 void MainState::update(const float deltaTime)
 {
     PROFILE_FUNCTION();
-    if (InputManager::getInstance().isKeyPressed("Exit"))
+    if (InputManager::getInstance().isActionPressed("Exit"))
     {
         m_gameStateManager->setState("MenuState");
         return;
