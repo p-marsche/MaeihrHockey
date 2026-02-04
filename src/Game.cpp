@@ -59,7 +59,6 @@ void Game::initInputManager()
 
     m_inputManager->bind("Exit", sf::Keyboard::Escape);
     m_inputManager->bind("Select", sf::Keyboard::Space);
-    m_inputManager->bind("Reset", sf::Keyboard::F5);
 
     // May move to view later on
     m_inputManager->bind("up", sf::Keyboard::W, 0);
@@ -73,6 +72,8 @@ void Game::initInputManager()
     m_inputManager->bind("left", JoystickMap::Direction::Left, 0);
     m_inputManager->bind("down", JoystickMap::Direction::Down, 0);
     m_inputManager->bind("right", JoystickMap::Direction::Right, 0);
+    m_inputManager->bind("switch", 0, 0);
+    m_inputManager->bind("dash", 1, 0);
 
     m_inputManager->bind("up", sf::Keyboard::Up, 1);
     m_inputManager->bind("left", sf::Keyboard::Left, 1);
@@ -85,6 +86,8 @@ void Game::initInputManager()
     m_inputManager->bind("left", JoystickMap::Direction::Left, 1);
     m_inputManager->bind("down", JoystickMap::Direction::Down, 1);
     m_inputManager->bind("right", JoystickMap::Direction::Right, 1);
+    m_inputManager->bind("switch", 0, 1);
+    m_inputManager->bind("dash", 1, 1);
 
     m_inputManager->bind("debugdraw", sf::Keyboard::F1, 0);
 }
