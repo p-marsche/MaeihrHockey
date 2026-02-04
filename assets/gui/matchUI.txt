@@ -24,7 +24,7 @@ Label.Score2 {
     ScrollbarPolicy = Never;
     Size = (105, 160);
     Text = 0;
-    TextSize = 120;
+    TextSize = 80;
     VerticalAlignment = Center;
 }
 
@@ -37,7 +37,7 @@ Label.Timer {
     ScrollbarPolicy = Never;
     Size = (373, 160);
     Text = "3 : 00";
-    TextSize = 120;
+    TextSize = 80;
     VerticalAlignment = Center;
 }
 
@@ -50,6 +50,6 @@ Label.Score1 {
     ScrollbarPolicy = Never;
     Size = (105, 160);
     Text = 0;
-    TextSize = 120;
+    TextSize = 80;
     VerticalAlignment = Center;
 }

@@ -122,14 +122,18 @@ void MainState::updateTimer(const float deltaTime)
 
         int seconds = m_timerSeconds % 60;
         int minutes = m_timerSeconds / 60;
-        auto time    = tgui::String(minutes) + " : " + tgui::String(seconds);
+        std::string seperation = (seconds > 9) ? " : " : " : 0";
+        auto time    = tgui::String(minutes) + seperation + tgui::String(seconds);
         m_guiGroup->get<tgui::Label>("Timer")->setText(time);
 
         m_accumulator--;
     }
 
     if (m_timerSeconds < 1)
-        std::cout << "Game ends" << std::endl;
+    {
+        exit();
+        init();
+    }
 }
 
 void MainState::handleGoal(int playerIndex)

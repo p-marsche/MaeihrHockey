@@ -94,8 +94,8 @@ bool Game::init()
 
     //
     m_window.create(sf::VideoMode(m_config.m_resolution.x, m_config.m_resolution.y), m_config.m_windowName);
-    auto view = sf::View(sf::Vector2f(m_window.getSize().x, m_window.getSize().y / 2),
-                         sf::Vector2f(2.f * m_window.getSize().x, 2.f * m_window.getSize().y));
+    auto view = sf::View(sf::Vector2f(m_window.getSize().x / 2, m_window.getSize().y / 2),
+                         sf::Vector2f(1.3f * m_window.getSize().x, 1.3f * m_window.getSize().y));
     m_window.setView(view);
     m_gui.setTarget(m_window);
 
