@@ -15,19 +15,31 @@ void InputManager::process(const sf::Event& event)
     switch (event.type) // NOLINT(clang-diagnostic-switch-enum)
     {
         case sf::Event::KeyPressed:
-
+            if (isKeyBound(event.key.code))
+                m_eventFrame.m_map[*m_keyToAction[event.key.code].lock()] = true;
             break;
         case sf::Event::KeyReleased:
-
+            if (isKeyBound(event.key.code))
+                m_eventFrame.m_map[*m_keyToAction[event.key.code].lock()] = false;
             break;
         case sf::Event::JoystickMoved:
-
+            if (isJoystickAxisBound(JoystickAxis{(int)event.joystickMove.joystickId,
+                                                 (int)event.joystickMove.axis,
+                                                 (int)event.joystickMove.position}))
+            {
+            }
             break;
         case sf::Event::JoystickButtonPressed:
-
+            if (isJoystickButtonBound(JoystickButton{(int)event.joystickButton.joystickId, (int)event.joystickButton.button}))
+                m_eventFrame.m_map[*m_joystickButtonToAction[JoystickButton{(int)event.joystickButton.joystickId,
+                                                                            (int)event.joystickButton.button}]
+                                        .lock()] = true;
             break;
         case sf::Event::JoystickButtonReleased:
-
+            if (isJoystickButtonBound(JoystickButton{(int)event.joystickButton.joystickId, (int)event.joystickButton.button}))
+                m_eventFrame.m_map[*m_joystickButtonToAction[JoystickButton{(int)event.joystickButton.joystickId,
+                                                                            (int)event.joystickButton.button}]
+                                        .lock()] = false;
             break;
         case sf::Event::JoystickConnected:
             std::cout << "Joystick connected " << event.joystickConnect.joystickId << " ("
@@ -52,8 +64,8 @@ void InputManager::bind(const std::string& action, const sf::Keyboard::Key keyCo
     ffAssertMsg(playerIdx < PlayerCount, "player out of bounds")
 
         if (m_actionBinding[playerIdx].find(action) == m_actionBinding[playerIdx].end()) m_actionBinding[playerIdx]
-            .emplace(action, Action(action, playerIdx));
-    m_actionBinding[playerIdx][action].addInput(keyCode);
+            .emplace(action, new Action(action, playerIdx));
+    m_actionBinding[playerIdx][action]->addInput(keyCode);
 
     if (isKeyBound(keyCode))
         std::clog << "WARNING: Double control binding. Removed old binding.";
@@ -66,8 +78,8 @@ void InputManager::bind(const std::string& action, const int joystickButton, con
 
         auto btn = JoystickButton{playerIdx, joystickButton};
     if (m_actionBinding[playerIdx].find(action) == m_actionBinding[playerIdx].end())
-        m_actionBinding[playerIdx].emplace(action, Action(action, playerIdx));
-    m_actionBinding[playerIdx][action].addInput(btn);
+        m_actionBinding[playerIdx].emplace(action, new Action(action, playerIdx));
+    m_actionBinding[playerIdx][action]->addInput(btn);
 
     if (isJoystickButtonBound(btn))
         std::clog << "WARNING: Double control binding. Removed old binding.";
@@ -80,8 +92,8 @@ void InputManager::bind(const std::string& action, const int joystickAxis, const
 
         auto axis = JoystickAxis{playerIdx, joystickAxis, directionValue};
     if (m_actionBinding[playerIdx].find(action) == m_actionBinding[playerIdx].end())
-        m_actionBinding[playerIdx].emplace(action, Action(action, playerIdx));
-    m_actionBinding[playerIdx][action].addInput(axis);
+        m_actionBinding[playerIdx].emplace(action, new Action(action, playerIdx));
+    m_actionBinding[playerIdx][action]->addInput(axis);
 
     if (isJoystickAxisBound(axis))
         std::clog << "WARNING: Double control binding. Removed old binding.";
@@ -100,7 +112,7 @@ Action* InputManager::getActionFromName(const std::string& action, const int pla
         const auto it = m_actionBinding[playerIdx].find(action);
     if (it != m_actionBinding[playerIdx].end())
     {
-        return &(it->second);
+        return it->second.get();
     }
     return nullptr;
 }

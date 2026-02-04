@@ -147,6 +147,7 @@
     <ClInclude Include="..\src\GameState.hpp" />
     <ClInclude Include="..\src\GoalEvent.hpp" />
     <ClInclude Include="..\src\GoalHandler.hpp" />
+    <ClInclude Include="..\src\HashFunctions.hpp" />
     <ClInclude Include="..\src\ITransformAnimation.hpp" />
     <ClInclude Include="..\src\JoystickMap.hpp" />
     <ClInclude Include="..\src\MainState.hpp" />
@@ -204,6 +205,7 @@
     <ClCompile Include="..\src\GameObjectManager.cpp" />
     <ClCompile Include="..\src\GoalEvent.cpp" />
     <ClCompile Include="..\src\GoalHandler.cpp" />
+    <ClCompile Include="..\src\HashFunctions.cpp" />
     <ClCompile Include="..\src\TsonPropertyReader.cpp" />
     <ClCompile Include="..\src\PhysicsComponentEvents.cpp" />
     <ClCompile Include="..\src\PhysicsManager.cpp" />

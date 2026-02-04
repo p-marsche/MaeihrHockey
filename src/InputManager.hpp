@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Action.hpp"
+#include "HashFunctions.hpp"
 #include "SFML/Window.hpp"
 
 #include <unordered_map>
@@ -69,6 +70,9 @@ public:
     }
 
 private:
+    using ActionRef = std::weak_ptr<Action>;
+    using ActionPtr = std::shared_ptr<Action>;
+
     InputManager()  = default;
     ~InputManager() = default;
 
@@ -79,7 +83,7 @@ private:
 
     struct FrameData
     {
-        std::unordered_map<Action&, bool> m_map;
+        std::unordered_map<Action, bool, ActionHash> m_map;
     };
 
     FrameData m_lastFrame{};
@@ -88,10 +92,10 @@ private:
 
     sf::RenderWindow* m_renderWindow{nullptr};
 
-    static constexpr int                    PlayerCount = 4; ///< maximum allowed players. Can be increased if needed.
-    std::unordered_map<std::string, Action> m_actionBinding[PlayerCount];
-    std::unordered_map<sf::Keyboard::Key, Action&>   m_keyToAction;
-    std::unordered_map<JoystickAxis, Action&>        m_joystickAxisToAction;
-    std::unordered_map<JoystickButton, Action&> m_joystickButtonToAction;
+    static constexpr int PlayerCount = 4; ///< maximum allowed players. Can be increased if needed.
+    std::unordered_map<std::string, ActionPtr>       m_actionBinding[PlayerCount];
+    std::unordered_map<sf::Keyboard::Key, ActionRef> m_keyToAction;
+    std::unordered_map<JoystickAxis, ActionRef, AxisHash>      m_joystickAxisToAction;
+    std::unordered_map<JoystickButton, ActionRef, ButtonHash>    m_joystickButtonToAction;
 };
 } // namespace mmt_gd

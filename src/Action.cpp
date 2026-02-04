@@ -8,11 +8,6 @@ Action::Action(const std::string& name, const int playerIdx) : m_name(name), m_p
 {
 }
 
-const std::string& Action::getName()
-{
-    return m_name;
-}
-
 void Action::addInput(const sf::Keyboard::Key key)
 {
     auto it = std::find(m_keyboard.begin(), m_keyboard.end(), key);
@@ -68,19 +63,24 @@ bool Action::hasInput(const sf::Keyboard::Key key) const
     return it != m_keyboard.end();
 }
 
-bool Action::hasInput(const JoystickAxis axis) const
+bool Action::hasInput(JoystickAxis axis) const
 {
     auto it = std::find(m_joystickAxis.begin(), m_joystickAxis.end(), axis);
     return it != m_joystickAxis.end();
 }
 
-bool Action::hasInput(const JoystickButton button) const
+bool Action::hasInput(JoystickButton button) const
 {
     auto it = std::find(m_joystickButtons.begin(), m_joystickButtons.end(), button);
     return it != m_joystickButtons.end();
 }
 
 bool Action::operator==(const Action& other)
+{
+    return m_name == other.m_name && m_playerIdx == other.m_playerIdx;
+}
+
+bool Action::operator==(const Action& other) const
 {
     return m_name == other.m_name && m_playerIdx == other.m_playerIdx;
 }
