@@ -14,6 +14,7 @@ namespace mmt_gd
 		: m_listeners()
 		, m_paddles()
 		, m_moveComps()
+		,m_dashComps()
 		, m_playerIndex(playerIndex)
 	{
 		const EventBus::ListenerId
@@ -52,9 +53,11 @@ namespace mmt_gd
             m_paddles.push_back(temp[i]);
             auto rb = m_paddles[i]->getComponent<RigidBodyComponent>();
             m_moveComps.push_back(std::make_shared<PlayerMoveComponent>(*m_paddles[i], *rb, m_playerIndex));
+            m_dashComps.push_back(std::make_shared<PlayerDashComponent>(*m_paddles[i], *rb, m_playerIndex));
         }
 
         m_paddles[1]->addComponent<PlayerMoveComponent>(m_moveComps[1]);
+        m_paddles[1]->addComponent<PlayerDashComponent>(m_dashComps[1]);
         m_activeIndex = 1;
 	}
 
@@ -88,6 +91,7 @@ namespace mmt_gd
 	{
         auto go1 = m_paddles[m_activeIndex];
         go1->removeComponent(m_moveComps[m_activeIndex]);
+        go1->removeComponent(m_dashComps[m_activeIndex]);
 
         if (m_activeIndex == m_paddles.size() - 1)
             m_activeIndex = 0;
@@ -96,6 +100,7 @@ namespace mmt_gd
 
 		auto go2 = m_paddles[m_activeIndex];
         go2->addComponent<PlayerMoveComponent>(m_moveComps[m_activeIndex]);
+        go2->addComponent<PlayerDashComponent>(m_dashComps[m_activeIndex]);
 	}
 
 	void Player::shutdown()
