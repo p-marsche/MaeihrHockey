@@ -22,19 +22,19 @@ void PlayerMoveComponent::update(const float deltaTime)
 {
     const auto   speed = 2'000.0F; // pixels/second
     sf::Vector2f translation{};
-    if (InputManager::getInstance().isKeyDown("right", m_playerIndex))
+    if (InputManager::getInstance().isActionJustPressed("right", m_playerIndex))
     {
         translation.x += speed * deltaTime;
     }
-    if (InputManager::getInstance().isKeyDown("left", m_playerIndex))
+    if (InputManager::getInstance().isActionJustPressed("left", m_playerIndex))
     {
         translation.x -= speed * deltaTime;
     }
-    if (InputManager::getInstance().isKeyDown("up", m_playerIndex))
+    if (InputManager::getInstance().isActionJustPressed("up", m_playerIndex))
     {
         translation.y -= speed * deltaTime;
     }
-    if (InputManager::getInstance().isKeyDown("down", m_playerIndex))
+    if (InputManager::getInstance().isActionJustPressed("down", m_playerIndex))
     {
         translation.y += speed * deltaTime;
     }

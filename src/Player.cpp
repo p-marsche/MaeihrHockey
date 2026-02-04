@@ -78,7 +78,7 @@ namespace mmt_gd
 
 	void Player::update(const float deltaTime)
 	{
-        if (InputManager::getInstance().isKeyPressed("switch", m_playerIndex))
+        if (InputManager::getInstance().isActionPressed("switch", m_playerIndex))
             switchPaddle();
 	}
 
