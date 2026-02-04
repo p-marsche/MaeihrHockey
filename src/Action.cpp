@@ -20,20 +20,18 @@ void Action::addInput(const sf::Keyboard::Key key)
         m_keyboard.emplace_back(key);
 }
 
-void Action::addInput(const int joystickIndex, const int joystickAxis, const int directionValue)
+void Action::addInput(const JoystickAxis axis)
 {
-    JoystickAxis input = {joystickIndex, joystickAxis, directionValue};
-    auto         it    = std::find(m_joystickAxis.begin(), m_joystickAxis.end(), input);
+    auto it = std::find(m_joystickAxis.begin(), m_joystickAxis.end(), axis);
     if (it == m_joystickAxis.end())
-        m_joystickAxis.emplace_back(input);
+        m_joystickAxis.emplace_back(axis);
 }
 
-void Action::addInput(const int joystickIndex, const int joystickButton)
+void Action::addInput(const JoystickButton button)
 {
-    JoystickButton input{joystickIndex, joystickButton};
-    auto                it = std::find(m_joystickButtons.begin(), m_joystickButtons.end(), input);
+    auto it = std::find(m_joystickButtons.begin(), m_joystickButtons.end(), button);
     if (it == m_joystickButtons.end())
-        m_joystickButtons.emplace_back(input);
+        m_joystickButtons.emplace_back(button);
 }
 
 void Action::removeInput(const sf::Keyboard::Key key)
@@ -43,18 +41,16 @@ void Action::removeInput(const sf::Keyboard::Key key)
         m_keyboard.erase(it);
 }
 
-void Action::removeInput(const int joystickIndex, const int joystickAxis, const int directionValue)
+void Action::removeInput(const JoystickAxis axis)
 {
-    auto it = std::find(m_joystickAxis.begin(),
-                        m_joystickAxis.end(),
-                        JoystickAxis{joystickIndex, joystickAxis, directionValue});
+    auto it = std::find(m_joystickAxis.begin(), m_joystickAxis.end(), axis);
     if (it != m_joystickAxis.end())
         m_joystickAxis.erase(it);
 }
 
-void Action::removeInput(const int joystickIndex, const int joystickButton)
+void Action::removeInput(const JoystickButton button)
 {
-    auto it = std::find(m_joystickButtons.begin(), m_joystickButtons.end(), JoystickButton{joystickIndex, joystickButton});
+    auto it = std::find(m_joystickButtons.begin(), m_joystickButtons.end(), button);
     if (it != m_joystickButtons.end())
         m_joystickButtons.erase(it);
 }
@@ -72,17 +68,15 @@ bool Action::hasInput(const sf::Keyboard::Key key) const
     return it != m_keyboard.end();
 }
 
-bool Action::hasInput(const int joystickIndex, const int joystickAxis, const int directionValue) const
+bool Action::hasInput(const JoystickAxis axis) const
 {
-    auto it = std::find(m_joystickAxis.begin(),
-                        m_joystickAxis.end(),
-                        JoystickAxis{joystickIndex, joystickAxis, directionValue});
+    auto it = std::find(m_joystickAxis.begin(), m_joystickAxis.end(), axis);
     return it != m_joystickAxis.end();
 }
 
-bool Action::hasInput(const int joystickIndex, const int joystickButton) const
+bool Action::hasInput(const JoystickButton button) const
 {
-    auto it = std::find(m_joystickButtons.begin(), m_joystickButtons.end(), JoystickButton{joystickIndex, joystickButton});
+    auto it = std::find(m_joystickButtons.begin(), m_joystickButtons.end(), button);
     return it != m_joystickButtons.end();
 }
 

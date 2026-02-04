@@ -33,15 +33,15 @@ public:
     Action(const std::string& name, int playerIdx);
     const std::string& getName();
     void               addInput(const sf::Keyboard::Key key);
-    void               addInput(const int joystickIndex, const int joystickAxis, const int directionValue);
-    void               addInput(const int joystickIndex, const int joystickButton);
+    void               addInput(const JoystickAxis axis);
+    void               addInput(const JoystickButton button);
     void               removeInput(const sf::Keyboard::Key key);
-    void               removeInput(const int joystickIndex, const int joystickAxis, const int directionValue);
-    void               removeInput(const int joystickIndex, const int joystickButton);
+    void               removeInput(const JoystickAxis axis);
+    void               removeInput(const JoystickButton button);
     void               clearInputs();
     bool               hasInput(const sf::Keyboard::Key key) const;
-    bool               hasInput(const int joystickIndex, const int joystickAxis, const int directionValue) const;
-    bool               hasInput(const int joystickIndex, const int joystickButton) const;
+    bool               hasInput(const JoystickAxis axis) const;
+    bool               hasInput(const JoystickButton button) const;
     bool               operator==(const Action& other);
 
 private:
