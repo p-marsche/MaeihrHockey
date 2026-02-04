@@ -27,6 +27,15 @@ void InputManager::process(const sf::Event& event)
                                                  (int)event.joystickMove.axis,
                                                  (int)event.joystickMove.position}))
             {
+                m_eventFrame.m_map[*m_joystickAxisToAction[JoystickAxis{(int)event.joystickMove.joystickId,
+                                                                        (int)event.joystickMove.axis,
+                                                                        (int)event.joystickMove.position}]
+                                        .lock()] = true;
+            }
+            else if (event.joystickMove.position < JoystickMap::ZERO_POS &&
+                     event.joystickMove.position > JoystickMap::ZERO_NEG)
+            {
+                resetAxis(event);
             }
             break;
         case sf::Event::JoystickButtonPressed:
@@ -130,6 +139,20 @@ bool InputManager::isJoystickAxisBound(JoystickAxis axis)
 bool InputManager::isJoystickButtonBound(JoystickButton button)
 {
     return m_joystickButtonToAction.find(button) != m_joystickButtonToAction.end();
+}
+
+void InputManager::resetAxis(const sf::Event& event)
+{
+    if (isJoystickAxisBound(
+            JoystickAxis{(int)event.joystickMove.joystickId, (int)event.joystickMove.axis, JoystickMap::THRESHOLD_POS}))
+        m_eventFrame
+            .m_map[*m_joystickAxisToAction[JoystickAxis{(int)event.joystickMove.joystickId, (int)event.joystickMove.axis, JoystickMap::THRESHOLD_POS}]
+                        .lock()] = false;
+    else if (isJoystickAxisBound(
+                 JoystickAxis{(int)event.joystickMove.joystickId, (int)event.joystickMove.axis, JoystickMap::THRESHOLD_NEG}))
+        m_eventFrame
+            .m_map[*m_joystickAxisToAction[JoystickAxis{(int)event.joystickMove.joystickId, (int)event.joystickMove.axis, JoystickMap::THRESHOLD_NEG}]
+                        .lock()] = false;
 }
 
 bool InputManager::isActionJustPressed(const std::string& action, const int playerIdx)

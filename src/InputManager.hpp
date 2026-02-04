@@ -80,6 +80,7 @@ private:
     bool    isKeyBound(sf::Keyboard::Key key);
     bool    isJoystickAxisBound(JoystickAxis axis);
     bool    isJoystickButtonBound(JoystickButton button);
+    void    resetAxis(const sf::Event& event);
 
     struct FrameData
     {
