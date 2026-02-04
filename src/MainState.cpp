@@ -91,7 +91,7 @@ void MainState::init()
 void MainState::update(const float deltaTime)
 {
     PROFILE_FUNCTION();
-    if (InputManager::getInstance().isKeyPressed("Exit"))
+    if (InputManager::getInstance().isActionPressed("Exit"))
     {
         m_gameStateManager->setState("MenuState");
         return;
@@ -100,7 +100,7 @@ void MainState::update(const float deltaTime)
     EventBus::getInstance().processEvents(deltaTime);
     m_gameObjectManager.update(deltaTime);
     m_physicsManager.update(deltaTime);
-    if (InputManager::getInstance().isKeyPressed("Goal"))
+    if (InputManager::getInstance().isActionPressed("Goal"))
         EventBus::getInstance().fireEvent(std::make_shared<GoalEvent>(1));
 
     updateTimer(deltaTime);

@@ -53,7 +53,7 @@ void MenuState::update(float delta)
 
     m_game->getWindow().setView(m_view);
 
-    if (InputManager::getInstance().isKeyPressed("Select"))
+    if (InputManager::getInstance().isActionPressed("Select"))
     {
         m_gameStateManager->setState("MainState");
     }
