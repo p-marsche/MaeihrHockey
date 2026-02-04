@@ -5,6 +5,7 @@
 #include "AssetManager.hpp"
 #include "ColliderComponent.hpp"
 #include "EventBus.hpp"
+#include "GoalEvent.hpp"
 #include "GameObjectEvents.hpp"
 #include "PhysicsManager.hpp"
 #include "PlayerMoveComponent.hpp"
@@ -232,12 +233,6 @@ GameObject::Ptr GameObjectFactory::createGoalsensor(sf::RenderWindow& window, ts
 {
     auto goal = createObject(obj);
 
-    /*std::string textureKey = TsonPropertyReader::getTexture(obj);
-		sf::Texture tex = AssetManager::getInstance().getTexture(textureKey);
-		auto spriteComp = wall->addComponent<SpriteRenderComponent>(
-			*paddle, window, tex, "GameObjects",
-			sf::IntRect(0, 0, 0, 0));*/
-
     auto rigidBody = goal->addComponent<RigidBodyComponent>(*goal, b2_staticBody);
 
     b2FixtureDef fixtureDef = createFixtureDef(obj);
@@ -248,11 +243,18 @@ GameObject::Ptr GameObjectFactory::createGoalsensor(sf::RenderWindow& window, ts
     fixtureDef.isSensor = true;
 
     auto collider = goal->addComponent<ColliderComponent>(*goal, *rigidBody, fixtureDef);
+    int  sideID;
+    if (goal->getId() == "LeftGoal")
+        sideID = 1;
+    else if (goal->getId() == "RightGoal")
+        sideID = 2;
 
     // add onCollision func later if we actually need it
-    /*collider->registerOnCollisionFunction([](ColliderComponent& self, ColliderComponent& other) {
-
-		});*/
+    collider->registerOnCollisionFunction([sideID](ColliderComponent& self, ColliderComponent& other) {
+            auto otherId = other.getGameObject().getId();
+            if (otherId == "Puck")
+                EventBus::getInstance().fireEvent(std::make_shared<GoalEvent>(sideID));
+		});
 
     if (!goal->init())
     {

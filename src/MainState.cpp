@@ -16,7 +16,6 @@
 #include "GoalEvent.hpp"
 
 #include <memory>
-#include <thread>
 
 namespace mmt_gd
 {
@@ -166,5 +165,7 @@ void MainState::exit()
     m_physicsManager.shutdown();
     m_spriteManager.shutdown();
     m_gameObjectManager.shutdown();
+    for (auto p : m_players)
+        p->shutdown();
 }
 } // namespace mmt_gd

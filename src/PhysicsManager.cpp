@@ -24,28 +24,12 @@ void PhysicsManager::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
 void PhysicsManager::BeginContact(b2Contact* contact)
 {
     //Todo: Use b2d fixure  objects https://box2d.org/documentation/md__d_1__git_hub_box2d_docs_loose_ends.html
-    /*auto* const colliderA = reinterpret_cast<ColliderComponent*>(contact->GetFixtureA()->GetUserData().pointer);
+    auto* const colliderA = reinterpret_cast<ColliderComponent*>(contact->GetFixtureA()->GetUserData().pointer);
     auto* const colliderB = reinterpret_cast<ColliderComponent*>(contact->GetFixtureB()->GetUserData().pointer);
     if (colliderA != nullptr && colliderB != nullptr)
     {
         colliderA->onCollision(*colliderB);
         colliderB->onCollision(*colliderA);
-    }*/
-    auto* const colliderA = reinterpret_cast<ColliderComponent*>(contact->GetFixtureA()->GetUserData().pointer);
-    auto* const colliderB = reinterpret_cast<ColliderComponent*>(contact->GetFixtureB()->GetUserData().pointer);
-    auto        idA       = colliderA->getGameObject().getId();
-    auto        idB       = colliderB->getGameObject().getId();
-    EventBus&   eb        = EventBus::getInstance();
-
-    if ((idA == "Puck" && idB == "LeftGoal") || (idA == "LeftGoal" && idB == "Puck"))
-    {
-        std::cout << "Left Goal" << std::endl;
-        eb.fireEvent(std::make_shared<GoalEvent>(1));
-    }
-    else if ((idA == "Puck" && idB == "RightGoal") || (idA == "RightGoal" && idB == "Puck"))
-    {
-        eb.fireEvent(std::make_shared<GoalEvent>(2));
-        std::cout << "Right Goal" << std::endl;
     }
 }
 
