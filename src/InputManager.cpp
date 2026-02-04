@@ -110,7 +110,6 @@ bool InputManager::isActionJustPressed(const std::string& action, const int play
     auto inputAction = getActionFromName(action, playerIdx);
     if (inputAction == nullptr)
         return false;
-
     return m_currentFrame.m_map[*inputAction] && m_lastFrame.m_map[*inputAction];
 }
 
@@ -119,8 +118,7 @@ bool InputManager::isActionJustReleased(const std::string& action, const int pla
     auto inputAction = getActionFromName(action, playerIdx);
     if (inputAction == nullptr)
         return false;
-    
-
+    return !m_currentFrame.m_map[*inputAction] && m_lastFrame.m_map[*inputAction];
 }
 
 bool InputManager::isActionPressed(const std::string& action, const int playerIdx)
@@ -128,7 +126,7 @@ bool InputManager::isActionPressed(const std::string& action, const int playerId
     auto inputAction = getActionFromName(action, playerIdx);
     if (inputAction == nullptr)
         return false;
-    return isKeyPressed();
+    return m_currentFrame.m_map[*inputAction];
 }
 
 bool InputManager::isActionReleased(const std::string& action, const int playerIdx)
@@ -136,6 +134,6 @@ bool InputManager::isActionReleased(const std::string& action, const int playerI
     auto inputAction = getActionFromName(action, playerIdx);
     if (inputAction == nullptr)
         return false;
-    return isKeyReleased();
+    return !m_currentFrame.m_map[*inputAction];
 }
 } // namespace mmt_gd
