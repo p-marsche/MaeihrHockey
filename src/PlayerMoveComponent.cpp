@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "GameObject.hpp"
 #include "InputManager.hpp"
+#include "VectorAlgebra2D.h"
 
 #include "PlayerMoveComponent.hpp"
 #include "PhysicsManager.hpp"
@@ -8,6 +9,7 @@
 namespace mmt_gd
 {
 float constexpr SLOW_FACTOR = 3.f;
+float constexpr MAX_VELOCITY = 1000.F;
 
 PlayerMoveComponent::PlayerMoveComponent(GameObject& gameObject, RigidBodyComponent& rigidBody, const int playerIndex) :
 IComponent(gameObject),
@@ -46,9 +48,13 @@ void PlayerMoveComponent::update(const float deltaTime)
         return;
 
     auto currVel = PhysicsManager::b2s(m_rigidBody.getB2Body()->GetLinearVelocity());
+    auto velMag  = MathUtil::length<float>(currVel);
+    if (velMag > MAX_VELOCITY)
+        MathUtil::setLength(currVel, MAX_VELOCITY);
+
     auto temp    = sf::Vector2f();
-    temp.x       = (currVel.x * translation.x > 0) ? 0 : (SLOW_FACTOR * currVel.x * deltaTime);
-    temp.y       = (currVel.y * translation.y > 0) ? 0 : (SLOW_FACTOR * currVel.y * deltaTime);
-    m_rigidBody.addVelocity(translation + temp);
+    temp.x       = (currVel.x * translation.x > 0) ? 0 : (currVel.x);
+    temp.y       = (currVel.y * translation.y > 0) ? 0 : (currVel.y);
+    m_rigidBody.addVelocity(translation - temp * SLOW_FACTOR * deltaTime);
 }
 } // namespace mmt_gd
