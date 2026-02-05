@@ -35,6 +35,7 @@ void TransformAnimationCameraShake::update(float deltaTime, sf::Transformable& t
             m_shake       = false;
             m_count       = 0;
             transform.setPosition(m_originalPosition);
+            return;
         }
 
         if (m_count == 4)
