@@ -1,2 +1,7 @@
 #include "stdafx.h"
-//#include "NoEffectPassiveComponent.hpp"
+
+#include "NoEffectPassive.hpp"
+
+namespace mmt_gd
+{
+}

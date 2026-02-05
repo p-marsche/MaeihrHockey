@@ -4,6 +4,9 @@
 #include "PlayerMoveComponent.hpp"
 #include "PlayerDashComponent.hpp"
 #include "PlayerEnlargeComponent.hpp"
+#include "HighDensityPassive.hpp"
+#include "NoEffectPassive.hpp"
+#include "HighBouncePassive.hpp"
 #include "RigidBodyComponent.hpp"
 #include "ColliderComponent.hpp"
 #include "GameObjectFactory.hpp"
@@ -65,10 +68,11 @@ namespace mmt_gd
             m_paddles.push_back(temp[i]);
             auto rb = m_paddles[i]->getComponent<RigidBodyComponent>();
             m_moveComps.push_back(std::make_shared<PlayerMoveComponent>(*m_paddles[i], *rb, m_playerIndex));
-            //m_abilityComps.push_back(std::make_shared<PlayerDashComponent>(*m_paddles[i], *rb, m_playerIndex));
             auto coll = m_paddles[i]->getComponent<ColliderComponent>();
             auto sprite = m_paddles[i]->getComponent<SpriteRenderComponent>();
             m_abilityComps.push_back(std::make_shared<PlayerEnlargeComponent>(*m_paddles[i], *rb, *coll, *sprite, m_playerIndex));
+            m_passiveComps.push_back(std::make_shared<HighDensityPassive>(*m_paddles[i]));
+
 		}
 
         m_paddles[1]->addComponent<PlayerMoveComponent>(m_moveComps[1]);
@@ -80,15 +84,17 @@ namespace mmt_gd
         fix2->SetFilterData(m_activeFilterMask);
         m_activeIndex = 1;
 
-        auto coll = m_paddles[1]->getComponent<ColliderComponent>();
-
-        coll->registerOnCollisionFunction(
-            [this](ColliderComponent& self, ColliderComponent& other) 
-            { 
-                GameObject& go = self.getGameObject();
-                GameObject& go2 = other.getGameObject();
-                this->handleCollision(go, go2);
-		});
+        for (auto p : m_paddles)
+        {
+            auto coll = p->getComponent<ColliderComponent>();
+            coll->registerOnCollisionFunction(
+                [this](ColliderComponent& self, ColliderComponent& other)
+                {
+                    GameObject& go  = self.getGameObject();
+                    GameObject& go2 = other.getGameObject();
+                    this->handleCollision(go, go2);
+                });
+        }
 	}
 
 	void Player::update(const float deltaTime)
@@ -100,20 +106,23 @@ namespace mmt_gd
             if (i == m_activeIndex)
                 m_abilityComps[i]->updateInactive(deltaTime);
 
-        for (auto p : m_paddles)
-            p->getComponent<ColliderComponent>()->getFixture()->SetRestitution(0.5f);
+        for (int i = 0; i < m_passiveComps.size(); ++i)
+            if (i == m_activeIndex)
+                return;
+            else if (auto bounce = std::dynamic_pointer_cast<HighBouncePassive>(m_passiveComps[i]))
+                bounce->revert();
 
 	}
 
 	void Player::handleCollision(GameObject& go, GameObject& go2)
     {
-        for (auto paddle : m_paddles)
+        for (int i = 0; i < m_paddles.size(); ++i)
         {
-            GameObject& test = *paddle;
-            if (paddle == m_paddles[m_activeIndex])
+            if (i == m_activeIndex)
                 return;
-            if (&test == &go && go2.getId() == "Puck")
-                go.getComponent<ColliderComponent>()->getFixture()->SetRestitution(2.f);
+            if (m_paddles[i]->getId() == go.getId() && go2.getId() == "Puck")
+                if (auto bounce = std::dynamic_pointer_cast<HighBouncePassive>(m_passiveComps[i]))
+                    bounce->apply();
         }
 	}
 
@@ -139,13 +148,15 @@ namespace mmt_gd
 
 	void Player::switchPaddle()
 	{
-        std::cout << "switch" << std::endl;
         auto go1 = m_paddles[m_activeIndex];
         auto body1 = go1->getComponent<RigidBodyComponent>()->getB2Body();
         body1->SetLinearDamping(0.1f);
         auto fix1 = go1->getComponent<ColliderComponent>()->getFixture();
         fix1->SetRestitution(0.9f);
         fix1->SetFilterData(m_passiveFilterMask);
+        auto move = go1->getComponent<PlayerMoveComponent>();
+        go1->removeComponent(move);
+        m_passiveComps[m_activeIndex]->apply();
 
         if (m_activeIndex == m_paddles.size() - 1)
             m_activeIndex = 0;
@@ -160,6 +171,7 @@ namespace mmt_gd
         auto fix2 = go2->getComponent<ColliderComponent>()->getFixture();
         fix2->SetRestitution(0.7f);
         fix2->SetFilterData(m_activeFilterMask);
+        m_passiveComps[m_activeIndex]->revert();
 	}
 
 	void Player::shutdown()

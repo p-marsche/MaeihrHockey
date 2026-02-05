@@ -215,7 +215,6 @@
     <ClCompile Include="..\src\GameObjectManager.cpp" />
     <ClCompile Include="..\src\HighBouncePassive.cpp" />
     <ClCompile Include="..\src\HighDensityPassive.cpp" />
-    <ClCompile Include="..\src\IPlayerPassiveComponent.cpp" />
     <ClCompile Include="..\src\NoEffectPassive.cpp" />
     <ClCompile Include="..\src\WindowHandler.cpp" />
     <ClCompile Include="..\src\GoalEvent.cpp" />
