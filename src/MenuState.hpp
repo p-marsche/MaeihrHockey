@@ -2,6 +2,7 @@
 
 #include "GameState.hpp"
 
+#include "TGUI/TGUI.hpp"
 #include <SFML/Graphics/Text.hpp>
 
 namespace mmt_gd
@@ -19,8 +20,13 @@ public:
     void exit() override;
 
 private:
+    void handleButtons();
+
     sf::View m_view;
 
     bool m_isInit = false;
+
+    std::array<tgui::Button::Ptr, 3> m_buttons;
+    int                            m_selectedButton;
 };
 } // namespace mmt_gd

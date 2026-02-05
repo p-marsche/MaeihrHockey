@@ -1,20 +1,21 @@
 Group.Buttons {
-    Position = (390, 340);
-    Size = (450, 330);
+    Position = (585, 510);
+    Size = (675, 495);
 
     Renderer {
     }
 
     Button.Start {
-        Position = (50, 30);
-        Size = (350, 70);
+        Position = (75, 45);
+        Size = (525, 105);
         Text = Start;
-        TextSize = 48;
+        TextSize = 72;
 
         Renderer {
             BackgroundColor = #F5F5F5;
             BackgroundColorDisabled = #E6E6E6;
-            BackgroundColorDown = #EBEBEB;
+            BackgroundColorDown = #BFB8BE;
+            BackgroundColorFocused = #FF131352;
             BackgroundColorHover = white;
             BorderColor = #3C3C3C;
             BorderColorDisabled = #7D7D7D;
@@ -40,15 +41,16 @@ Group.Buttons {
     }
 
     Button.Settings {
-        Position = (50, 130);
-        Size = (350, 70);
+        Position = (75, 195);
+        Size = (525, 105);
         Text = Settings;
-        TextSize = 48;
+        TextSize = 72;
 
         Renderer {
             BackgroundColor = #F5F5F5;
             BackgroundColorDisabled = #E6E6E6;
-            BackgroundColorDown = #EBEBEB;
+            BackgroundColorDown = #BFB8BE;
+            BackgroundColorFocused = #FF131352;
             BackgroundColorHover = white;
             BorderColor = #3C3C3C;
             BorderColorDisabled = #7D7D7D;
@@ -74,15 +76,16 @@ Group.Buttons {
     }
 
     Button.Quit {
-        Position = (50, 230);
-        Size = (350, 70);
+        Position = (75, 345);
+        Size = (525, 105);
         Text = Quit;
-        TextSize = 48;
+        TextSize = 72;
 
         Renderer {
             BackgroundColor = #F5F5F5;
             BackgroundColorDisabled = #E6E6E6;
-            BackgroundColorDown = #EBEBEB;
+            BackgroundColorDown = #BFB8BE;
+            BackgroundColorFocused = #FF131352;
             BackgroundColorHover = white;
             BorderColor = #3C3C3C;
             BorderColorDisabled = #7D7D7D;
@@ -109,10 +112,10 @@ Group.Buttons {
 }
 
 Label.Label1 {
-    Position = (215, 100);
-    Size = (850.5, 161);
+    Position = (322.5, 150);
+    Size = (1275.75, 241.5);
     Text = "Mæihr Hockey";
-    TextSize = 120;
+    TextSize = 180;
 
     Renderer {
         BackgroundColor = transparent;
