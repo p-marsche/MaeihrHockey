@@ -152,7 +152,7 @@ sf::SoundBuffer& AssetManager::getSoundBuffer(std::string name)
     if (m_soundBuffers.find(name) != m_soundBuffers.end())
         return *m_soundBuffers[name];
     else
-        throw new AssetNotFoundException("The sound buffer '{name}' could not be found!");
+        std::cerr << "ERROR: Could not get SoundBuffer asset: " << name << std::endl;
 }
 
 sf::Font& AssetManager::getFont(std::string name)
@@ -160,7 +160,7 @@ sf::Font& AssetManager::getFont(std::string name)
     if (m_fonts.find(name) != m_fonts.end())
         return *m_fonts[name];
     else
-        throw new AssetNotFoundException("The font '{name}' could not be found!");
+        std::cerr << "ERROR: Could not get Font asset: " << name << std::endl;
 }
 
 sf::Music& AssetManager::getMusic(std::string name)
@@ -168,7 +168,7 @@ sf::Music& AssetManager::getMusic(std::string name)
     if (m_music.find(name) != m_music.end())
         return *m_music[name];
     else
-        throw new AssetNotFoundException("The music file '{name}' could not be found!");
+        std::cerr << "ERROR: Could not get Music asset: " << name << std::endl;
 }
 
 sf::Image& AssetManager::getImage(std::string name)
@@ -176,7 +176,7 @@ sf::Image& AssetManager::getImage(std::string name)
     if (m_images.find(name) != m_images.end())
         return *m_images[name];
     else
-        throw new AssetNotFoundException("The image file '{name}' could not be found!");
+        std::cerr << "ERROR: Could not get Image asset: " << name << std::endl;
 }
 
 AssetManager::~AssetManager()
