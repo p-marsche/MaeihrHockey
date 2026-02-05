@@ -16,6 +16,7 @@ public:
 
     bool init() override;
     void update(float deltaTime) override;
+    void updateInactive(float deltaTime) override;
 
 private:
     int m_cooldown;
