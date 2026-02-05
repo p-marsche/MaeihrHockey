@@ -68,7 +68,7 @@ namespace mmt_gd
             //m_abilityComps.push_back(std::make_shared<PlayerDashComponent>(*m_paddles[i], *rb, m_playerIndex));
             auto coll = m_paddles[i]->getComponent<ColliderComponent>();
             auto sprite = m_paddles[i]->getComponent<SpriteRenderComponent>();
-            m_abilityComps.push_back(std::make_shared<PlayerEnlargeComponent>(*m_paddles[i], *rb, *coll, *sprite, m_playerIndex);
+            m_abilityComps.push_back(std::make_shared<PlayerEnlargeComponent>(*m_paddles[i], *rb, *coll, *sprite, m_playerIndex));
 		}
 
         m_paddles[1]->addComponent<PlayerMoveComponent>(m_moveComps[1]);
