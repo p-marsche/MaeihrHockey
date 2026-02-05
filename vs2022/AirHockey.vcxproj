@@ -145,6 +145,11 @@
     <ClInclude Include="..\src\Config.hpp" />
     <ClInclude Include="..\src\GameObjectFactory.hpp" />
     <ClInclude Include="..\src\GameState.hpp" />
+    <ClInclude Include="..\src\HighBouncePassive.hpp" />
+    <ClInclude Include="..\src\HighDensityPassive.hpp" />
+    <ClInclude Include="..\src\IPlayerPassiveComponent.hpp" />
+    <ClInclude Include="..\src\NoEffectPassive.hpp" />
+    <ClInclude Include="..\src\PlayerConfig.hpp" />
     <ClInclude Include="..\src\ResizeEvent.hpp" />
     <ClInclude Include="..\src\WindowHandler.hpp" />
     <ClInclude Include="..\src\GoalEvent.hpp" />
@@ -165,7 +170,7 @@
     <ClInclude Include="..\src\IEvent.hpp" />
     <ClInclude Include="..\src\GameObjectManager.hpp" />
     <ClInclude Include="..\src\Player.hpp" />
-    <ClInclude Include="..\src\PlayerAbilityComponent.hpp" />
+    <ClInclude Include="..\src\IPlayerAbilityComponent.hpp" />
     <ClInclude Include="..\src\PlayerDashComponent.hpp" />
     <ClInclude Include="..\src\PlayerEnlargeComponent.hpp" />
     <ClInclude Include="..\src\TransformAnimationCameraShake.hpp" />
@@ -211,11 +216,13 @@
     <ClCompile Include="..\src\GameObjectFactory.cpp" />
     <ClCompile Include="..\src\GameObjectManager.cpp" />
     <ClCompile Include="..\src\ResizeEvent.cpp" />
+    <ClCompile Include="..\src\HighBouncePassive.cpp" />
+    <ClCompile Include="..\src\HighDensityPassive.cpp" />
+    <ClCompile Include="..\src\NoEffectPassive.cpp" />
     <ClCompile Include="..\src\WindowHandler.cpp" />
     <ClCompile Include="..\src\GoalEvent.cpp" />
     <ClCompile Include="..\src\GoalHandler.cpp" />
     <ClCompile Include="..\src\Player.cpp" />
-    <ClCompile Include="..\src\PlayerAbilityComponent.cpp" />
     <ClCompile Include="..\src\PlayerDashComponent.cpp" />
     <ClCompile Include="..\src\HashFunctions.cpp" />
     <ClCompile Include="..\src\TransformAnimationCameraShake.cpp" />

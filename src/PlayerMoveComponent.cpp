@@ -44,6 +44,9 @@ void PlayerMoveComponent::update(const float deltaTime)
         translation.y += speed * deltaTime;
     }
 
+    if (translation.x == 0 && translation.y == 0)
+        return;
+
     auto currVel = PhysicsManager::b2s(m_rigidBody.getB2Body()->GetLinearVelocity());
     auto velMag  = MathUtil::length<float>(currVel);
     if (velMag > MAX_VELOCITY)

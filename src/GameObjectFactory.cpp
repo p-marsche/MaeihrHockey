@@ -60,14 +60,9 @@ GameObject::Ptr GameObjectFactory::createPuck(sf::RenderWindow& window, tson::Ob
     filter.categoryBits = CollisionLayers::OBJECTS;
     filter.maskBits     = CollisionLayers::GOAL_SENSOR | CollisionLayers::OBJECTS | CollisionLayers::WALL;
     fixtureDef.filter   = filter;
-    fixtureDef.restitution = 1.0f;
+    fixtureDef.restitution = 1.f;
 
     auto collider = puck->addComponent<ColliderComponent>(*puck, *rigidBody, fixtureDef);
-
-    // add onCollision func later if we actually need it
-    /*collider->registerOnCollisionFunction([](ColliderComponent& self, ColliderComponent& other) {
-
-		});*/
 
     if (!puck->init())
     {
@@ -96,6 +91,7 @@ GameObject::Ptr GameObjectFactory::createPaddle(sf::RenderWindow& window, tson::
     filter.maskBits     = CollisionLayers::FAKE_WALL | CollisionLayers::OBJECTS | CollisionLayers::WALL |
                       CollisionLayers::PENALTY;
     fixtureDef.filter = filter;
+    fixtureDef.restitution = 0.7f;
 
     auto collider = paddle->addComponent<ColliderComponent>(*paddle, *rigidBody, fixtureDef);
 

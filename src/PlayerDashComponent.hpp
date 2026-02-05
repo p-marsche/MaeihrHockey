@@ -2,12 +2,12 @@
 
 #include "IComponent.hpp"
 #include "RigidBodyComponent.hpp"
-#include "PlayerAbilityComponent.hpp"
+#include "IPlayerAbilityComponent.hpp"
 
 namespace mmt_gd
 {
 
-class PlayerDashComponent final : public PlayerAbilityComponent
+class PlayerDashComponent final : public IPlayerAbilityComponent
 {
 public:
     using ptr = std::shared_ptr<PlayerDashComponent>;

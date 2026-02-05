@@ -6,6 +6,8 @@
 #include "PlayerMoveComponent.hpp"
 #include "SpriteManager.hpp"
 #include "SpriteRenderComponent.hpp"
+#include "IPlayerAbilityComponent.hpp"
+#include "IPlayerPassiveComponent.hpp"
 
 #include <SFML/System/Vector2.hpp>
 
@@ -16,10 +18,11 @@ class Player
 public:
     Player(const int playerIndex, sf::RenderWindow& window);
 
-    void addPaddle(GameObject::Ptr go);
+	void addPaddle(GameObject::Ptr go);
     void startMatch();
     void update(const float deltaTime);
-    void switchPaddle();
+	void switchPaddle();
+    void handleCollision(GameObject& go, GameObject& go2);
 
     int getplayerIndex()
     {
@@ -29,11 +32,17 @@ public:
     void shutdown();
 
 private:
+    void                                                 setupPaddle(int index);
+    void                                                 setupStartingPaddle();
+    void                                                 activatePaddle();
+    void                                                 deactivatePaddle();
     void                                                 createMarkerSprites();
+
     int                                                  m_playerIndex, m_activeIndex;
     std::vector<GameObject::Ptr>                         m_paddles;
     std::vector<std::shared_ptr<PlayerMoveComponent>>    m_moveComps;
-    std::vector<std::shared_ptr<PlayerAbilityComponent>> m_abilityComps;
+    std::vector<std::shared_ptr<IPlayerAbilityComponent>> m_abilityComps;
+    std::vector<std::shared_ptr<IPlayerPassiveComponent>> m_passiveComps;
     std::list<mmt_gd::EventBus::ListenerId>              m_listeners;
     b2Filter                                             m_activeFilterMask, m_passiveFilterMask;
     std::vector<std::shared_ptr<SpriteRenderComponent>>  m_activePaddleMarker;

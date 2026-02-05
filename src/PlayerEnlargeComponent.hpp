@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IComponent.hpp"
-#include "PlayerAbilityComponent.hpp"
+#include "IPlayerAbilityComponent.hpp"
 #include "RigidBodyComponent.hpp"
 #include "ColliderComponent.hpp"
 #include "SpriteRenderComponent.hpp"
@@ -9,7 +9,7 @@
 namespace mmt_gd
 {
 
-class PlayerEnlargeComponent final : public PlayerAbilityComponent
+class PlayerEnlargeComponent final : public IPlayerAbilityComponent
 {
 public:
     using ptr = std::shared_ptr<PlayerEnlargeComponent>;

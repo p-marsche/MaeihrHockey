@@ -1,6 +1,13 @@
 #include "stdafx.h"
 
 #include "Player.hpp"
+#include "PlayerMoveComponent.hpp"
+#include "PlayerDashComponent.hpp"
+#include "PlayerEnlargeComponent.hpp"
+#include "HighDensityPassive.hpp"
+#include "NoEffectPassive.hpp"
+#include "HighBouncePassive.hpp"
+#include "RigidBodyComponent.hpp"
 
 #include "AssetManager.hpp"
 #include "ColliderComponent.hpp"
@@ -8,10 +15,6 @@
 #include "GameObjectEvents.hpp"
 #include "GameObjectFactory.hpp"
 #include "InputManager.hpp"
-#include "PlayerDashComponent.hpp"
-#include "PlayerEnlargeComponent.hpp"
-#include "PlayerMoveComponent.hpp"
-#include "RigidBodyComponent.hpp"
 
 #include <sstream>
 
@@ -64,10 +67,10 @@ void Player::startMatch()
 
     for (auto p : m_paddles)
     {
-        int         length = p->getId().length();
-        std::string idx    = "";
+        int length = p->getId().length();
+        std::string idx = "";
         idx.push_back(p->getId().at(length - 1));
-        int index       = stoi(idx);
+        int index = stoi(idx);
         temp[index - 1] = p;
     }
     m_paddles.clear();
@@ -75,25 +78,48 @@ void Player::startMatch()
     for (int i = 0; i < 3; ++i)
     {
         m_paddles.push_back(temp[i]);
-        auto rb = m_paddles[i]->getComponent<RigidBodyComponent>();
-        m_moveComps.push_back(std::make_shared<PlayerMoveComponent>(*m_paddles[i], *rb, m_playerIndex));
-        //m_abilityComps.push_back(std::make_shared<PlayerDashComponent>(*m_paddles[i], *rb, m_playerIndex));
-        auto coll   = m_paddles[i]->getComponent<ColliderComponent>();
-        auto sprite = m_paddles[i]->getComponent<SpriteRenderComponent>();
-        m_abilityComps.push_back(
-            std::make_shared<PlayerEnlargeComponent>(*m_paddles[i], *rb, *coll, *sprite, m_playerIndex));
+        setupPaddle(i);
     }
 
+    setupStartingPaddle();
+    
+    for (auto p : m_paddles)
+    {
+        auto coll = p->getComponent<ColliderComponent>();
+        coll->registerOnCollisionFunction(
+            [this](ColliderComponent& self, ColliderComponent& other)
+            {
+                GameObject& go  = self.getGameObject();
+                GameObject& go2 = other.getGameObject();
+                this->handleCollision(go, go2);
+            });
+    }
+    createMarkerSprites();
+}
+
+void Player::setupStartingPaddle()
+{
     m_paddles[1]->addComponent<PlayerMoveComponent>(m_moveComps[1]);
-    m_paddles[1]->addComponent<PlayerAbilityComponent>(m_abilityComps[1]);
+    m_paddles[1]->addComponent<IPlayerAbilityComponent>(m_abilityComps[1]);
     auto body2 = m_paddles[1]->getComponent<RigidBodyComponent>()->getB2Body();
     body2->SetLinearDamping(ACTIVE_LINEAR_DAMPENING);
     auto fix2 = m_paddles[1]->getComponent<ColliderComponent>()->getFixture();
     fix2->SetRestitution(ACTIVE_RESTITUTION);
     fix2->SetFilterData(m_activeFilterMask);
     m_activeIndex = 1;
+}
 
-    createMarkerSprites();
+void Player::setupPaddle(int index)
+{
+    auto rb = m_paddles[index]->getComponent<RigidBodyComponent>();
+    m_moveComps.push_back(std::make_shared<PlayerMoveComponent>(*m_paddles[index], *rb, m_playerIndex));
+    //m_abilityComps.push_back(std::make_shared<PlayerDashComponent>(*m_paddles[i], *rb, m_playerIndex));
+    auto coll   = m_paddles[index]->getComponent<ColliderComponent>();
+    auto sprite = m_paddles[index]->getComponent<SpriteRenderComponent>();
+    m_abilityComps.push_back(std::make_shared<PlayerEnlargeComponent>(*m_paddles[index], *rb, *coll, *sprite, m_playerIndex));
+    m_passiveComps.push_back(std::make_shared<HighDensityPassive>(*m_paddles[index]));
+    if (index != 1)
+        m_passiveComps[index]->apply();
 }
 
 void Player::update(const float deltaTime)
@@ -101,9 +127,28 @@ void Player::update(const float deltaTime)
     if (InputManager::getInstance().isActionJustPressed("switch", m_playerIndex))
         switchPaddle();
 
-    for (int i = 0; i < m_abilityComps.size(); ++i)
-        if (i != m_activeIndex)
-            m_abilityComps[i]->updateInactive(deltaTime);
+        for (int i = 0; i < m_abilityComps.size(); ++i)
+            if (i == m_activeIndex)
+                m_abilityComps[i]->updateInactive(deltaTime);
+
+        for (int i = 0; i < m_passiveComps.size(); ++i)
+            if (i == m_activeIndex)
+                return;
+            else if (auto bounce = std::dynamic_pointer_cast<HighBouncePassive>(m_passiveComps[i]))
+                bounce->revert();
+
+}
+
+void Player::handleCollision(GameObject& go, GameObject& go2)
+{
+    for (int i = 0; i < m_paddles.size(); ++i)
+    {
+        if (i == m_activeIndex)
+            return;
+        if (m_paddles[i]->getId() == go.getId() && go2.getId() == "Puck")
+            if (auto bounce = std::dynamic_pointer_cast<HighBouncePassive>(m_passiveComps[i]))
+                bounce->apply();
+    }
 }
 
 void Player::addPaddle(GameObject::Ptr go)
@@ -128,34 +173,44 @@ void Player::addPaddle(GameObject::Ptr go)
 
 void Player::switchPaddle()
 {
-    std::cout << "switch" << std::endl;
-
-    m_activePaddleMarker[m_activeIndex]->setVisibility(false);
-
-    auto go1 = m_paddles[m_activeIndex];
-    go1->removeComponent(m_moveComps[m_activeIndex]);
-    go1->removeComponent(m_abilityComps[m_activeIndex]);
-    auto body1 = go1->getComponent<RigidBodyComponent>()->getB2Body();
-    body1->SetLinearDamping(INACTIVE_LINEAR_DAMPENING);
-    auto fix1 = go1->getComponent<ColliderComponent>()->getFixture();
-    fix1->SetRestitution(INACTIVE_RESTITUTION);
-    fix1->SetFilterData(m_passiveFilterMask);
+    deactivatePaddle();
 
     if (m_activeIndex == m_paddles.size() - 1)
         m_activeIndex = 0;
     else
         m_activeIndex++;
 
+    activatePaddle();
+}
+
+void Player::activatePaddle()
+{
     auto go2 = m_paddles[m_activeIndex];
     go2->addComponent<PlayerMoveComponent>(m_moveComps[m_activeIndex]);
-    go2->addComponent<PlayerAbilityComponent>(m_abilityComps[m_activeIndex]);
+    go2->addComponent<IPlayerAbilityComponent>(m_abilityComps[m_activeIndex]);
     auto body2 = go2->getComponent<RigidBodyComponent>()->getB2Body();
     body2->SetLinearDamping(ACTIVE_LINEAR_DAMPENING);
     auto fix2 = go2->getComponent<ColliderComponent>()->getFixture();
     fix2->SetRestitution(ACTIVE_RESTITUTION);
     fix2->SetFilterData(m_activeFilterMask);
+    m_passiveComps[m_activeIndex]->revert();
 
     m_activePaddleMarker[m_activeIndex]->setVisibility(true);
+}
+
+void Player::deactivatePaddle()
+{
+    m_activePaddleMarker[m_activeIndex]->setVisibility(false);
+
+    auto go1   = m_paddles[m_activeIndex];
+    auto body1 = go1->getComponent<RigidBodyComponent>()->getB2Body();
+    body1->SetLinearDamping(INACTIVE_LINEAR_DAMPENING);
+    auto fix1 = go1->getComponent<ColliderComponent>()->getFixture();
+    fix1->SetRestitution(INACTIVE_RESTITUTION);
+    fix1->SetFilterData(m_passiveFilterMask);
+    auto move = go1->getComponent<PlayerMoveComponent>();
+    go1->removeComponent(move);
+    m_passiveComps[m_activeIndex]->apply();
 }
 
 void Player::shutdown()
