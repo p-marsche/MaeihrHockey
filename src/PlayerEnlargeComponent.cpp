@@ -8,17 +8,14 @@
     namespace mmt_gd
 {
     float constexpr BASE_COOLDOWN    = 3.f;
-    float constexpr BASE_ENLARGE_FACTOR = 2.f;
+    float constexpr BASE_ENLARGE_FACTOR = 1.5f;
     float constexpr BASE_DURATION       = 1.5f;
 
     PlayerEnlargeComponent::PlayerEnlargeComponent(GameObject & gameObject, RigidBodyComponent & rigidBody, 
         ColliderComponent& coll, SpriteRenderComponent& sprite, const int playerIndex) :
-    IComponent(gameObject),
-    m_playerIndex(playerIndex),
-    m_rigidBody(rigidBody),
+    PlayerAbilityComponent(gameObject, rigidBody, playerIndex),
     m_collider(coll),
     m_sprite(sprite),
-    m_cdTimer(0.f),
     m_cooldown(BASE_COOLDOWN),
     m_enlargeFactor(BASE_ENLARGE_FACTOR),
     m_durationTotal(BASE_DURATION),
@@ -46,9 +43,12 @@
             m_endDuration = true;
         }
 
-        
-        if (InputManager::getInstance().isActionJustPressed("Enlarge", m_playerIndex))
+        if (m_cdTimer > 0.f)
+            return;
+
+        if (InputManager::getInstance().isActionJustPressed("ability", m_playerIndex))
         {
+            std::cout << "dash" << std::endl;
             changeSize(true);
             m_cdTimer = m_cooldown + m_durationTotal;
             m_durationTimer = m_durationTotal;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IComponent.hpp"
+#include "PlayerAbilityComponent.hpp"
 #include "RigidBodyComponent.hpp"
 #include "ColliderComponent.hpp"
 #include "SpriteRenderComponent.hpp"
@@ -8,7 +9,7 @@
 namespace mmt_gd
 {
 
-class PlayerEnlargeComponent : public IComponent
+class PlayerEnlargeComponent final : public PlayerAbilityComponent
 {
 public:
     using ptr = std::shared_ptr<PlayerEnlargeComponent>;
@@ -21,11 +22,10 @@ public:
     void changeSize(bool enlareg);
 
 private:
-    int   m_playerIndex, m_cooldown;
-    float m_cdTimer, m_enlargeFactor, m_durationTimer, m_durationTotal;
+    int   m_cooldown;
+    float m_enlargeFactor, m_durationTimer, m_durationTotal;
     bool  m_endDuration;
 
-    RigidBodyComponent& m_rigidBody;
     ColliderComponent&  m_collider;
     SpriteRenderComponent& m_sprite;
 };
