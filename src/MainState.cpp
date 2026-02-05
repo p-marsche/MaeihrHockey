@@ -128,6 +128,8 @@ void MainState::init()
 
     for (auto& p : m_players)
         p->startMatch();
+
+    updateTimer(0.f);
 }
 
 void MainState::update(const float deltaTime)
@@ -188,28 +190,27 @@ void MainState::handleGoal(int playerIndex)
     if (playerIndex < 1 || playerIndex > 2)
         std::cout << "Scoring player non existent" << std::endl;
 
-    int currScore = 0;
-    if (playerIndex == 1)
-    {
-        currScore = stoi(m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score2")->getText().toStdString());
-        currScore++;
-        m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score2")->setText(tgui::String(currScore));
-    }
-    else if (playerIndex == 2)
-    {
-        currScore = stoi(m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score1")->getText().toStdString());
-        currScore++;
-        m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score1")->setText(tgui::String(currScore));
-    }
+    int currScore = (playerIndex == 1) ? updateScore(2) : updateScore(1);
     m_scored   = true;
     m_goalTime = 0.f;
     m_guiGroups.at("Goal")->setVisible(true);
+
+    currScore = 10;
 
     if (currScore > 9)
     {
         exit();
         init();
     }
+}
+
+int MainState::updateScore(int sideIndex)
+{
+    std::string label     = "Score" + std::to_string(sideIndex);
+    int currScore = stoi(m_guiGroups.at("Scoreboard")->get<tgui::Label>(label)->getText().toStdString());
+    currScore++;
+    m_guiGroups.at("Scoreboard")->get<tgui::Label>(label)->setText(tgui::String(currScore));
+    return currScore;
 }
 
 void MainState::draw()

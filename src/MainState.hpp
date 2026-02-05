@@ -34,6 +34,7 @@ private:
     void                                    activateCameraShake();
     void                                    updateCamera();
     void                                    loadAssets();
+    int                                     updateScore(int sideIndex);
 
     SpriteManager                           m_spriteManager;
     GameObjectManager                       m_gameObjectManager;

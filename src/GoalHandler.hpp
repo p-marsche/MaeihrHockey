@@ -20,7 +20,7 @@ namespace mmt_gd
 		std::array<sf::Vector2f, 2> m_spawns;
 		std::list<mmt_gd::EventBus::ListenerId> m_listeners;
         bool                                    m_goalNoticed;
-        int                                     m_respawnSide;
+        int                                     m_respawnSide, m_score1, m_score2;
         float                                   m_resetTimer;
 	};
 }

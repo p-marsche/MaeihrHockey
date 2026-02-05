@@ -8,7 +8,8 @@
 
 namespace mmt_gd
 {
-constexpr float RESET_DELAY = 2.0f;
+float constexpr RESET_DELAY = 2.0f;
+int constexpr MAX_SCORE     = 9;
 
 	GoalHandler::GoalHandler()
 		: m_puck(nullptr)
@@ -16,6 +17,8 @@ constexpr float RESET_DELAY = 2.0f;
 		, m_goalNoticed(false)
 		, m_respawnSide(0)
 		, m_resetTimer(0)
+		, m_score1(0)
+		, m_score2(0)
 	{
 		// subscribe to creation events
 		const EventBus::ListenerId
@@ -65,10 +68,23 @@ constexpr float RESET_DELAY = 2.0f;
                 m_resetTimer += deltaTime;
             else
             {
-                handleGoal(m_respawnSide);
                 m_goalNoticed = false;
-                m_respawnSide = 0;
                 m_resetTimer  = 0;
+				if (m_respawnSide == 1)
+				{
+                    m_score1++;
+                    if (m_score1 > MAX_SCORE)
+                        return;
+				}
+				else
+				{
+                    m_score2++;
+                    if (m_score2 > MAX_SCORE)
+                        return;
+				}
+             
+                handleGoal(m_respawnSide);
+                m_respawnSide = 0;
 			}
 		}
 	}
