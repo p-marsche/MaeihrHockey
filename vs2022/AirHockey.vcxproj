@@ -140,7 +140,6 @@
     <ClInclude Include="../src/stdafx.h" />
     <ClInclude Include="..\src\Action.hpp" />
     <ClInclude Include="..\src\AssetManager.hpp" />
-    <ClInclude Include="..\src\BulletPool.hpp" />
     <ClInclude Include="..\src\ColliderComponent.hpp" />
     <ClInclude Include="..\src\Config.hpp" />
     <ClInclude Include="..\src\GameObjectFactory.hpp" />

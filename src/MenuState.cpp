@@ -43,19 +43,23 @@ void MenuState::init()
                 std::string name            = btn->getWidgetName().toStdString();
 
                 if (name == "Start")
-                    btn->onPress([&manager = m_gameStateManager] { manager->setState("MainState"); });
+                {
+                    //btn->onPress([&manager = m_gameStateManager] { manager->setState("MainState"); });
+                    w->getSignal("Pressed").connect([&manager = m_gameStateManager] { manager->setState("MainState"); });
+                }
                 else if (name == "Settings")
                     continue;
                 //btn->onPress([&manager = m_gameStateManager] { manager->setState("Settings"); });
                 else if (name == "Quit")
-                    btn->onPress([&game = m_game] { game->getWindow().close(); });
+                {
+                    //btn->onPress([&game = m_game] { game->getWindow().close(); });
+                    w->getSignal("Pressed").connect([&game = m_game] { game->getWindow().close(); });
+                }
             }
         }
         m_selectedButton = 0;
         m_buttons[m_selectedButton]->setFocused(true);
     }
-
-    // SIGNALLLLL??????
 }
 
 void MenuState::update(float delta)
@@ -84,14 +88,20 @@ void MenuState::exit()
 void MenuState::handleButtons()
 {
     int prevSelected = m_selectedButton;
-    if (InputManager::getInstance().isActionJustPressed("down") 
-        || InputManager::getInstance().isActionJustPressed("right"))
+    if (InputManager::getInstance().isActionJustPressed("down") ||
+        InputManager::getInstance().isActionJustPressed(
+            "rig"
+            "h"
+            "t"))
         m_selectedButton++;
     else if (InputManager::getInstance().isActionJustPressed("up") ||
              InputManager::getInstance().isActionJustPressed("left"))
         m_selectedButton--;
     else if (InputManager::getInstance().isActionJustPressed("switch"))
-        std::cout << "press" << std::endl;
+    {
+        auto widget = m_game->getGui().get(m_buttons[m_selectedButton]->getWidgetName());
+        widget->getSignal("Pressed").emit(widget.get());
+    }
 
     if (prevSelected != m_selectedButton)
     {
