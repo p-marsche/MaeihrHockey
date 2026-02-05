@@ -24,11 +24,11 @@ bool PlayerDashComponent::init()
 
 void PlayerDashComponent::update(const float deltaTime)
 {
-    /*if (m_cdTimer > 0.f)
+    if (m_cdTimer > 0.f)
     {
         m_cdTimer -= deltaTime;
         return;
-    }*/
+    }
     if (InputManager::getInstance().isActionJustPressed("ability", m_playerIndex))
     {
         auto sfVec = PhysicsManager::b2s(m_rigidBody.getB2Body()->GetLinearVelocity());
@@ -37,4 +37,14 @@ void PlayerDashComponent::update(const float deltaTime)
         m_cdTimer = m_cooldown;
     }
 }
+
+void PlayerDashComponent::updateInactive(float deltaTime)
+{
+    if (m_cdTimer > 0.f)
+    {
+        m_cdTimer -= deltaTime;
+        return;
+    }
+}
+
 } // namespace mmt_gd

@@ -24,6 +24,11 @@ public:
         return;
     };
 
+    void virtual updateInactive(float deltaTime)
+    {
+        return;
+    }
+
 protected:
     int   m_playerIndex;
     float m_cdTimer;
