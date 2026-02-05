@@ -42,10 +42,13 @@ void PlayerMoveComponent::update(const float deltaTime)
         translation.y += speed * deltaTime;
     }
 
+    /*if (translation.x != 0 && translation.y != 0)
+        translation *= 0.7f;*/
+
     auto currVel = PhysicsManager::b2s(m_rigidBody.getB2Body()->GetLinearVelocity());
     auto temp    = sf::Vector2f();
-    temp.x       = (currVel.x * translation.x > 0) ? 0 : (SLOW_FACTOR * currVel.x * deltaTime);
-    temp.y       = (currVel.y * translation.y > 0) ? 0 : (SLOW_FACTOR * currVel.y * deltaTime);
-    m_rigidBody.addVelocity(translation + temp);
+    temp.x       = (currVel.x * translation.x > 0) ? 0 : (currVel.x);
+    temp.y       = (currVel.y * translation.y > 0) ? 0 : (currVel.y);
+    m_rigidBody.addVelocity(translation - temp * SLOW_FACTOR * deltaTime);
 }
 } // namespace mmt_gd
