@@ -19,6 +19,7 @@
 
 namespace mmt_gd
 {
+int constexpr ROUND_LENGTH             = 180;
 float constexpr GOAL_TIME                = 1.8f;
 float constexpr CAMERA_SHAKE_MAGNITUDE_X = 20.f;
 float constexpr CAMERA_SHAKE_MAGNITUDE_Y = 10.f;
@@ -32,7 +33,7 @@ m_players()
     initGui();
 
     for (int i = 0; i < playerCount; ++i)
-        m_players.push_back(std::make_shared<Player>(i));
+        m_players.push_back(std::make_shared<Player>(i, m_game->getWindow()));
 
     const auto goalListenerId = EventBus::getInstance()
                                     .addListener(GoalEvent::Type,
@@ -79,13 +80,14 @@ void MainState::init()
     m_guiGroups.at("Scoreboard")->setVisible(true);
     m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score1")->setText(tgui::String(0));
     m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score2")->setText(tgui::String(0));
-    m_timerSeconds = 180;
+    m_timerSeconds = ROUND_LENGTH;
     m_accumulator  = 0.f;
     updateTimer(0);
 
     m_gameObjectManager.init();
     m_spriteManager.init();
     m_physicsManager.init();
+    loadAssets();
 
     // Load tile map
     tson::Tileson tileson;
@@ -256,5 +258,10 @@ void MainState::updateCamera()
     camera->removeComponent(camera->getComponent<CameraRenderComponent>());
     const auto renderComponent = camera->addComponent<CameraRenderComponent>(*camera, m_game->getWindow(), m_game->getWindow().getView());
     m_spriteManager.setCamera(renderComponent.get());
+}
+
+void MainState::loadAssets()
+{
+    AssetManager::getInstance().loadTexture("Selected Marker", "selected_marker.png");
 }
 } // namespace mmt_gd

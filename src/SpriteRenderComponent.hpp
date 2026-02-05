@@ -14,7 +14,7 @@ public:
 
     SpriteRenderComponent(GameObject&       gameObject,
                           sf::RenderWindow& renderWindow,
-                          sf::Texture&       texture,
+                          sf::Texture&      texture,
                           std::string       layerName,
                           sf::IntRect       textureRect = sf::IntRect());
 
