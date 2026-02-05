@@ -22,26 +22,15 @@ void MenuState::init()
         return;
     }
 
-    if (!m_font.loadFromFile("../assets/arial.ttf"))
-    {
-        sf::err() << "Could not load font\n";
-        return;
-    }
-    m_text.setPosition(m_game->getWindow().getView().getCenter());
-    m_text.setString("Press space to continue");
-    m_text.setFillColor(sf::Color::White);
-    m_text.setFont(m_font);
-    m_text.setOrigin(m_text.getLocalBounds().width * 0.5F, m_text.getLocalBounds().height * 0.5F);
-
     m_view = m_game->getWindow().getView();
 
     m_isInit = true;
 
 
     // LoadGui
-    m_game->getGui().loadWidgetsFromFile("../assets/demoTgui.txt");
+    m_game->getGui().loadWidgetsFromFile("../assets/main_menu.txt");
 
-    if (const auto btn = dynamic_pointer_cast<tgui::Button>(m_game->getGui().get("StartGameBtn")))
+    if (const auto btn = dynamic_pointer_cast<tgui::Button>(m_game->getGui().get("Start")))
     {
         btn->onClick([&manager = m_gameStateManager] { manager->setState("MainState"); });
     }
@@ -62,8 +51,6 @@ void MenuState::update(float delta)
 void MenuState::draw()
 {
     PROFILE_FUNCTION();
-
-    m_game->getWindow().draw(m_text);
 }
 
 void MenuState::exit()

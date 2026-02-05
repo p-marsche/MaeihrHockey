@@ -19,8 +19,6 @@ public:
     void exit() override;
 
 private:
-    sf::Text m_text;
-    sf::Font m_font;
     sf::View m_view;
 
     bool m_isInit = false;

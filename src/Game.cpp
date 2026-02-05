@@ -115,7 +115,7 @@ bool Game::init()
     m_inputManager->setRenderWindow(&m_windowHandler.m_window);
     m_inputManager->bind("fullscreen", sf::Keyboard::F11);
 
-    m_gameStateManager.setState("MainState"); // DONT FORGET TO CHANGE BACK
+    m_gameStateManager.setState("MenuState"); // DONT FORGET TO CHANGE BACK
 
     return true;
 }
