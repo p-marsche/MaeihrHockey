@@ -163,7 +163,7 @@
     <ClInclude Include="..\src\IEvent.hpp" />
     <ClInclude Include="..\src\GameObjectManager.hpp" />
     <ClInclude Include="..\src\Player.hpp" />
-    <ClInclude Include="..\src\PlayerAbilityComponent.hpp" />
+    <ClInclude Include="..\src\IPlayerAbilityComponent.hpp" />
     <ClInclude Include="..\src\PlayerDashComponent.hpp" />
     <ClInclude Include="..\src\PlayerEnlargeComponent.hpp" />
     <ClInclude Include="..\src\TransformAnimationCameraShake.hpp" />
@@ -211,7 +211,6 @@
     <ClCompile Include="..\src\GoalEvent.cpp" />
     <ClCompile Include="..\src\GoalHandler.cpp" />
     <ClCompile Include="..\src\Player.cpp" />
-    <ClCompile Include="..\src\PlayerAbilityComponent.cpp" />
     <ClCompile Include="..\src\PlayerDashComponent.cpp" />
     <ClCompile Include="..\src\HashFunctions.cpp" />
     <ClCompile Include="..\src\TransformAnimationCameraShake.cpp" />

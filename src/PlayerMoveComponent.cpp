@@ -42,6 +42,9 @@ void PlayerMoveComponent::update(const float deltaTime)
         translation.y += speed * deltaTime;
     }
 
+    if (translation.x == 0 && translation.y == 0)
+        return;
+
     auto currVel = PhysicsManager::b2s(m_rigidBody.getB2Body()->GetLinearVelocity());
     auto temp    = sf::Vector2f();
     temp.x       = (currVel.x * translation.x > 0) ? 0 : (SLOW_FACTOR * currVel.x * deltaTime);

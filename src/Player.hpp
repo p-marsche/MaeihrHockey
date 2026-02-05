@@ -3,7 +3,7 @@
 #include "GameObject.hpp"
 #include "EventBus.hpp"
 #include "PlayerMoveComponent.hpp"
-#include "PlayerAbilityComponent.hpp"
+#include "IPlayerAbilityComponent.hpp"
 #include <SFML/System/Vector2.hpp>
 
 namespace mmt_gd
@@ -29,7 +29,7 @@ namespace mmt_gd
         int										m_playerIndex, m_activeIndex;
 		std::vector<GameObject::Ptr>			m_paddles;
         std::vector<std::shared_ptr<PlayerMoveComponent>> m_moveComps;
-        std::vector<std::shared_ptr<PlayerAbilityComponent>> m_abilityComps;
+        std::vector<std::shared_ptr<IPlayerAbilityComponent>> m_abilityComps;
 		std::list<mmt_gd::EventBus::ListenerId> m_listeners;
         b2Filter                                m_activeFilterMask, m_passiveFilterMask;
 	};

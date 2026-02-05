@@ -13,7 +13,7 @@
 
     PlayerEnlargeComponent::PlayerEnlargeComponent(GameObject & gameObject, RigidBodyComponent & rigidBody, 
         ColliderComponent& coll, SpriteRenderComponent& sprite, const int playerIndex) :
-    PlayerAbilityComponent(gameObject, rigidBody, playerIndex),
+    IPlayerAbilityComponent(gameObject, rigidBody, playerIndex),
     m_collider(coll),
     m_sprite(sprite),
     m_cooldown(BASE_COOLDOWN),
@@ -48,7 +48,6 @@
 
         if (InputManager::getInstance().isActionJustPressed("ability", m_playerIndex))
         {
-            std::cout << "dash" << std::endl;
             changeSize(true);
             m_cdTimer = m_cooldown + m_durationTotal;
             m_durationTimer = m_durationTotal;
