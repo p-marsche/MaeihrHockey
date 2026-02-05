@@ -42,7 +42,7 @@ void Game::run()
                     m_windowHandler.m_window.close();
                     return;
                 }
-                else if (sf::Event::Resized)
+                else if (event.type == sf::Event::Resized)
                     m_windowHandler.resizeWindow();
 
                 m_inputManager->process(event);
