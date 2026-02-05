@@ -40,6 +40,11 @@ bool TsonPropertyReader::isSensor(tson::Object& obj)
     return getProperty<bool>(obj, "Sensor");
 }
 
+std::string TsonPropertyReader::getWallSide(tson::Object& obj)
+{
+    return getProperty<std::string>(obj, "WallSide");
+}
+
 void TsonPropertyReader::propertyMissingNotice(std::string objName, std::string property)
 {
     std::clog << "ERROR: tson::Object " << objName << " does not contain property \"" << property

@@ -33,6 +33,8 @@ void GameObjectFactory::createGameObject(sf::RenderWindow& window, tson::Object&
         ptr = createGoalsensor(window, obj);
     else if (objType == "PuckSpawn")
         ptr = createPuckSpawn(window, obj);
+    else if (objType == "ExtraWall")
+        ptr = createExtraWall(window, obj);
     else
     {
         std::cerr << "ERROR: GameObjectFactory::createGameObject: Unknown object type \"" << objType << "\"";
@@ -58,7 +60,8 @@ GameObject::Ptr GameObjectFactory::createPuck(sf::RenderWindow& window, tson::Ob
     b2FixtureDef fixtureDef = createFixtureDef(obj);
     b2Filter     filter;
     filter.categoryBits = CollisionLayers::OBJECTS;
-    filter.maskBits     = CollisionLayers::GOAL_SENSOR | CollisionLayers::OBJECTS | CollisionLayers::WALL;
+    filter.maskBits     = CollisionLayers::GOAL_SENSOR | CollisionLayers::OBJECTS | 
+        CollisionLayers::WALL | CollisionLayers::PUCK_WALL;
     fixtureDef.filter   = filter;
     fixtureDef.restitution = 1.f;
 
@@ -94,13 +97,6 @@ GameObject::Ptr GameObjectFactory::createPaddle(sf::RenderWindow& window, tson::
     fixtureDef.restitution = 0.7f;
 
     auto collider = paddle->addComponent<ColliderComponent>(*paddle, *rigidBody, fixtureDef);
-
-    //paddle->addComponent<PlayerMoveComponent>(*paddle, *rigidBody, playerIndex);
-
-    // add onCollision func later if we actually need it
-    /*collider->registerOnCollisionFunction([](ColliderComponent& self, ColliderComponent& other) {
-
-		});*/
 
     if (!paddle->init())
     {
@@ -159,12 +155,6 @@ GameObject::Ptr GameObjectFactory::createNeutralzone(sf::RenderWindow& window, t
 {
     auto neutral = createObject(obj);
 
-    /*std::string textureKey = TsonPropertyReader::getTexture(obj);
-		sf::Texture tex = AssetManager::getInstance().getTexture(textureKey);
-		auto spriteComp = wall->addComponent<SpriteRenderComponent>(
-			*paddle, window, tex, "GameObjects",
-			sf::IntRect(0, 0, 0, 0));*/
-
     auto rigidBody = neutral->addComponent<RigidBodyComponent>(*neutral, b2_staticBody);
 
     b2FixtureDef fixtureDef = createFixtureDef(obj);
@@ -172,13 +162,49 @@ GameObject::Ptr GameObjectFactory::createNeutralzone(sf::RenderWindow& window, t
     filter.categoryBits = CollisionLayers::FAKE_WALL;
     filter.maskBits     = CollisionLayers::OBJECTS;
     fixtureDef.filter   = filter;
+    
+
+    /*fixtureDef.isSensor = true;*/
 
     auto collider = neutral->addComponent<ColliderComponent>(*neutral, *rigidBody, fixtureDef);
 
-    // add onCollision func later if we actually need it
-    /*collider->registerOnCollisionFunction([](ColliderComponent& self, ColliderComponent& other) {
-
+    /*collider->registerOnCollisionFunction([](ColliderComponent& self, ColliderComponent& other) 
+        { 
+            other.getBody().getB2Body()->ApplyLinearImpulseToCenter(b2Vec2(50.f, 0.f), true);
 		});*/
+
+    if (!neutral->init())
+    {
+        sf::err() << "Could not initialize wall \n";
+    }
+
+    EventBus::getInstance().fireEvent(std::make_shared<GameObjectCreateEvent>(neutral));
+
+    return neutral;
+}
+
+GameObject::Ptr GameObjectFactory::createExtraWall(sf::RenderWindow& window, tson::Object& obj)
+{
+    auto neutral = createObject(obj);
+
+    auto rigidBody = neutral->addComponent<RigidBodyComponent>(*neutral, b2_staticBody);
+
+    b2FixtureDef fixtureDef = createFixtureDef(obj);
+    b2Filter     filter;
+    filter.categoryBits = CollisionLayers::PUCK_WALL;
+    filter.maskBits     = CollisionLayers::OBJECTS;
+    fixtureDef.filter   = filter;
+
+    fixtureDef.isSensor = true;
+
+    auto collider = neutral->addComponent<ColliderComponent>(*neutral, *rigidBody, fixtureDef);
+
+    int dir = (TsonPropertyReader::getWallSide(obj) == "Top") ? (-5) : 5; 
+
+    collider->registerOnCollisionFunction([](ColliderComponent& self, ColliderComponent& other) 
+        { 
+            other.getBody().getB2Body()->ApplyLinearImpulseToCenter(b2Vec2(0.f, 5.f), true);
+		});
 
     if (!neutral->init())
     {

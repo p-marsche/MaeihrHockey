@@ -15,6 +15,7 @@ namespace mmt_gd
         static GameObject::Ptr createPaddle(sf::RenderWindow& window, tson::Object& obj);
         static GameObject::Ptr createWall(sf::RenderWindow& window, tson::Object& obj);
         static GameObject::Ptr createNeutralzone(sf::RenderWindow& window, tson::Object& obj);
+        static GameObject::Ptr createExtraWall(sf::RenderWindow& window, tson::Object& obj);
         static GameObject::Ptr createPenaltyarea(sf::RenderWindow& window, tson::Object& obj);
         static GameObject::Ptr createGoalsensor(sf::RenderWindow& window, tson::Object& obj);
         static GameObject::Ptr createGoalbarrier(sf::RenderWindow& window, tson::Object& obj);
@@ -34,7 +35,8 @@ namespace mmt_gd
         FAKE_WALL       = 0x0002,
         PENALTY         = 0x0004,
         GOAL_SENSOR     = 0x0008,
-        OBJECTS         = 0x0010
+        OBJECTS         = 0x0010,
+        PUCK_WALL       = 0x0020
     };
 
 
