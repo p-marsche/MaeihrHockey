@@ -194,14 +194,6 @@ void MainState::handleGoal(int playerIndex)
     m_scored   = true;
     m_goalTime = 0.f;
     m_guiGroups.at("Goal")->setVisible(true);
-
-    currScore = 10;
-
-    if (currScore > 9)
-    {
-        exit();
-        init();
-    }
 }
 
 int MainState::updateScore(int sideIndex)

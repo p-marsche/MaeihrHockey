@@ -127,16 +127,15 @@ void Player::update(const float deltaTime)
     if (InputManager::getInstance().isActionJustPressed("switch", m_playerIndex))
         switchPaddle();
 
-        for (int i = 0; i < m_abilityComps.size(); ++i)
-            if (i == m_activeIndex)
-                m_abilityComps[i]->updateInactive(deltaTime);
+    for (int i = 0; i < m_abilityComps.size(); ++i)
+        if (i == m_activeIndex)
+            m_abilityComps[i]->updateInactive(deltaTime);
 
-        for (int i = 0; i < m_passiveComps.size(); ++i)
-            if (i == m_activeIndex)
-                return;
-            else if (auto bounce = std::dynamic_pointer_cast<HighBouncePassive>(m_passiveComps[i]))
-                bounce->revert();
-
+    for (int i = 0; i < m_passiveComps.size(); ++i)
+        if (i == m_activeIndex)
+            return;
+        else if (auto bounce = std::dynamic_pointer_cast<HighBouncePassive>(m_passiveComps[i]))
+            bounce->revert();
 }
 
 void Player::handleCollision(GameObject& go, GameObject& go2)
