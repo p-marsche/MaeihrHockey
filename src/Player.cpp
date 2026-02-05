@@ -71,10 +71,10 @@ void Player::startMatch()
 
     for (auto p : m_paddles)
     {
-        int         length = p->getId().length();
-        std::string idx    = "";
+        int length = p->getId().length();
+        std::string idx = "";
         idx.push_back(p->getId().at(length - 1));
-        int index       = stoi(idx);
+        int index = stoi(idx);
         temp[index - 1] = p;
     }
     m_paddles.clear();
@@ -90,6 +90,8 @@ void Player::startMatch()
         m_abilityComps.push_back(
             std::make_shared<PlayerEnlargeComponent>(*m_paddles[i], *rb, *coll, *sprite, m_playerIndex));
         m_passiveComps.push_back(std::make_shared<HighDensityPassive>(*m_paddles[i]));
+        if (i != 1)
+            m_passiveComps[i]->apply();
     }
 
         m_paddles[1]->addComponent<PlayerMoveComponent>(m_moveComps[1]);
