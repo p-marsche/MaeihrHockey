@@ -21,11 +21,10 @@ public:
     void update(float deltaTime) override;
     void draw() override;
 
-    void initGui() override;
-    void updateTimer(const float deltaTime);
-    void handleGoal(int playerIndex);
-
 private:
+    void                                    initGui() override;
+    void                                    updateTimer(const float deltaTime);
+    void                                    handleGoal(int playerIndex);
     void                                    activateCameraShake();
     void                                    updateCamera();
     void                                    loadAssets();

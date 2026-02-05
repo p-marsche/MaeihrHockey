@@ -149,6 +149,7 @@
     <ClInclude Include="..\src\HighDensityPassive.hpp" />
     <ClInclude Include="..\src\IPlayerPassiveComponent.hpp" />
     <ClInclude Include="..\src\NoEffectPassive.hpp" />
+    <ClInclude Include="..\src\PlayerConfig.hpp" />
     <ClInclude Include="..\src\ResizeEvent.hpp" />
     <ClInclude Include="..\src\WindowHandler.hpp" />
     <ClInclude Include="..\src\GoalEvent.hpp" />
