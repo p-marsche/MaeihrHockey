@@ -100,7 +100,7 @@ void MainState::init()
                                                                              m_game->getWindow().getView());
     camera->setPosition(sf::Vector2f(m_game->getWindow().getSize().x / 2, m_game->getWindow().getSize().y / 2));
 
-    m_cameraShake = std::make_shared<TransformAnimationCameraShake>(CAMERA_SHAKE_ANGLE, CAMERA_SHAKE_DURATION);
+    m_cameraShake = std::make_shared<TransformAnimationCameraShake>(sf::Vector2f(0,0), CAMERA_SHAKE_DURATION);
     camera->addComponent<TransformAnimationComponent>(*camera, m_cameraShake);
 
     if (!camera->init())

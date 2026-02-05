@@ -1,16 +1,26 @@
 #include "stdafx.h"
 
-#include "GoalEvent.hpp"
 #include "TransformAnimationCameraShake.hpp"
+
+#include "GoalEvent.hpp"
 
 namespace mmt_gd
 {
-TransformAnimationCameraShake::TransformAnimationCameraShake(float maxAngle, float duration) :
-m_maxAngle(maxAngle),
+TransformAnimationCameraShake::TransformAnimationCameraShake(sf::Vector2f magnitude, float duration) :
 m_duration(duration),
 m_accumulator(0),
-m_shake(false)
+m_shake(false),
+m_count(0)
 {
+    magnitude.x      = std::abs(magnitude.x);
+    magnitude.y      = std::abs(magnitude.y);
+    m_magnitude[0]   = magnitude;
+    m_magnitude[1].x = -2 * magnitude.x;
+    m_magnitude[1].y = 0;
+    m_magnitude[2].x = 0;
+    m_magnitude[2].y = -2 * magnitude.y;
+    m_magnitude[3].x = 2 * magnitude.x;
+    m_magnitude[3].y = 0;
 }
 
 void TransformAnimationCameraShake::update(float deltaTime, sf::Transformable& transform)
@@ -21,11 +31,15 @@ void TransformAnimationCameraShake::update(float deltaTime, sf::Transformable& t
         {
             m_accumulator = 0;
             m_shake       = false;
+            m_count       = 0;
             transform.setRotation(0);
         }
-        transform.rotate(m_maxAngle);
-        //m_maxAngle = -m_maxAngle;
+
+        
+
         m_accumulator += deltaTime;
+        m_count++;
+        m_count = m_count % sizeof(m_magnitude) / sizeof(*m_magnitude);
     }
 }
 } // namespace mmt_gd
