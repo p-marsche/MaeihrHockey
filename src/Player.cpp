@@ -76,9 +76,19 @@ namespace mmt_gd
         auto body2 = m_paddles[1]->getComponent<RigidBodyComponent>()->getB2Body();
         body2->SetLinearDamping(0.2f);
         auto fix2 = m_paddles[1]->getComponent<ColliderComponent>()->getFixture();
-        fix2->SetRestitution(0.2f);
+        fix2->SetRestitution(0.7f);
         fix2->SetFilterData(m_activeFilterMask);
         m_activeIndex = 1;
+
+        auto coll = m_paddles[1]->getComponent<ColliderComponent>();
+
+        coll->registerOnCollisionFunction(
+            [this](ColliderComponent& self, ColliderComponent& other) 
+            { 
+                GameObject& go = self.getGameObject();
+                GameObject& go2 = other.getGameObject();
+                this->handleCollision(go, go2);
+		});
 	}
 
 	void Player::update(const float deltaTime)
@@ -87,8 +97,24 @@ namespace mmt_gd
             switchPaddle();
 
         for (int i = 0; i < m_abilityComps.size(); ++i)
-            if (i != m_activeIndex)
+            if (i == m_activeIndex)
                 m_abilityComps[i]->updateInactive(deltaTime);
+
+        for (auto p : m_paddles)
+            p->getComponent<ColliderComponent>()->getFixture()->SetRestitution(0.5f);
+
+	}
+
+	void Player::handleCollision(GameObject& go, GameObject& go2)
+    {
+        for (auto paddle : m_paddles)
+        {
+            GameObject& test = *paddle;
+            if (paddle == m_paddles[m_activeIndex])
+                return;
+            if (&test == &go && go2.getId() == "Puck")
+                go.getComponent<ColliderComponent>()->getFixture()->SetRestitution(2.f);
+        }
 	}
 
 	void Player::addPaddle(GameObject::Ptr go)
@@ -114,10 +140,7 @@ namespace mmt_gd
 	void Player::switchPaddle()
 	{
         std::cout << "switch" << std::endl;
-
         auto go1 = m_paddles[m_activeIndex];
-        go1->removeComponent(m_moveComps[m_activeIndex]);
-        go1->removeComponent(m_abilityComps[m_activeIndex]);
         auto body1 = go1->getComponent<RigidBodyComponent>()->getB2Body();
         body1->SetLinearDamping(0.1f);
         auto fix1 = go1->getComponent<ColliderComponent>()->getFixture();

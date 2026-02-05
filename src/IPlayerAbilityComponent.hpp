@@ -27,6 +27,10 @@ public:
     {
         return;
     }
+    void virtual updateInactive(float deltaTime)
+    {
+        return;
+    }
 
     void virtual activate()
     {

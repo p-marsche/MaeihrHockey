@@ -17,6 +17,7 @@ namespace mmt_gd
         void startMatch();
         void update(const float deltaTime);
 		void switchPaddle();
+        void handleCollision(GameObject& go, GameObject& go2);
 
         int  getplayerIndex()
         {
