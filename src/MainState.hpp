@@ -2,10 +2,11 @@
 
 #include "GameObjectManager.hpp"
 #include "GameState.hpp"
-#include "PhysicsManager.hpp"
-#include "SpriteManager.hpp"
 #include "GoalHandler.hpp"
+#include "ITransformAnimation.hpp"
+#include "PhysicsManager.hpp"
 #include "Player.hpp"
+#include "SpriteManager.hpp"
 
 namespace mmt_gd
 {
@@ -25,6 +26,7 @@ public:
     void handleGoal(int playerIndex);
 
 private:
+    void                                    activateCameraShake();
     SpriteManager                           m_spriteManager;
     GameObjectManager                       m_gameObjectManager;
     PhysicsManager                          m_physicsManager;
@@ -34,6 +36,6 @@ private:
     float                                   m_accumulator, m_goalTime;
     std::list<mmt_gd::EventBus::ListenerId> m_listeners;
     bool                                    m_scored;
-
+    ITransformAnimation::Ptr                m_cameraShake;
 };
 } // namespace mmt_gd

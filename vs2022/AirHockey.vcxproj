@@ -164,6 +164,7 @@
     <ClInclude Include="..\src\GameObjectManager.hpp" />
     <ClInclude Include="..\src\Player.hpp" />
     <ClInclude Include="..\src\PlayerDashComponent.hpp" />
+    <ClInclude Include="..\src\TransformAnimationCameraShake.hpp" />
     <ClInclude Include="..\src\TsonPropertyReader.hpp" />
     <ClInclude Include="..\src\PhysicsComponentEvents.hpp" />
     <ClInclude Include="..\src\PhysicsManager.hpp" />
@@ -210,6 +211,7 @@
     <ClCompile Include="..\src\Player.cpp" />
     <ClCompile Include="..\src\PlayerDashComponent.cpp" />
     <ClCompile Include="..\src\HashFunctions.cpp" />
+    <ClCompile Include="..\src\TransformAnimationCameraShake.cpp" />
     <ClCompile Include="..\src\TsonPropertyReader.cpp" />
     <ClCompile Include="..\src\PhysicsComponentEvents.cpp" />
     <ClCompile Include="..\src\PhysicsManager.cpp" />
