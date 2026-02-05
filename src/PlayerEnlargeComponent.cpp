@@ -11,7 +11,7 @@
     float constexpr BASE_ENLARGE_FACTOR = 1.5f;
     float constexpr BASE_DURATION       = 1.5f;
 
-    PlayerEnlargeComponent::PlayerEnlargeComponent(GameObject & gameObject, RigidBodyComponent & rigidBody, 
+    PlayerEnlargeComponent::PlayerEnlargeComponent(GameObject& gameObject, RigidBodyComponent& rigidBody, 
         ColliderComponent& coll, SpriteRenderComponent& sprite, const int playerIndex) :
     IPlayerAbilityComponent(gameObject, rigidBody, playerIndex),
     m_collider(coll),

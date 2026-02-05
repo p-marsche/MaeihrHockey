@@ -101,7 +101,7 @@ void SpriteManager::draw()
             auto& layer = m_layerToComp[order];
         for (auto* comp : layer)
         {
-            if (comp->getGameObject().isActive())
+            if (comp->getGameObject().isActive() && comp->isVisible())
             {
                 comp->draw();
             }
