@@ -25,7 +25,7 @@ void Game::run()
     Instrumentor::instance().endSession();
     Instrumentor::instance().beginSession("runtime", "runtime.json");
 
-    while (m_window.isOpen())
+    while (m_windowHandler.m_window.isOpen())
     {
         PROFILE_SCOPE("Frame");
 
@@ -34,14 +34,17 @@ void Game::run()
 
             // process events in the input manager
             sf::Event event{};
-            while (m_window.pollEvent(event))
+            while (m_windowHandler.m_window.pollEvent(event))
             {
                 if (event.type == sf::Event::Closed)
                 {
                     shutdown();
-                    m_window.close();
+                    m_windowHandler.m_window.close();
                     return;
                 }
+                else if (sf::Event::Resized)
+                    m_windowHandler.resizeWindow();
+
                 m_inputManager->process(event);
                 m_gui.handleEvent(event);
             }
@@ -106,14 +109,11 @@ bool Game::init()
     m_gameStateManager.registerState("MainState", make_shared<MainState>(&m_gameStateManager, this, gui, 2));
 
     //
-    m_window.create(sf::VideoMode(m_config.m_resolution.x, m_config.m_resolution.y), m_config.m_windowName);
-    auto view = sf::View(sf::Vector2f(m_window.getSize().x / 2, m_window.getSize().y / 2),
-                         sf::Vector2f(1.3f * m_window.getSize().x, 1.3f * m_window.getSize().y));    
-    m_window.setView(view);
-    m_gui.setTarget(m_window);
-    m_window.setFramerateLimit(120);
+    m_windowHandler.init(m_config.m_windowName, m_config.m_resolution.x, m_config.m_resolution.y);
+    m_gui.setTarget(m_windowHandler.m_window);
 
-    m_inputManager->setRenderWindow(&m_window);
+    m_inputManager->setRenderWindow(&m_windowHandler.m_window);
+    m_inputManager->bind("fullscreen", sf::Keyboard::F11);
 
     m_gameStateManager.setState("MainState"); // DONT FORGET TO CHANGE BACK
 
@@ -133,6 +133,9 @@ void Game::update()
     // must be first call
     m_inputManager->update();
 
+    if (m_inputManager->isActionJustPressed("fullscreen"))
+        m_windowHandler.toggleFullscreen();
+
     m_gameStateManager.update(deltaTimeSeconds);
 
     m_debugDraw->update(deltaTimeSeconds);
@@ -141,22 +144,22 @@ void Game::update()
     m_fps.update();
     ss << m_config.m_windowName << " | FPS: " << m_fps.getFps();
 
-    m_window.setTitle(ss.str());
+    m_windowHandler.m_window.setTitle(ss.str());
 }
 
 void Game::draw()
 {
     PROFILE_FUNCTION();
 
-    m_window.clear(sf::Color::Black);
+    m_windowHandler.m_window.clear(sf::Color::Black);
 
     m_gameStateManager.draw();
 
-    m_debugDraw->draw(m_window);
+    m_debugDraw->draw(m_windowHandler.m_window);
 
     m_gui.draw();
 
-    m_window.display();
+    m_windowHandler.m_window.display();
 }
 
 void Game::shutdown() const
