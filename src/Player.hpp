@@ -4,6 +4,7 @@
 #include "EventBus.hpp"
 #include "PlayerMoveComponent.hpp"
 #include "IPlayerAbilityComponent.hpp"
+#include "IPlayerPassiveComponent.hpp"
 #include <SFML/System/Vector2.hpp>
 
 namespace mmt_gd
