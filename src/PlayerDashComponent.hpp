@@ -2,11 +2,12 @@
 
 #include "IComponent.hpp"
 #include "RigidBodyComponent.hpp"
+#include "PlayerAbilityComponent.hpp"
 
 namespace mmt_gd
 {
 
-class PlayerDashComponent : public IComponent
+class PlayerDashComponent final : public PlayerAbilityComponent
 {
 public:
     using ptr = std::shared_ptr<PlayerDashComponent>;
@@ -17,9 +18,7 @@ public:
     void update(float deltaTime) override;
 
 private:
-    int m_playerIndex, m_cooldown;
-    float m_cdTimer, m_dashFactor;
-
-    RigidBodyComponent& m_rigidBody;
+    int m_cooldown;
+    float m_dashFactor;
 };
 } // namespace mmt_gd

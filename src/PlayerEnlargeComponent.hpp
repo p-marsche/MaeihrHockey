@@ -1,0 +1,33 @@
+#pragma once
+
+#include "IComponent.hpp"
+#include "PlayerAbilityComponent.hpp"
+#include "RigidBodyComponent.hpp"
+#include "ColliderComponent.hpp"
+#include "SpriteRenderComponent.hpp"
+
+namespace mmt_gd
+{
+
+class PlayerEnlargeComponent final : public PlayerAbilityComponent
+{
+public:
+    using ptr = std::shared_ptr<PlayerEnlargeComponent>;
+
+    PlayerEnlargeComponent(GameObject& gameObject, RigidBodyComponent& rigidBody, 
+        ColliderComponent& coll, SpriteRenderComponent& sprite, int playerIndex);
+
+    bool init() override;
+    void update(float deltaTime) override;
+    void changeSize(bool enlareg);
+
+private:
+    int   m_cooldown;
+    float m_enlargeFactor, m_durationTimer, m_durationTotal;
+    bool  m_endDuration;
+
+    ColliderComponent&  m_collider;
+    SpriteRenderComponent& m_sprite;
+};
+} // namespace mmt_gd
+

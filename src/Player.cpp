@@ -2,6 +2,8 @@
 
 #include "Player.hpp"
 #include "PlayerMoveComponent.hpp"
+#include "PlayerDashComponent.hpp"
+#include "PlayerEnlargeComponent.hpp"
 #include "RigidBodyComponent.hpp"
 #include "ColliderComponent.hpp"
 #include "GameObjectFactory.hpp"
@@ -17,7 +19,7 @@ namespace mmt_gd
 		: m_listeners()
 		, m_paddles()
 		, m_moveComps()
-		,m_dashComps()
+		, m_abilityComps()
 		, m_playerIndex(playerIndex)
 	{
 		const EventBus::ListenerId
@@ -63,11 +65,14 @@ namespace mmt_gd
             m_paddles.push_back(temp[i]);
             auto rb = m_paddles[i]->getComponent<RigidBodyComponent>();
             m_moveComps.push_back(std::make_shared<PlayerMoveComponent>(*m_paddles[i], *rb, m_playerIndex));
-            m_dashComps.push_back(std::make_shared<PlayerDashComponent>(*m_paddles[i], *rb, m_playerIndex));
-        }
+            //m_abilityComps.push_back(std::make_shared<PlayerDashComponent>(*m_paddles[i], *rb, m_playerIndex));
+            auto coll = m_paddles[i]->getComponent<ColliderComponent>();
+            auto sprite = m_paddles[i]->getComponent<SpriteRenderComponent>();
+            m_abilityComps.push_back(std::make_shared<PlayerEnlargeComponent>(*m_paddles[i], *rb, *coll, *sprite, m_playerIndex);
+		}
 
         m_paddles[1]->addComponent<PlayerMoveComponent>(m_moveComps[1]);
-        m_paddles[1]->addComponent<PlayerDashComponent>(m_dashComps[1]);
+        m_paddles[1]->addComponent<PlayerAbilityComponent>(m_abilityComps[1]);
         auto body2 = m_paddles[1]->getComponent<RigidBodyComponent>()->getB2Body();
         body2->SetLinearDamping(0.2f);
         auto fix2 = m_paddles[1]->getComponent<ColliderComponent>()->getFixture();
@@ -78,7 +83,7 @@ namespace mmt_gd
 
 	void Player::update(const float deltaTime)
 	{
-        if (InputManager::getInstance().isActionPressed("switch", m_playerIndex))
+        if (InputManager::getInstance().isActionJustPressed("switch", m_playerIndex))
             switchPaddle();
 	}
 
@@ -104,15 +109,16 @@ namespace mmt_gd
 
 	void Player::switchPaddle()
 	{
+        std::cout << "switch" << std::endl;
+
         auto go1 = m_paddles[m_activeIndex];
         go1->removeComponent(m_moveComps[m_activeIndex]);
-        go1->removeComponent(m_dashComps[m_activeIndex]);
+        go1->removeComponent(m_abilityComps[m_activeIndex]);
         auto body1 = go1->getComponent<RigidBodyComponent>()->getB2Body();
         body1->SetLinearDamping(0.1f);
         auto fix1 = go1->getComponent<ColliderComponent>()->getFixture();
         fix1->SetRestitution(0.9f);
         fix1->SetFilterData(m_passiveFilterMask);
-
 
         if (m_activeIndex == m_paddles.size() - 1)
             m_activeIndex = 0;
@@ -121,7 +127,7 @@ namespace mmt_gd
 
 		auto go2 = m_paddles[m_activeIndex];
         go2->addComponent<PlayerMoveComponent>(m_moveComps[m_activeIndex]);
-        go2->addComponent<PlayerDashComponent>(m_dashComps[m_activeIndex]);
+        go2->addComponent<PlayerAbilityComponent>(m_abilityComps[m_activeIndex]);
         auto body2 = go2->getComponent<RigidBodyComponent>()->getB2Body();
         body2->SetLinearDamping(0.2f);
         auto fix2 = go2->getComponent<ColliderComponent>()->getFixture();

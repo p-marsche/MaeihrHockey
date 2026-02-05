@@ -11,10 +11,7 @@ float constexpr BASE_COOLDOWN = 3.f;
 float constexpr BASE_DASH_FACTOR = 3.f;
 
 PlayerDashComponent::PlayerDashComponent(GameObject& gameObject, RigidBodyComponent& rigidBody, const int playerIndex) :
-IComponent(gameObject),
-m_playerIndex(playerIndex),
-m_rigidBody(rigidBody),
-m_cdTimer(0.f),
+PlayerAbilityComponent(gameObject, rigidBody, playerIndex),
 m_cooldown(BASE_COOLDOWN),
 m_dashFactor(BASE_DASH_FACTOR)
 {
@@ -27,12 +24,12 @@ bool PlayerDashComponent::init()
 
 void PlayerDashComponent::update(const float deltaTime)
 {
-    if (m_cdTimer > 0.f)
+    /*if (m_cdTimer > 0.f)
     {
         m_cdTimer -= deltaTime;
         return;
-    }
-    if (InputManager::getInstance().isActionJustPressed("dash", m_playerIndex))
+    }*/
+    if (InputManager::getInstance().isActionJustPressed("ability", m_playerIndex))
     {
         auto sfVec = PhysicsManager::b2s(m_rigidBody.getB2Body()->GetLinearVelocity());
         auto dashVel = sf::Vector2f(sfVec.x * m_dashFactor, sfVec.y * m_dashFactor);
