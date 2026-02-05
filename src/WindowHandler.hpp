@@ -3,7 +3,7 @@
 class WindowHandler
 {
 public:
-    void init(std::string title, int width, int height, int initialScaling = 1);
+    void init(std::string title, int width, int height, tgui::Gui* gui, int initialScaling = 1);
     void toggleFullscreen();
     void resizeWindow();
 
@@ -17,4 +17,6 @@ private:
     std::string m_title;
     int         m_width;
     int         m_height;
+
+    tgui::Gui* m_gui;
 };

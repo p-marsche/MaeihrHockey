@@ -5,24 +5,24 @@
 #include "AssetManager.hpp"
 #include "CameraRenderComponent.hpp"
 #include "ColliderComponent.hpp"
+#include "EventBus.hpp"
 #include "Game.hpp"
+#include "GoalEvent.hpp"
 #include "InputManager.hpp"
+#include "ResizeEvent.hpp"
 #include "TileMapLoader.hpp"
 #include "Tileson.hpp"
-#include "TransformAnimationComponent.hpp"
 #include "TransformAnimationCameraShake.hpp"
-
-#include "EventBus.hpp"
-#include "GoalEvent.hpp"
+#include "TransformAnimationComponent.hpp"
 
 #include <memory>
 
 namespace mmt_gd
 {
-float constexpr GOAL_TIME = 1.8f;
+float constexpr GOAL_TIME                = 1.8f;
 float constexpr CAMERA_SHAKE_MAGNITUDE_X = 20.f;
 float constexpr CAMERA_SHAKE_MAGNITUDE_Y = 10.f;
-float constexpr CAMERA_SHAKE_DURATION = 0.5f;
+float constexpr CAMERA_SHAKE_DURATION    = 0.5f;
 
 MainState::MainState(GameStateManager* gameStateManager, Game* game, tgui::Gui* gui, int playerCount) :
 GameState(gameStateManager, game, gui),
@@ -44,17 +44,20 @@ m_players()
                                                  });
     m_listeners.push_back(goalListenerId);
 
-    const auto goalListenerCameraShake = EventBus::getInstance()
-                                    .addListener(GoalEvent::Type,
-                                                 [this](const IEvent::Ptr& event)
-                                                                             { activateCameraShake();
-                                                 });
+    const auto goalListenerCameraShake = EventBus::getInstance().addListener(GoalEvent::Type,
+                                                                             [this](const IEvent::Ptr& event)
+                                                                             { activateCameraShake(); });
     m_listeners.push_back(goalListenerId);
+
+    const auto resizeListenerId = EventBus::getInstance().addListener(ResizeEvent::Type,
+                                                                      [this](const IEvent::Ptr& event)
+                                                                      { updateCamera(); });
+    m_listeners.push_back(resizeListenerId);
 }
 
 void MainState::initGui()
 {
-    auto guiGroup = tgui::Group::create();
+    auto        guiGroup = tgui::Group::create();
     std::string filename = "matchUI.txt";
     guiGroup->loadWidgetsFromFile(Config::guiPath + filename);
     m_guiGroups.emplace("Scoreboard", guiGroup);
@@ -104,7 +107,9 @@ void MainState::init()
                                                                              m_game->getWindow().getView());
     camera->setPosition(sf::Vector2f(m_game->getWindow().getSize().x / 2, m_game->getWindow().getSize().y / 2));
 
-    m_cameraShake = std::make_shared<TransformAnimationCameraShake>(sf::Vector2f(CAMERA_SHAKE_MAGNITUDE_X, CAMERA_SHAKE_MAGNITUDE_Y), CAMERA_SHAKE_DURATION);
+    m_cameraShake = std::make_shared<TransformAnimationCameraShake>(sf::Vector2f(CAMERA_SHAKE_MAGNITUDE_X,
+                                                                                 CAMERA_SHAKE_MAGNITUDE_Y),
+                                                                    CAMERA_SHAKE_DURATION);
     camera->addComponent<TransformAnimationComponent>(*camera, m_cameraShake);
 
     if (!camera->init())
@@ -149,10 +154,10 @@ void MainState::updateTimer(const float deltaTime)
     {
         m_timerSeconds--;
 
-        int seconds = m_timerSeconds % 60;
-        int minutes = m_timerSeconds / 60;
+        int         seconds    = m_timerSeconds % 60;
+        int         minutes    = m_timerSeconds / 60;
         std::string seperation = (seconds > 9) ? " : " : " : 0";
-        auto time    = tgui::String(minutes) + seperation + tgui::String(seconds);
+        auto        time       = tgui::String(minutes) + seperation + tgui::String(seconds);
         m_guiGroups.at("Scoreboard")->get<tgui::Label>("Timer")->setText(time);
 
         m_accumulator--;
@@ -194,7 +199,7 @@ void MainState::handleGoal(int playerIndex)
         currScore++;
         m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score1")->setText(tgui::String(currScore));
     }
-    m_scored = true;
+    m_scored   = true;
     m_goalTime = 0.f;
     m_guiGroups.at("Goal")->setVisible(true);
 
@@ -243,5 +248,13 @@ void MainState::activateCameraShake()
     {
         std::cerr << "ERROR: Couldn't activate camera shake" << std::endl;
     }
+}
+
+void MainState::updateCamera()
+{
+    auto camera = m_gameObjectManager.getGameObject("Camera");
+    camera->removeComponent(camera->getComponent<CameraRenderComponent>());
+    const auto renderComponent = camera->addComponent<CameraRenderComponent>(*camera, m_game->getWindow(), m_game->getWindow().getView());
+    m_spriteManager.setCamera(renderComponent.get());
 }
 } // namespace mmt_gd

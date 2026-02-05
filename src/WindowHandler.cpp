@@ -1,14 +1,17 @@
 #include "stdafx.h"
 
+#include "EventBus.hpp"
+#include "ResizeEvent.hpp"
 #include "WindowHandler.hpp"
 
-void WindowHandler::init(std::string title, int width, int height, int initialScaling)
+void WindowHandler::init(std::string title, int width, int height, tgui::Gui* gui, int initialScaling)
 {
     m_title        = title;
     m_width        = width;
     m_height       = height;
     m_scale        = initialScaling;
     m_isFullscreen = true;
+    m_gui          = gui;
 
     sf::VideoMode mode = sf::VideoMode((width * m_scale), (height * m_scale));
     createWindow(mode, sf::Style::Fullscreen);
@@ -42,6 +45,10 @@ void WindowHandler::resizeWindow()
     sf::View view           = m_window.getView();
     view.setViewport(sf::FloatRect((1 - viewportWidth) / 2, (1 - viewportHeight) / 2, viewportWidth, viewportHeight));
     m_window.setView(view);
+
+    m_gui->setRelativeView({0, 0, m_width / (float)newSize.x, m_height / (float)newSize.y});
+
+    mmt_gd::EventBus::getInstance().fireEvent(std::make_shared<mmt_gd::ResizeEvent>());
 }
 
 void WindowHandler::createWindow(sf::VideoMode mode, int style)

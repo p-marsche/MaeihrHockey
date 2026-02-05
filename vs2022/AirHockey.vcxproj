@@ -145,6 +145,7 @@
     <ClInclude Include="..\src\Config.hpp" />
     <ClInclude Include="..\src\GameObjectFactory.hpp" />
     <ClInclude Include="..\src\GameState.hpp" />
+    <ClInclude Include="..\src\ResizeEvent.hpp" />
     <ClInclude Include="..\src\WindowHandler.hpp" />
     <ClInclude Include="..\src\GoalEvent.hpp" />
     <ClInclude Include="..\src\GoalHandler.hpp" />
@@ -209,6 +210,7 @@
     <ClCompile Include="..\src\GameObjectEvents.cpp" />
     <ClCompile Include="..\src\GameObjectFactory.cpp" />
     <ClCompile Include="..\src\GameObjectManager.cpp" />
+    <ClCompile Include="..\src\ResizeEvent.cpp" />
     <ClCompile Include="..\src\WindowHandler.cpp" />
     <ClCompile Include="..\src\GoalEvent.cpp" />
     <ClCompile Include="..\src\GoalHandler.cpp" />

@@ -109,7 +109,7 @@ bool Game::init()
     m_gameStateManager.registerState("MainState", make_shared<MainState>(&m_gameStateManager, this, gui, 2));
 
     //
-    m_windowHandler.init(m_config.m_windowName, m_config.m_resolution.x, m_config.m_resolution.y);
+    m_windowHandler.init(m_config.m_windowName, m_config.m_resolution.x, m_config.m_resolution.y, gui);
     m_gui.setTarget(m_windowHandler.m_window);
 
     m_inputManager->setRenderWindow(&m_windowHandler.m_window);

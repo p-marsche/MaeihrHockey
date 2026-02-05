@@ -27,6 +27,7 @@ public:
 
 private:
     void                                    activateCameraShake();
+    void                                    updateCamera();
     SpriteManager                           m_spriteManager;
     GameObjectManager                       m_gameObjectManager;
     PhysicsManager                          m_physicsManager;
