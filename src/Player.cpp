@@ -17,7 +17,14 @@
 
 namespace mmt_gd
 {
+    float constexpr MARKER_PADDLE_RATIO      = 1.8f;
+    float constexpr ACTIVE_LINEAR_DAMPENING  = 0.1f;
+    float constexpr ACTIVE_RESTITUTION       = 0.9f;
+    float constexpr PASSIVE_LINEAR_DAMPENING = 0.2f;
+    float constexpr PASIVE_RESTITUTION       = 0.7f;
+
 	using CL = CollisionLayers;
+
 	Player::Player(const int playerIndex)
 		: m_listeners()
 		, m_paddles()
@@ -78,9 +85,9 @@ namespace mmt_gd
         m_paddles[1]->addComponent<PlayerMoveComponent>(m_moveComps[1]);
         m_paddles[1]->addComponent<IPlayerAbilityComponent>(m_abilityComps[1]);
         auto body2 = m_paddles[1]->getComponent<RigidBodyComponent>()->getB2Body();
-        body2->SetLinearDamping(0.2f);
+        body2->SetLinearDamping(ACTIVE_LINEAR_DAMPENING);
         auto fix2 = m_paddles[1]->getComponent<ColliderComponent>()->getFixture();
-        fix2->SetRestitution(0.7f);
+        fix2->SetRestitution(ACTIVE_RESTITUTION);
         fix2->SetFilterData(m_activeFilterMask);
         m_activeIndex = 1;
 
@@ -150,9 +157,9 @@ namespace mmt_gd
 	{
         auto go1 = m_paddles[m_activeIndex];
         auto body1 = go1->getComponent<RigidBodyComponent>()->getB2Body();
-        body1->SetLinearDamping(0.1f);
+        body1->SetLinearDamping(PASSIVE_LINEAR_DAMPENING);
         auto fix1 = go1->getComponent<ColliderComponent>()->getFixture();
-        fix1->SetRestitution(0.9f);
+        fix1->SetRestitution(PASIVE_RESTITUTION);
         fix1->SetFilterData(m_passiveFilterMask);
         auto move = go1->getComponent<PlayerMoveComponent>();
         go1->removeComponent(move);
@@ -167,9 +174,9 @@ namespace mmt_gd
         go2->addComponent<PlayerMoveComponent>(m_moveComps[m_activeIndex]);
         go2->addComponent<IPlayerAbilityComponent>(m_abilityComps[m_activeIndex]);
         auto body2 = go2->getComponent<RigidBodyComponent>()->getB2Body();
-        body2->SetLinearDamping(0.2f);
+        body2->SetLinearDamping(ACTIVE_LINEAR_DAMPENING);
         auto fix2 = go2->getComponent<ColliderComponent>()->getFixture();
-        fix2->SetRestitution(0.7f);
+        fix2->SetRestitution(ACTIVE_RESTITUTION);
         fix2->SetFilterData(m_activeFilterMask);
         m_passiveComps[m_activeIndex]->revert();
 	}
