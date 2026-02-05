@@ -145,6 +145,7 @@
     <ClInclude Include="..\src\Config.hpp" />
     <ClInclude Include="..\src\GameObjectFactory.hpp" />
     <ClInclude Include="..\src\GameState.hpp" />
+    <ClInclude Include="..\src\WindowHandler.hpp" />
     <ClInclude Include="..\src\GoalEvent.hpp" />
     <ClInclude Include="..\src\GoalHandler.hpp" />
     <ClInclude Include="..\src\HashFunctions.hpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="..\src\PlayerAbilityComponent.hpp" />
     <ClInclude Include="..\src\PlayerDashComponent.hpp" />
     <ClInclude Include="..\src\PlayerEnlargeComponent.hpp" />
+    <ClInclude Include="..\src\TransformAnimationCameraShake.hpp" />
     <ClInclude Include="..\src\TsonPropertyReader.hpp" />
     <ClInclude Include="..\src\PhysicsComponentEvents.hpp" />
     <ClInclude Include="..\src\PhysicsManager.hpp" />
@@ -207,12 +209,14 @@
     <ClCompile Include="..\src\GameObjectEvents.cpp" />
     <ClCompile Include="..\src\GameObjectFactory.cpp" />
     <ClCompile Include="..\src\GameObjectManager.cpp" />
+    <ClCompile Include="..\src\WindowHandler.cpp" />
     <ClCompile Include="..\src\GoalEvent.cpp" />
     <ClCompile Include="..\src\GoalHandler.cpp" />
     <ClCompile Include="..\src\Player.cpp" />
     <ClCompile Include="..\src\PlayerAbilityComponent.cpp" />
     <ClCompile Include="..\src\PlayerDashComponent.cpp" />
     <ClCompile Include="..\src\HashFunctions.cpp" />
+    <ClCompile Include="..\src\TransformAnimationCameraShake.cpp" />
     <ClCompile Include="..\src\PlayerEnlargeComponent.cpp" />
     <ClCompile Include="..\src\TsonPropertyReader.cpp" />
     <ClCompile Include="..\src\PhysicsComponentEvents.cpp" />

@@ -2,6 +2,7 @@
 
 #include "FPS.hpp"
 #include "GameStateManager.hpp"
+#include "WindowHandler.hpp"
 
 #include <string>
 
@@ -26,7 +27,7 @@ public:
 
     sf::RenderWindow& getWindow()
     {
-        return m_window;
+        return m_windowHandler.m_window;
     }
 
     tgui::Gui& getGui()
@@ -45,7 +46,7 @@ private:
 
     Config m_config;
 
-    sf::RenderWindow m_window;
+    WindowHandler m_windowHandler;
     GameStateManager m_gameStateManager;
 
     InputManager* m_inputManager = nullptr;
