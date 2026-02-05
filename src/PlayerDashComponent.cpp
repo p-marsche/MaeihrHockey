@@ -37,4 +37,14 @@ void PlayerDashComponent::update(const float deltaTime)
         m_cdTimer = m_cooldown;
     }
 }
+
+void PlayerDashComponent::updateInactive(float deltaTime)
+{
+    if (m_cdTimer > 0.f)
+    {
+        m_cdTimer -= deltaTime;
+        return;
+    }
+}
+
 } // namespace mmt_gd

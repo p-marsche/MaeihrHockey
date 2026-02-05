@@ -85,6 +85,10 @@ namespace mmt_gd
 	{
         if (InputManager::getInstance().isActionJustPressed("switch", m_playerIndex))
             switchPaddle();
+
+        for (int i = 0; i < m_abilityComps.size(); ++i)
+            if (i != m_activeIndex)
+                m_abilityComps[i]->updateInactive(deltaTime);
 	}
 
 	void Player::addPaddle(GameObject::Ptr go)

@@ -20,6 +20,7 @@ public:
     bool init() override;
     void update(float deltaTime) override;
     void changeSize(bool enlareg);
+    void updateInactive(float deltaTime) override;
 
 private:
     int   m_cooldown;

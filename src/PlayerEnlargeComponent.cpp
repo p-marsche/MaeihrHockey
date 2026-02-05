@@ -55,6 +55,21 @@
         }
     }
 
+    void PlayerEnlargeComponent::updateInactive(float deltaTime)
+    {
+        if (m_durationTimer > 0.f)
+        {
+            m_durationTimer -= deltaTime;
+            m_cdTimer -= deltaTime;
+            return;
+        }
+        else if (m_cdTimer > 0.f && !m_endDuration)
+        {
+            changeSize(false);
+            m_endDuration = true;
+        }
+    }
+
     void PlayerEnlargeComponent::changeSize(bool enlarge)
     {
         auto shape = m_collider.getFixture()->GetShape();
