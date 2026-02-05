@@ -6,7 +6,7 @@
 
 namespace mmt_gd
 {
-float constexpr BASE_FACTOR = 5.f;
+float constexpr BASE_FACTOR = 50.f;
 
     HighDensityPassive::HighDensityPassive(GameObject& go) 
     : IPlayerPassiveComponent(go)
