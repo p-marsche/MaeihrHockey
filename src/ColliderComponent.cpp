@@ -17,6 +17,7 @@ m_fixture(nullptr)
 {
     def.userData.pointer = reinterpret_cast<uintptr_t>(this);
     m_fixture            = m_body.getB2Body()->CreateFixture(&def);
+    delete def.shape;
 }
 
 void ColliderComponent::update(float deltaTime)
