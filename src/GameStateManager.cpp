@@ -1,6 +1,9 @@
 #include "stdafx.h"
 
 #include "GameStateManager.hpp"
+#include "PlayerConfig.hpp"
+#include "MainState.hpp"
+#include "PreviewState.hpp"
 
 #include "Debug.hpp"
 #include "GameState.hpp"
@@ -18,6 +21,13 @@ void GameStateManager::setState(const std::string& stateName)
 {
     GameState* state = findState(stateName);
     ffAssertMsg(state != nullptr, "State could not be found")
+
+    if (stateName == "MainState")
+    {
+        auto prev = static_cast<PreviewState*>(m_currentState);
+        auto main = static_cast<MainState*>(state);
+        main->addConfig(prev->getConfig());
+    }
 
         m_futureState = state;
 }

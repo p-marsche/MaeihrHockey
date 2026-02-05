@@ -18,11 +18,11 @@ class Player
 public:
     Player(const int playerIndex, sf::RenderWindow& window);
 
-		void addPaddle(GameObject::Ptr go);
-        void startMatch();
-        void update(const float deltaTime);
-		void switchPaddle();
-        void handleCollision(GameObject& go, GameObject& go2);
+	void addPaddle(GameObject::Ptr go);
+    void startMatch();
+    void update(const float deltaTime);
+	void switchPaddle();
+    void handleCollision(GameObject& go, GameObject& go2);
 
     int getplayerIndex()
     {
@@ -32,7 +32,12 @@ public:
     void shutdown();
 
 private:
+    void                                                 setupPaddle(int index);
+    void                                                 setupStartingPaddle();
+    void                                                 activatePaddle();
+    void                                                 deactivatePaddle();
     void                                                 createMarkerSprites();
+
     int                                                  m_playerIndex, m_activeIndex;
     std::vector<GameObject::Ptr>                         m_paddles;
     std::vector<std::shared_ptr<PlayerMoveComponent>>    m_moveComps;

@@ -7,6 +7,7 @@
 #include "PhysicsManager.hpp"
 #include "Player.hpp"
 #include "SpriteManager.hpp"
+#include "PlayerConfig.hpp"
 
 namespace mmt_gd
 {
@@ -20,6 +21,11 @@ public:
 
     void update(float deltaTime) override;
     void draw() override;
+
+    void addConfig(std::unordered_map<int, PlayerConfig> config)
+    {
+        m_config = config;
+    }
 
 private:
     void                                    initGui() override;
@@ -39,5 +45,6 @@ private:
     std::list<mmt_gd::EventBus::ListenerId> m_listeners;
     bool                                    m_scored;
     ITransformAnimation::Ptr                m_cameraShake;
+    std::unordered_map<int, PlayerConfig>   m_config;
 };
 } // namespace mmt_gd
