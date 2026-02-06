@@ -98,6 +98,7 @@ void MainState::init()
     m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score2")->setText(tgui::String(0));
     m_timerSeconds = ROUND_LENGTH;
     m_accumulator  = 0.f;
+    m_endTimer     = 0;
     updateTimer(0);
 
     m_gameObjectManager.init();
@@ -203,13 +204,20 @@ void MainState::updateTimer(const float deltaTime)
 
     if (m_timerSeconds < 1)
     {
-        /*if (m_endTimer < 3.f)
+        if (m_endTimer < 3.f)
         {
+        std::cout << m_endTimer << std::endl;
             int currScore1 = stoi(m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score1")->getText().toStdString());
             int currScore2 = stoi(m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score2")->getText().toStdString());
 
-            std::string player = (currScore1 > currScore2) ? "1" : "2";
-            std::string winner = "Player" + player + " wins!";
+            std::string winner;
+            if(currScore1 == currScore2)
+                winner = "It's a draw!";
+            if(currScore1 > currScore2)
+                winner = "Player1 wins!";
+            if (currScore2 > currScore1)
+                winner = "Player2 wins!";
+
             m_guiGroups.at("End")->get<tgui::Label>("Label1")->setText(tgui::String(winner));
             m_guiGroups.at("End")->setVisible(true);
             m_guiGroups.at("Scoreboard")->setVisible(false);
@@ -218,8 +226,7 @@ void MainState::updateTimer(const float deltaTime)
             return;
         }
         std::cout << "end" << std::endl;
-
-            m_endTimer = 0;*/
+        
             exit();
             init();
   

@@ -38,8 +38,8 @@ private:
     PhysicsManager                          m_physicsManager;
     GoalHandler                             m_goalHandler;
     std::vector<std::shared_ptr<Player>>    m_players;
-    int                                     m_timerSeconds, m_endTimer;
-    float                                   m_accumulator, m_goalTime;
+    int                                     m_timerSeconds;
+    float                                   m_accumulator, m_goalTime, m_endTimer;
     std::list<mmt_gd::EventBus::ListenerId> m_listeners;
     bool                                    m_scored;
     ITransformAnimation::Ptr                m_cameraShake;
