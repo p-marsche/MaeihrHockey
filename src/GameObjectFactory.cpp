@@ -67,17 +67,17 @@ GameObject::Ptr GameObjectFactory::createPuck(sf::RenderWindow& window, tson::Ob
     fixtureDef.restitution = 1.f;
 
     auto collider = puck->addComponent<ColliderComponent>(*puck, *rigidBody, fixtureDef);
-    sf::SoundBuffer& buffer   = AssetManager::getInstance().getSoundBuffer("test");
+    /*sf::SoundBuffer& buffer   = AssetManager::getInstance().getSoundBuffer("test");
     auto             audio    = puck->addComponent<AudioComponent>(*puck, buffer);
 
     collider->registerOnCollisionFunction(
         [audio](ColliderComponent& self, ColliderComponent& other)
         { 
             audio->playSound();
-        });
+        });*/
 
     collider->registerOnCollisionFunction(
-        [audio](ColliderComponent& self, ColliderComponent& other) 
+        [](ColliderComponent& self, ColliderComponent& other) 
         { 
             if (other.getGameObject().getId() == "TopWall")
                 self.getBody().addVelocity(sf::Vector2f(0.f, 30.f));
