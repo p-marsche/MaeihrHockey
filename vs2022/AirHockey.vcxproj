@@ -140,6 +140,8 @@
     <ClInclude Include="../src/stdafx.h" />
     <ClInclude Include="..\src\Action.hpp" />
     <ClInclude Include="..\src\AssetManager.hpp" />
+    <ClInclude Include="..\src\AudioComponent.hpp" />
+    <ClInclude Include="..\src\BulletPool.hpp" />
     <ClInclude Include="..\src\ColliderComponent.hpp" />
     <ClInclude Include="..\src\Config.hpp" />
     <ClInclude Include="..\src\GameObjectFactory.hpp" />
@@ -150,6 +152,7 @@
     <ClInclude Include="..\src\NoEffectPassive.hpp" />
     <ClInclude Include="..\src\PauseState.hpp" />
     <ClInclude Include="..\src\PlayerConfig.hpp" />
+    <ClInclude Include="..\src\PlayerConfigEvent.hpp" />
     <ClInclude Include="..\src\ResizeEvent.hpp" />
     <ClInclude Include="..\src\WindowHandler.hpp" />
     <ClInclude Include="..\src\GoalEvent.hpp" />
@@ -208,6 +211,7 @@
     <ClCompile Include="../src/InputManager.cpp" />
     <ClCompile Include="..\src\Action.cpp" />
     <ClCompile Include="..\src\AssetManager.cpp" />
+    <ClCompile Include="..\src\AudioComponent.cpp" />
     <ClCompile Include="..\src\ColliderComponent.cpp" />
     <ClCompile Include="..\src\Config.cpp" />
     <ClCompile Include="..\src\DebugDraw.cpp" />
@@ -215,7 +219,7 @@
     <ClCompile Include="..\src\GameObjectEvents.cpp" />
     <ClCompile Include="..\src\GameObjectFactory.cpp" />
     <ClCompile Include="..\src\GameObjectManager.cpp" />
-    <ClCompile Include="..\src\PauseState.cpp" />
+    <ClCompile Include="..\src\PlayerConfigEvent.cpp" />
     <ClCompile Include="..\src\ResizeEvent.cpp" />
     <ClCompile Include="..\src\HighBouncePassive.cpp" />
     <ClCompile Include="..\src\HighDensityPassive.cpp" />

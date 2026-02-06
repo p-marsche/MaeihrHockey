@@ -18,6 +18,7 @@ public:
     static std::string getShape(tson::Object& obj);
     static std::string getTexture(tson::Object& obj);
     static bool        isSensor(tson::Object& obj);
+    static std::string getWallSide(tson::Object& obj);
     static void TsonPropertyReader::propertyMissingNotice(std::string objName, std::string property);
 
     template <typename T>

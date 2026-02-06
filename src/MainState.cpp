@@ -8,6 +8,7 @@
 #include "EventBus.hpp"
 #include "Game.hpp"
 #include "GoalEvent.hpp"
+#include "PlayerConfigEvent.hpp"
 #include "InputManager.hpp"
 #include "ResizeEvent.hpp"
 #include "TileMapLoader.hpp"
@@ -41,14 +42,20 @@ m_playerCount(playerCount)
                                                  {
                                                      const auto goalEvent = std::static_pointer_cast<GoalEvent>(event);
                                                      int        playerIndex = goalEvent->getData();
+                                                     activateCameraShake();
                                                      handleGoal(playerIndex);
                                                  });
     m_listeners.push_back(goalListenerId);
 
-    const auto goalListenerCameraShake = EventBus::getInstance().addListener(GoalEvent::Type,
-                                                                             [this](const IEvent::Ptr& event)
-                                                                             { activateCameraShake(); });
-    m_listeners.push_back(goalListenerId);
+    const auto configListenerId = EventBus::getInstance()
+                                    .addListener(PlayerConfigFinishEvent::Type,
+                                                 [this](const IEvent::Ptr& event)
+                                                 { 
+                                                       const auto configEvent = std::static_pointer_cast<PlayerConfigFinishEvent>(event);
+                                                       PlayerConfig config = configEvent->getData();
+                                                       addConfig(config);
+                                                 });
+    m_listeners.push_back(configListenerId);
 
     const auto resizeListenerId = EventBus::getInstance().addListener(ResizeEvent::Type,
                                                                       [this](const IEvent::Ptr& event)
@@ -176,9 +183,15 @@ void MainState::init()
     m_scored = false;
 
     for (auto& p : m_players)
-        p->startMatch();
+        p->startMatch(m_config.at(p->getplayerIndex()));
 
+    updateTimer(0.f);
     m_isInit = true;
+}
+
+void MainState::addConfig(PlayerConfig config)
+{
+    m_config[config.m_playerIndex] = config;
 }
 
 void MainState::update(const float deltaTime)
@@ -245,28 +258,19 @@ void MainState::handleGoal(int playerIndex)
     if (playerIndex < 1 || playerIndex > 2)
         std::cout << "Scoring player non existent" << std::endl;
 
-    int currScore = 0;
-    if (playerIndex == 1)
-    {
-        currScore = stoi(m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score2")->getText().toStdString());
-        currScore++;
-        m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score2")->setText(tgui::String(currScore));
-    }
-    else if (playerIndex == 2)
-    {
-        currScore = stoi(m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score1")->getText().toStdString());
-        currScore++;
-        m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score1")->setText(tgui::String(currScore));
-    }
+    int currScore = (playerIndex == 1) ? updateScore(2) : updateScore(1);
     m_scored   = true;
     m_goalTime = 0.f;
     m_guiGroups.at("Goal")->setVisible(true);
+}
 
-    if (currScore > 9)
-    {
-        exit();
-        init();
-    }
+int MainState::updateScore(int sideIndex)
+{
+    std::string label     = "Score" + std::to_string(sideIndex);
+    int currScore = stoi(m_guiGroups.at("Scoreboard")->get<tgui::Label>(label)->getText().toStdString());
+    currScore++;
+    m_guiGroups.at("Scoreboard")->get<tgui::Label>(label)->setText(tgui::String(currScore));
+    return currScore;
 }
 
 void MainState::draw()
@@ -322,6 +326,7 @@ void MainState::updateCamera()
 void MainState::loadAssets()
 {
     AssetManager::getInstance().loadTexture("Selected Marker", "selected_marker.png");
+    AssetManager::getInstance().loadSoundBuffer("test", "test.wav");
 }
 
 void MainState::pauseGame()

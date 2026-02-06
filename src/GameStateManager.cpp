@@ -3,6 +3,8 @@
 #include "GameStateManager.hpp"
 #include "PlayerConfig.hpp"
 #include "MainState.hpp"
+#include "EventBus.hpp"
+#include "PlayerConfigEvent.hpp"
 //#include "PreviewState.hpp"
 
 #include "Debug.hpp"
@@ -24,10 +26,39 @@ void GameStateManager::setState(const std::string& stateName, bool pause)
 
     /*if (stateName == "MainState")
     {
-        auto prev = static_cast<PreviewState*>(m_currentState);
+        /*auto prev = static_cast<PreviewState*>(m_currentState);
         auto main = static_cast<MainState*>(state);
-        main->addConfig(prev->getConfig());
-    }*/
+        main->addConfig(prev->getConfig());*/
+
+
+        
+        ////Config Test Stuff
+        PlayerConfig config1{};
+        PlayerConfig config2{};
+        config1.m_playerIndex = 0;
+        config2.m_playerIndex = 1;
+
+        for (int i = 0; i < 3; ++i)
+        {
+            config1.m_config.at(i).m_ability = PaddleAbility::DASH;
+            config1.m_config.at(i).m_passive = PaddlePassive::HEAVY;
+            config1.m_config.at(i).m_paddleIndex = i;
+        }
+
+        for (int i = 0; i < 2; ++i)
+        {
+            config2.m_config.at(i).m_ability     = PaddleAbility::DASH;
+            config2.m_config.at(i).m_passive     = PaddlePassive::HEAVY;
+            config2.m_config.at(i).m_paddleIndex = i;
+        }
+
+        config2.m_config.at(2).m_ability = PaddleAbility::ENLARGE;
+        config2.m_config.at(2).m_passive = PaddlePassive::BOUNCY;
+        config2.m_config.at(2).m_paddleIndex = 3;
+
+        EventBus::getInstance().fireEvent(std::make_shared<PlayerConfigFinishEvent>(config1));
+        EventBus::getInstance().fireEvent(std::make_shared<PlayerConfigFinishEvent>(config2));
+    }
 
         m_futureState = state;
     m_pauseState      = pause;

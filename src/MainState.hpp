@@ -22,10 +22,7 @@ public:
     void update(float deltaTime) override;
     void draw() override;
 
-    void addConfig(std::unordered_map<int, PlayerConfig> config)
-    {
-        m_config = config;
-    }
+    void addConfig(PlayerConfig config);
     void enableGui() override;
 
 private:
@@ -35,6 +32,7 @@ private:
     void activateCameraShake();
     void updateCamera();
     void loadAssets();
+    int  updateScore(int sideIndex);
     void pauseGame();
     void pauseLoop();
 

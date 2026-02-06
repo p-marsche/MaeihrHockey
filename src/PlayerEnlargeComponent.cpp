@@ -44,7 +44,10 @@
         }
 
         if (m_cdTimer > 0.f)
+        {
+            m_cdTimer -= deltaTime;
             return;
+        }
 
         if (InputManager::getInstance().isActionJustPressed("ability", m_playerIndex))
         {
