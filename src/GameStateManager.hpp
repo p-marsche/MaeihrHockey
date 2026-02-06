@@ -20,7 +20,7 @@ public:
     /**
      * \brief Changes the current GameState to the one with the given name.
      */
-    void setState(const std::string& stateName);
+    void setState(const std::string& stateName, bool pause = false);
 
     void update(float deltaTime);
     void draw() const;
@@ -29,10 +29,11 @@ public:
 
 private:
     GameState* findState(const std::string& stateName);
-    void       changeState(GameState* stateName);
+    void       changeState(GameState* stateName, bool pause = false);
 
     std::unordered_map<std::string, GameState::Ptr> m_states;
     GameState*                                      m_currentState = nullptr;
     GameState*                                      m_futureState  = nullptr;
+    bool                                            m_pauseState     = false;
 };
 } // namespace mmt_gd

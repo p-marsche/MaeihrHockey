@@ -6,6 +6,7 @@
 #include "InputManager.hpp"
 #include "MainState.hpp"
 #include "MenuState.hpp"
+#include "PauseState.hpp"
 
 #include <sstream>
 
@@ -13,6 +14,8 @@
 namespace mmt_gd
 {
 using namespace std;
+
+int constexpr NUM_PLAYERS = 2;
 
 void Game::run()
 {
@@ -60,8 +63,10 @@ void Game::initInputManager()
 {
     m_inputManager = &InputManager::getInstance();
 
-    m_inputManager->bind("Exit", sf::Keyboard::Escape);
+    m_inputManager->bind("Pause", sf::Keyboard::Escape);
     m_inputManager->bind("Select", sf::Keyboard::Space);
+
+    m_inputManager->bind("Pause", 10);
 
     // May move to view later on
     m_inputManager->bind("up", sf::Keyboard::W, 0);
@@ -106,7 +111,7 @@ bool Game::init()
     //
     tgui::Gui* gui = &m_gui;
     m_gameStateManager.registerState("MenuState", make_shared<MenuState>(&m_gameStateManager, this, gui));
-    m_gameStateManager.registerState("MainState", make_shared<MainState>(&m_gameStateManager, this, gui, 2));
+    m_gameStateManager.registerState("MainState", make_shared<MainState>(&m_gameStateManager, this, gui, NUM_PLAYERS));
 
     //
     m_windowHandler.init(m_config.m_windowName, m_config.m_resolution.x, m_config.m_resolution.y, gui);

@@ -6,8 +6,8 @@
 #include "ITransformAnimation.hpp"
 #include "PhysicsManager.hpp"
 #include "Player.hpp"
-#include "SpriteManager.hpp"
 #include "PlayerConfig.hpp"
+#include "SpriteManager.hpp"
 
 namespace mmt_gd
 {
@@ -26,14 +26,17 @@ public:
     {
         m_config = config;
     }
+    void enableGui() override;
 
 private:
-    void                                    initGui() override;
-    void                                    updateTimer(const float deltaTime);
-    void                                    handleGoal(int playerIndex);
-    void                                    activateCameraShake();
-    void                                    updateCamera();
-    void                                    loadAssets();
+    void initGui() override;
+    void updateTimer(const float deltaTime);
+    void handleGoal(int playerIndex);
+    void activateCameraShake();
+    void updateCamera();
+    void loadAssets();
+    void pauseGame();
+    void pauseLoop();
 
     SpriteManager                           m_spriteManager;
     GameObjectManager                       m_gameObjectManager;
@@ -46,5 +49,11 @@ private:
     bool                                    m_scored;
     ITransformAnimation::Ptr                m_cameraShake;
     std::unordered_map<int, PlayerConfig>   m_config;
+
+    std::array<tgui::Widget::Ptr, 2> m_pauseButtons;
+    int                              m_selectedButton;
+    bool                             m_isPaused;
+
+    int m_playerCount;
 };
 } // namespace mmt_gd

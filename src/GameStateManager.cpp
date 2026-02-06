@@ -17,7 +17,7 @@ void GameStateManager::registerState(const std::string& name, GameState::Ptr sta
     m_states[name] = std::move(state);
 }
 
-void GameStateManager::setState(const std::string& stateName)
+void GameStateManager::setState(const std::string& stateName, bool pause)
 {
     GameState* state = findState(stateName);
     ffAssertMsg(state != nullptr, "State could not be found")
@@ -30,14 +30,16 @@ void GameStateManager::setState(const std::string& stateName)
     }*/
 
         m_futureState = state;
+    m_pauseState      = pause;
 }
 
-void GameStateManager::changeState(GameState* stateName)
+void GameStateManager::changeState(GameState* stateName, bool pause)
 {
     if (stateName != m_currentState)
     {
         if (m_currentState != nullptr)
         {
+            m_currentState->disableGui();
             m_currentState->exit();
         }
 
@@ -54,7 +56,7 @@ void GameStateManager::update(float deltaTime)
 {
     if (m_futureState != nullptr)
     {
-        changeState(m_futureState);
+        changeState(m_futureState, m_pauseState);
         m_futureState = nullptr;
     }
 

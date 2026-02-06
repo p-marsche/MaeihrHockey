@@ -148,6 +148,7 @@
     <ClInclude Include="..\src\HighDensityPassive.hpp" />
     <ClInclude Include="..\src\IPlayerPassiveComponent.hpp" />
     <ClInclude Include="..\src\NoEffectPassive.hpp" />
+    <ClInclude Include="..\src\PauseState.hpp" />
     <ClInclude Include="..\src\PlayerConfig.hpp" />
     <ClInclude Include="..\src\ResizeEvent.hpp" />
     <ClInclude Include="..\src\WindowHandler.hpp" />
@@ -214,6 +215,7 @@
     <ClCompile Include="..\src\GameObjectEvents.cpp" />
     <ClCompile Include="..\src\GameObjectFactory.cpp" />
     <ClCompile Include="..\src\GameObjectManager.cpp" />
+    <ClCompile Include="..\src\PauseState.cpp" />
     <ClCompile Include="..\src\ResizeEvent.cpp" />
     <ClCompile Include="..\src\HighBouncePassive.cpp" />
     <ClCompile Include="..\src\HighDensityPassive.cpp" />

@@ -7,7 +7,7 @@
 
 namespace mmt_gd
 {
-class MenuState final : public GameState
+class PauseState final : public GameState
 {
 public:
     using GameState::GameState;
@@ -24,7 +24,7 @@ private:
 
     sf::View m_view;
 
-    std::array<tgui::Widget::Ptr, 2> m_buttons;
+    std::array<tgui::Widget::Ptr, 3> m_buttons;
     int                            m_selectedButton;
 };
 } // namespace mmt_gd
