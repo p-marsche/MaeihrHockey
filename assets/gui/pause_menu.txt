@@ -1,0 +1,94 @@
+Group.Buttons {
+    Position = (622.5, 460);
+    Size = (675, 495);
+
+    Renderer {
+    }
+
+    Button.Continue {
+        Position = (75, 45);
+        Size = (525, 105);
+        Text = Continue;
+        TextSize = 72;
+
+        Renderer {
+            BackgroundColor = #F5F5F5;
+            BackgroundColorDisabled = #E6E6E6;
+            BackgroundColorDown = #BFB8BE;
+            BackgroundColorFocused = #FF131352;
+            BackgroundColorHover = #FFFFFF00;
+            BorderColor = #3C3C3C;
+            BorderColorDisabled = #7D7D7D;
+            BorderColorDown = black;
+            BorderColorFocused = #1E1EB4;
+            BorderColorHover = black;
+            Borders = (1, 1, 1, 1);
+            Font = "..\\fonts\\SourGummy-Bold.ttf";
+            RoundedBorderRadius = 10;
+            TextColor = #3C3C3C;
+            TextColorDisabled = #7D7D7D;
+            TextColorDown = black;
+            TextColorHover = black;
+            TextStyle = Bold;
+            Texture = None;
+            TextureDisabled = None;
+            TextureDown = None;
+            TextureDownFocused = None;
+            TextureDownHover = None;
+            TextureFocused = None;
+            TextureHover = None;
+        }
+    }
+
+    Button.Quit {
+        Position = (75, 195);
+        Size = (525, 105);
+        Text = Quit;
+        TextSize = 72;
+
+        Renderer {
+            BackgroundColor = #F5F5F5;
+            BackgroundColorDisabled = #E6E6E6;
+            BackgroundColorDown = #BFB8BE;
+            BackgroundColorFocused = #FF131352;
+            BackgroundColorHover = #FFFFFF00;
+            BorderColor = #3C3C3C;
+            BorderColorDisabled = #7D7D7D;
+            BorderColorDown = black;
+            BorderColorFocused = #1E1EB4;
+            BorderColorHover = black;
+            Borders = (1, 1, 1, 1);
+            Font = "..\\fonts\\SourGummy-Bold.ttf";
+            RoundedBorderRadius = 10;
+            TextColor = #3C3C3C;
+            TextColorDisabled = #7D7D7D;
+            TextColorDown = black;
+            TextColorHover = black;
+            TextStyle = Bold;
+            Texture = None;
+            TextureDisabled = None;
+            TextureDown = None;
+            TextureDownFocused = None;
+            TextureDownHover = None;
+            TextureFocused = None;
+            TextureHover = None;
+        }
+    }
+}
+
+Label.Label1 {
+    Position = (683, 100);
+    ScrollbarPolicy = Never;
+    Size = (554, 231.5);
+    Text = Pause;
+    TextSize = 180;
+
+    Renderer {
+        BackgroundColor = transparent;
+        BorderColor = #3C3C3C;
+        Borders = (0, 0, 0, 0);
+        Font = "..\\fonts\\SourGummy-Bold.ttf";
+        TextColor = #3C3C3C;
+        TextureBackground = None;
+    }
+}

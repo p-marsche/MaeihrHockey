@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#include "MenuState.hpp"
+#include "PauseState.hpp"
 
 #include "Game.hpp"
 #include "GameStateManager.hpp"
@@ -10,7 +10,7 @@ namespace mmt_gd
 {
 using namespace std;
 
-void MenuState::init()
+void PauseState::init()
 {
     PROFILE_FUNCTION();
     //m_guiGroup->setVisible(true);
@@ -24,16 +24,12 @@ void MenuState::init()
 
     m_isInit = true;
 
-    m_selectedButton = 0;
 
     // LoadGui
-    auto        guiGroup = tgui::Group::create();
-    guiGroup->loadWidgetsFromFile(Config::guiPath + "main_menu.txt");
-    m_guiGroups.emplace("MainMenu", guiGroup);
-    m_gui->add(guiGroup);
-    m_guiGroups.at("MainMenu")->setVisible(true);
+    
 
-    auto buttonGroup = guiGroup->get("Buttons");
+
+    auto buttonGroup = m_game->getGui().get("Buttons");
     if (const auto grp = dynamic_pointer_cast<tgui::Group>(buttonGroup))
     {
         int cnt = 0;
@@ -47,21 +43,22 @@ void MenuState::init()
                 cnt++;
                 std::string name = btn->getWidgetName().toStdString();
 
-                if (name == "Start")
+                if (name == "Continue")
                     w->getSignal("Pressed").connect([&manager = m_gameStateManager] { manager->setState("MainState"); });
-               /* else if (name == "Settings")
+                else if (name == "Main Menu")
                     w->getSignal("Pressed").connect(
-                        [&manager = m_gameStateManager] { manager->setState("SettingsMenuState"); });*/
+                        [&manager = m_gameStateManager] { manager->setState("MenuState"); });
                 //btn->onPress([&manager = m_gameStateManager] { manager->setState("Settings"); });
                 else if (name == "Quit")
                     w->getSignal("Pressed").connect([&game = m_game] { game->getWindow().close(); });
             }
         }
+        m_selectedButton = 0;
         m_buttons[m_selectedButton]->setFocused(true);
     }
 }
 
-void MenuState::update(float delta)
+void PauseState::update(float delta)
 {
     PROFILE_FUNCTION();
 
@@ -70,24 +67,21 @@ void MenuState::update(float delta)
     handleButtons();
 }
 
-void MenuState::draw()
+void PauseState::draw()
 {
     PROFILE_FUNCTION();
 }
 
-void MenuState::exit()
+void PauseState::exit()
 {
     PROFILE_FUNCTION();
 
+    m_game->getGui().removeAllWidgets();
     m_isInit = false;
-    //for (auto grp : m_guiGroups)
-    //{
-    //    grp.second->removeAllWidgets();
-    //}
     GameState::exit();
 }
 
-void MenuState::handleButtons()
+void PauseState::handleButtons()
 {
     int prevSelected = m_selectedButton;
     if (InputManager::getInstance().isActionJustPressed("down") ||
@@ -104,6 +98,8 @@ void MenuState::handleButtons()
         auto widget = m_buttons[m_selectedButton];
         widget->getSignal("Pressed").emit(widget.get());
     }
+    else if (InputManager::getInstance().isActionJustPressed("Pause"))
+        m_gameStateManager->setState("MainState");
 
     if (prevSelected != m_selectedButton)
     {

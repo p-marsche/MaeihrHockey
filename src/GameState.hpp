@@ -1,7 +1,7 @@
 #pragma once
 
-#include "FinalFrontier/dll_export.hpp"
 #include "Config.hpp";
+#include "FinalFrontier/dll_export.hpp"
 
 #include <memory>
 
@@ -15,8 +15,7 @@ class FINALFRONTIER_API GameState
 public:
     using Ptr = std::shared_ptr<GameState>;
 
-    GameState(GameStateManager* gameStateManager, Game* game, tgui::Gui* gui) 
-        :
+    GameState(GameStateManager* gameStateManager, Game* game, tgui::Gui* gui) :
     m_gameStateManager(gameStateManager),
     m_game(game),
     m_gui(gui)
@@ -41,10 +40,23 @@ public:
     virtual void draw()              = 0;
     virtual void initGui()           = 0;
 
+    virtual void disableGui()
+    {
+        for (auto& group : m_guiGroups)
+            group.second->setVisible(false);
+    }
+
+    virtual void enableGui()
+    {
+        for (auto& group : m_guiGroups)
+            group.second->setVisible(true);
+    }
+
 protected:
-    GameStateManager* m_gameStateManager;
-    Game*             m_game;
-    tgui::Gui*        m_gui;
-    std::unordered_map<std::string, tgui::Group::Ptr>  m_guiGroups;
+    GameStateManager*                                 m_gameStateManager;
+    Game*                                             m_game;
+    tgui::Gui*                                        m_gui;
+    std::unordered_map<std::string, tgui::Group::Ptr> m_guiGroups;
+    bool                                              m_isInit = false;
 };
 } // namespace mmt_gd
