@@ -31,8 +31,9 @@ GameState(gameStateManager, game, gui),
 m_spriteManager(game->getWindow()),
 m_players(),
 m_music(music),
-m_endTimer(0)
-m_playerCount(playerCount)
+m_endTimer(0),
+m_playerCount(playerCount),
+m_isPaused(false)
 {
     for (int i = 0; i < m_playerCount; ++i)
         m_players.push_back(std::make_shared<Player>(i, m_game->getWindow()));

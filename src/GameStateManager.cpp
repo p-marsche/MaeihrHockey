@@ -47,8 +47,8 @@ void GameStateManager::setState(const std::string& stateName, bool pause)
 
         for (int i = 0; i < 3; ++i)
         {
-            config2.m_config.at(i).m_ability     = PaddleAbility::ENLARGE;
-            config2.m_config.at(i).m_passive     = PaddlePassive::BOUNCY;
+            config2.m_config.at(i).m_ability     = PaddleAbility::DASH;
+            config2.m_config.at(i).m_passive     = PaddlePassive::HEAVY;
             config2.m_config.at(i).m_paddleIndex = i;
         }
 

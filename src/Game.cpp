@@ -112,7 +112,7 @@ bool Game::init()
 
     //
     tgui::Gui* gui = &m_gui;
-    AssetManager::getInstance().loadMusic("music", "music1.ogg");
+    AssetManager::getInstance().loadMusic("music", "music2.ogg");
     sf::Music& mainmusic = AssetManager::getInstance().getMusic("music");
     m_gameStateManager.registerState("MenuState", make_shared<MenuState>(&m_gameStateManager, this, gui));
     m_gameStateManager.registerState("MainState", make_shared<MainState>(&m_gameStateManager, this, gui, mainmusic, 2));
