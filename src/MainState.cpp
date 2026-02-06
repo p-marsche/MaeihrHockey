@@ -20,16 +20,18 @@
 
 namespace mmt_gd
 {
-int constexpr ROUND_LENGTH             = 180;
+int constexpr ROUND_LENGTH             = 10;
 float constexpr GOAL_TIME                = 1.8f;
 float constexpr CAMERA_SHAKE_MAGNITUDE_X = 20.f;
 float constexpr CAMERA_SHAKE_MAGNITUDE_Y = 10.f;
 float constexpr CAMERA_SHAKE_DURATION    = 0.5f;
 
-MainState::MainState(GameStateManager* gameStateManager, Game* game, tgui::Gui* gui, int playerCount) :
+MainState::MainState(GameStateManager* gameStateManager, Game* game, tgui::Gui* gui, sf::Music& music, int playerCount) :
 GameState(gameStateManager, game, gui),
 m_spriteManager(game->getWindow()),
-m_players()
+m_players(),
+m_music(music),
+m_endTimer(0)
 {
     initGui();
 
@@ -78,6 +80,13 @@ void MainState::initGui()
     m_guiGroups.emplace("Goal", guiGroup);
     m_gui->add(guiGroup);
     m_guiGroups.at("Goal")->setVisible(false);
+
+    guiGroup = tgui::Group::create();
+    filename = "goal.txt";
+    guiGroup->loadWidgetsFromFile(Config::guiPath + filename);
+    m_guiGroups.emplace("End", guiGroup);
+    m_gui->add(guiGroup);
+    m_guiGroups.at("End")->setVisible(false);
 }
 
 void MainState::init()
@@ -136,6 +145,8 @@ void MainState::init()
     for (auto& p : m_players)
         p->startMatch(m_config.at(p->getplayerIndex()));
 
+    m_music.play();
+    m_music.setLoop(true);
     updateTimer(0.f);
 }
 
@@ -192,8 +203,26 @@ void MainState::updateTimer(const float deltaTime)
 
     if (m_timerSeconds < 1)
     {
-        exit();
-        init();
+        /*if (m_endTimer < 3.f)
+        {
+            int currScore1 = stoi(m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score1")->getText().toStdString());
+            int currScore2 = stoi(m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score2")->getText().toStdString());
+
+            std::string player = (currScore1 > currScore2) ? "1" : "2";
+            std::string winner = "Player" + player + " wins!";
+            m_guiGroups.at("End")->get<tgui::Label>("Label1")->setText(tgui::String(winner));
+            m_guiGroups.at("End")->setVisible(true);
+            m_guiGroups.at("Scoreboard")->setVisible(false);
+
+            m_endTimer += deltaTime;
+            return;
+        }
+        std::cout << "end" << std::endl;
+
+            m_endTimer = 0;*/
+            exit();
+            init();
+  
     }
 }
 

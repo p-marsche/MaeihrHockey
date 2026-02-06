@@ -45,16 +45,16 @@ void GameStateManager::setState(const std::string& stateName)
             config1.m_config.at(i).m_paddleIndex = i;
         }
 
-        for (int i = 0; i < 2; ++i)
+        for (int i = 0; i < 3; ++i)
         {
-            config2.m_config.at(i).m_ability     = PaddleAbility::DASH;
-            config2.m_config.at(i).m_passive     = PaddlePassive::HEAVY;
+            config2.m_config.at(i).m_ability     = PaddleAbility::ENLARGE;
+            config2.m_config.at(i).m_passive     = PaddlePassive::BOUNCY;
             config2.m_config.at(i).m_paddleIndex = i;
         }
 
-        config2.m_config.at(2).m_ability = PaddleAbility::ENLARGE;
-        config2.m_config.at(2).m_passive = PaddlePassive::BOUNCY;
-        config2.m_config.at(2).m_paddleIndex = 3;
+        //config2.m_config.at(2).m_ability = PaddleAbility::ENLARGE;
+        //config2.m_config.at(2).m_passive = PaddlePassive::BOUNCY;
+        //config2.m_config.at(2).m_paddleIndex = 3;
 
         EventBus::getInstance().fireEvent(std::make_shared<PlayerConfigFinishEvent>(config1));
         EventBus::getInstance().fireEvent(std::make_shared<PlayerConfigFinishEvent>(config2));

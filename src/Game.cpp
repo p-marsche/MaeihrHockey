@@ -2,6 +2,7 @@
 
 #include "Game.hpp"
 
+#include "AssetManager.hpp"
 #include "DebugDraw.hpp"
 #include "InputManager.hpp"
 #include "MainState.hpp"
@@ -105,8 +106,10 @@ bool Game::init()
 
     //
     tgui::Gui* gui = &m_gui;
+    AssetManager::getInstance().loadMusic("music", "music1.ogg");
+    sf::Music& mainmusic = AssetManager::getInstance().getMusic("music");
     m_gameStateManager.registerState("MenuState", make_shared<MenuState>(&m_gameStateManager, this, gui));
-    m_gameStateManager.registerState("MainState", make_shared<MainState>(&m_gameStateManager, this, gui, 2));
+    m_gameStateManager.registerState("MainState", make_shared<MainState>(&m_gameStateManager, this, gui, mainmusic, 2));
 
     //
     m_windowHandler.init(m_config.m_windowName, m_config.m_resolution.x, m_config.m_resolution.y, gui);

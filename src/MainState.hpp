@@ -14,7 +14,7 @@ namespace mmt_gd
 class FINALFRONTIER_API MainState final : public GameState
 {
 public:
-    MainState(GameStateManager* gameStateManager, Game* game, tgui::Gui* gui, int playerCount);
+    MainState(GameStateManager* gameStateManager, Game* game, tgui::Gui* gui, sf::Music& music, int playerCount);
 
     void init() override;
     void exit() override;
@@ -38,11 +38,12 @@ private:
     PhysicsManager                          m_physicsManager;
     GoalHandler                             m_goalHandler;
     std::vector<std::shared_ptr<Player>>    m_players;
-    int                                     m_timerSeconds;
+    int                                     m_timerSeconds, m_endTimer;
     float                                   m_accumulator, m_goalTime;
     std::list<mmt_gd::EventBus::ListenerId> m_listeners;
     bool                                    m_scored;
     ITransformAnimation::Ptr                m_cameraShake;
     std::unordered_map<int, PlayerConfig>   m_config;
+    sf::Music&                               m_music;
 };
 } // namespace mmt_gd
