@@ -8,6 +8,7 @@
 #include "EventBus.hpp"
 #include "Game.hpp"
 #include "GoalEvent.hpp"
+#include "PlayerConfigEvent.hpp"
 #include "InputManager.hpp"
 #include "ResizeEvent.hpp"
 #include "TileMapLoader.hpp"
@@ -41,14 +42,20 @@ m_players()
                                                  {
                                                      const auto goalEvent = std::static_pointer_cast<GoalEvent>(event);
                                                      int        playerIndex = goalEvent->getData();
+                                                     activateCameraShake();
                                                      handleGoal(playerIndex);
                                                  });
     m_listeners.push_back(goalListenerId);
 
-    const auto goalListenerCameraShake = EventBus::getInstance().addListener(GoalEvent::Type,
-                                                                             [this](const IEvent::Ptr& event)
-                                                                             { activateCameraShake(); });
-    m_listeners.push_back(goalListenerId);
+    const auto configListenerId = EventBus::getInstance()
+                                    .addListener(PlayerConfigFinishEvent::Type,
+                                                 [this](const IEvent::Ptr& event)
+                                                 { 
+                                                       const auto configEvent = std::static_pointer_cast<PlayerConfigFinishEvent>(event);
+                                                       PlayerConfig config = configEvent->getData();
+                                                       addConfig(config);
+                                                 });
+    m_listeners.push_back(configListenerId);
 
     const auto resizeListenerId = EventBus::getInstance().addListener(ResizeEvent::Type,
                                                                       [this](const IEvent::Ptr& event)
@@ -127,9 +134,14 @@ void MainState::init()
     m_scored = false;
 
     for (auto& p : m_players)
-        p->startMatch();
+        p->startMatch(m_config.at(p->getplayerIndex()));
 
     updateTimer(0.f);
+}
+
+void MainState::addConfig(PlayerConfig config)
+{
+    m_config[config.m_playerIndex] = config;
 }
 
 void MainState::update(const float deltaTime)

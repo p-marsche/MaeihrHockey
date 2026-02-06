@@ -5,7 +5,7 @@
 
 namespace mmt_gd
 {
-class PlayerConfigFinishEvent final : public BasicDataEvent<std::vector<PlayerConfig>>
+class PlayerConfigFinishEvent final : public BasicDataEvent<PlayerConfig>
 {
 public:
     using BasicDataEvent::BasicDataEvent;
@@ -28,3 +28,4 @@ public:
         return Type;
     }
 };
+} // namespace mmt_gd

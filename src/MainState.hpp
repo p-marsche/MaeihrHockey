@@ -22,10 +22,7 @@ public:
     void update(float deltaTime) override;
     void draw() override;
 
-    void addConfig(std::unordered_map<int, PlayerConfig> config)
-    {
-        m_config = config;
-    }
+    void addConfig(PlayerConfig config);
 
 private:
     void                                    initGui() override;

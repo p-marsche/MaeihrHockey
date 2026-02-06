@@ -8,6 +8,7 @@
 #include "SpriteRenderComponent.hpp"
 #include "IPlayerAbilityComponent.hpp"
 #include "IPlayerPassiveComponent.hpp"
+#include "PlayerConfig.hpp"
 
 #include <SFML/System/Vector2.hpp>
 
@@ -19,7 +20,7 @@ public:
     Player(const int playerIndex, sf::RenderWindow& window);
 
 	void addPaddle(GameObject::Ptr go);
-    void startMatch();
+    void startMatch(PlayerConfig config);
     void update(const float deltaTime);
 	void switchPaddle();
     void handleCollision(GameObject& go, GameObject& go2);
@@ -32,7 +33,7 @@ public:
     void shutdown();
 
 private:
-    void                                                 setupPaddle(int index);
+    void                                                 setupPaddle(int index, PaddleConfig config);
     void                                                 setupStartingPaddle();
     void                                                 activatePaddle();
     void                                                 deactivatePaddle();

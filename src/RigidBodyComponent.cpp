@@ -61,28 +61,6 @@ void RigidBodyComponent::physicsUpdate(float deltaTime)
 
     m_gameObject.setPosition(PhysicsManager::b2s(pos));
     m_gameObject.setRotation(getB2Body()->GetAngle() * 180 / b2_pi);
-
-    //Debug Draw
-    //auto*  fixture = m_body->GetFixtureList();
-    //b2AABB aabb;
-    //aabb.lowerBound = b2Vec2(FLT_MAX, FLT_MAX);
-    //aabb.upperBound = b2Vec2(-FLT_MAX, -FLT_MAX);
-    //while (fixture != nullptr)
-    //{
-    //    aabb.Combine(aabb, fixture->GetAABB(0));
-
-    //    if (auto* const convexShape = fixture->GetShape(); convexShape->GetType() == b2Shape::e_polygon)
-    //    {
-    //        DebugDraw::getInstance().drawPolygonShape(*dynamic_cast<b2PolygonShape*>(convexShape),
-    //                                                  m_gameObject,
-    //                                                  PhysicsManager::s2b(sf::Color::Green));
-    //    }
-
-    //    fixture = fixture->GetNext();
-    //}
-
-    //DebugDraw::getInstance().drawAabb(&aabb, sf::Color::Green);
-    ////DebugDraw::getInstance().DrawTransform(getB2Body()->GetTransform());
 }
 
 

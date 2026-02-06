@@ -17,6 +17,7 @@ namespace mmt_gd
 		NOTHING
 	};
 
+	// paddleIndex = 0, 1, 2
 	struct PaddleConfig
 	{
     public:
@@ -25,10 +26,11 @@ namespace mmt_gd
         PaddlePassive m_passive;
 	};
 
+	// playerIndex = 0, 1
 	struct PlayerConfig
 	{
         int                                   m_playerIndex;
-        std::unordered_map<int, PaddleConfig> m_config;
+        std::array<PaddleConfig, 3>			  m_config;
 	};
 
 }
