@@ -20,8 +20,18 @@ public:
     void exit() override;
 
 private:
-    void handleButtons();
+    void handleButtons1();
+    void handleButtons2();
+    void sendEvent();
 
     sf::View m_view;
+
+    tgui::ListBox::Ptr player1Active;
+    tgui::ListBox::Ptr player1Inactive;
+    tgui::ListBox::Ptr player2Active;
+    tgui::ListBox::Ptr player2Inactive;
+
+    bool player1ActiveSet;
+    bool player2ActiveSet;
 };
 } // namespace mmt_gd

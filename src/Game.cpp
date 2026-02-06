@@ -7,6 +7,7 @@
 #include "MainState.hpp"
 #include "MenuState.hpp"
 #include "PauseState.hpp"
+#include "PaddleSetupState.hpp"
 
 #include <sstream>
 
@@ -112,7 +113,8 @@ bool Game::init()
     tgui::Gui* gui = &m_gui;
     m_gameStateManager.registerState("MenuState", make_shared<MenuState>(&m_gameStateManager, this, gui));
     m_gameStateManager.registerState("MainState", make_shared<MainState>(&m_gameStateManager, this, gui, NUM_PLAYERS));
-
+    m_gameStateManager.registerState("PaddleSetup", make_shared<PaddleSetupState>(&m_gameStateManager, this, gui));
+    
     //
     m_windowHandler.init(m_config.m_windowName, m_config.m_resolution.x, m_config.m_resolution.y, gui);
     m_gui.setTarget(m_windowHandler.m_window);

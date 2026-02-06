@@ -58,9 +58,9 @@ void GameStateManager::setState(const std::string& stateName, bool pause)
 
         EventBus::getInstance().fireEvent(std::make_shared<PlayerConfigFinishEvent>(config1));
         EventBus::getInstance().fireEvent(std::make_shared<PlayerConfigFinishEvent>(config2));
-    }
+    //}
 
-        m_futureState = state;
+    m_futureState = state;
     m_pauseState      = pause;
 }
 
