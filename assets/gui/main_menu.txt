@@ -1,3 +1,13 @@
+Panel.Panel1 {
+    Size = (1920, 1080);
+
+    Renderer {
+        BackgroundColor = white;
+        BorderColor = black;
+        TextureBackground = None;
+    }
+}
+
 Group.Buttons {
     Position = (622.5, 460);
     Size = (675, 495);
