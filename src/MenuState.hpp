@@ -26,7 +26,7 @@ private:
 
     bool m_isInit = false;
 
-    std::array<tgui::Button::Ptr, 3> m_buttons;
+    std::array<tgui::Widget::Ptr, 3> m_buttons;
     int                            m_selectedButton;
 };
 } // namespace mmt_gd

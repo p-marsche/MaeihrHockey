@@ -38,23 +38,18 @@ void MenuState::init()
                 break;
             if (const auto btn = dynamic_pointer_cast<tgui::Button>(w))
             {
-                m_buttons[cnt] = btn;
+                m_buttons[cnt] = w;
                 cnt++;
-                std::string name            = btn->getWidgetName().toStdString();
+                std::string name = btn->getWidgetName().toStdString();
 
                 if (name == "Start")
-                {
-                    //btn->onPress([&manager = m_gameStateManager] { manager->setState("MainState"); });
                     w->getSignal("Pressed").connect([&manager = m_gameStateManager] { manager->setState("MainState"); });
-                }
                 else if (name == "Settings")
-                    continue;
+                    w->getSignal("Pressed").connect(
+                        [&manager = m_gameStateManager] { manager->setState("SettingsMenuState"); });
                 //btn->onPress([&manager = m_gameStateManager] { manager->setState("Settings"); });
                 else if (name == "Quit")
-                {
-                    //btn->onPress([&game = m_game] { game->getWindow().close(); });
                     w->getSignal("Pressed").connect([&game = m_game] { game->getWindow().close(); });
-                }
             }
         }
         m_selectedButton = 0;
@@ -99,7 +94,7 @@ void MenuState::handleButtons()
         m_selectedButton--;
     else if (InputManager::getInstance().isActionJustPressed("switch"))
     {
-        auto widget = m_game->getGui().get(m_buttons[m_selectedButton]->getWidgetName());
+        auto widget = m_buttons[m_selectedButton];
         widget->getSignal("Pressed").emit(widget.get());
     }
 
@@ -109,6 +104,5 @@ void MenuState::handleButtons()
         m_buttons[prevSelected]->setFocused(false);
         m_buttons[m_selectedButton]->setFocused(true);
     }
-
 }
 } // namespace mmt_gd
