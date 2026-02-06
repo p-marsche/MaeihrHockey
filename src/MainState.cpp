@@ -268,5 +268,6 @@ void MainState::updateCamera()
 void MainState::loadAssets()
 {
     AssetManager::getInstance().loadTexture("Selected Marker", "selected_marker.png");
+    AssetManager::getInstance().loadSoundBuffer("test", "test.wav");
 }
 } // namespace mmt_gd

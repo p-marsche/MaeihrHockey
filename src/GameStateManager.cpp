@@ -33,31 +33,31 @@ void GameStateManager::setState(const std::string& stateName)
 
         
         ////Config Test Stuff
-        //PlayerConfig config1{};
-        //PlayerConfig config2{};
-        //config1.m_playerIndex = 0;
-        //config2.m_playerIndex = 1;
+        PlayerConfig config1{};
+        PlayerConfig config2{};
+        config1.m_playerIndex = 0;
+        config2.m_playerIndex = 1;
 
-        //for (int i = 0; i < 3; ++i)
-        //{
-        //    config1.m_config.at(i).m_ability = PaddleAbility::DASH;
-        //    config1.m_config.at(i).m_passive = PaddlePassive::HEAVY;
-        //    config1.m_config.at(i).m_paddleIndex = i;
-        //}
+        for (int i = 0; i < 3; ++i)
+        {
+            config1.m_config.at(i).m_ability = PaddleAbility::DASH;
+            config1.m_config.at(i).m_passive = PaddlePassive::HEAVY;
+            config1.m_config.at(i).m_paddleIndex = i;
+        }
 
-        //for (int i = 0; i < 2; ++i)
-        //{
-        //    config2.m_config.at(i).m_ability     = PaddleAbility::DASH;
-        //    config2.m_config.at(i).m_passive     = PaddlePassive::HEAVY;
-        //    config2.m_config.at(i).m_paddleIndex = i;
-        //}
+        for (int i = 0; i < 2; ++i)
+        {
+            config2.m_config.at(i).m_ability     = PaddleAbility::DASH;
+            config2.m_config.at(i).m_passive     = PaddlePassive::HEAVY;
+            config2.m_config.at(i).m_paddleIndex = i;
+        }
 
-        //config2.m_config.at(2).m_ability = PaddleAbility::ENLARGE;
-        //config2.m_config.at(2).m_passive = PaddlePassive::BOUNCY;
-        //config2.m_config.at(2).m_paddleIndex = 3;
+        config2.m_config.at(2).m_ability = PaddleAbility::ENLARGE;
+        config2.m_config.at(2).m_passive = PaddlePassive::BOUNCY;
+        config2.m_config.at(2).m_paddleIndex = 3;
 
-        //EventBus::getInstance().fireEvent(std::make_shared<PlayerConfigFinishEvent>(config1));
-        //EventBus::getInstance().fireEvent(std::make_shared<PlayerConfigFinishEvent>(config2));
+        EventBus::getInstance().fireEvent(std::make_shared<PlayerConfigFinishEvent>(config1));
+        EventBus::getInstance().fireEvent(std::make_shared<PlayerConfigFinishEvent>(config2));
     }
 
         m_futureState = state;

@@ -140,6 +140,7 @@
     <ClInclude Include="../src/stdafx.h" />
     <ClInclude Include="..\src\Action.hpp" />
     <ClInclude Include="..\src\AssetManager.hpp" />
+    <ClInclude Include="..\src\AudioComponent.hpp" />
     <ClInclude Include="..\src\BulletPool.hpp" />
     <ClInclude Include="..\src\ColliderComponent.hpp" />
     <ClInclude Include="..\src\Config.hpp" />
@@ -209,6 +210,7 @@
     <ClCompile Include="../src/InputManager.cpp" />
     <ClCompile Include="..\src\Action.cpp" />
     <ClCompile Include="..\src\AssetManager.cpp" />
+    <ClCompile Include="..\src\AudioComponent.cpp" />
     <ClCompile Include="..\src\ColliderComponent.cpp" />
     <ClCompile Include="..\src\Config.cpp" />
     <ClCompile Include="..\src\DebugDraw.cpp" />

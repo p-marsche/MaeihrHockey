@@ -3,6 +3,7 @@
 #include "GameObjectFactory.hpp"
 
 #include "AssetManager.hpp"
+#include "AudioComponent.hpp"
 #include "ColliderComponent.hpp"
 #include "EventBus.hpp"
 #include "GoalEvent.hpp"
@@ -66,6 +67,23 @@ GameObject::Ptr GameObjectFactory::createPuck(sf::RenderWindow& window, tson::Ob
     fixtureDef.restitution = 1.f;
 
     auto collider = puck->addComponent<ColliderComponent>(*puck, *rigidBody, fixtureDef);
+    sf::SoundBuffer& buffer   = AssetManager::getInstance().getSoundBuffer("test");
+    auto             audio    = puck->addComponent<AudioComponent>(*puck, buffer);
+
+    collider->registerOnCollisionFunction(
+        [audio](ColliderComponent& self, ColliderComponent& other)
+        { 
+            audio->playSound();
+        });
+
+    collider->registerOnCollisionFunction(
+        [audio](ColliderComponent& self, ColliderComponent& other) 
+        { 
+            if (other.getGameObject().getId() == "TopWall")
+                self.getBody().addVelocity(sf::Vector2f(0.f, 30.f));
+            else if (other.getGameObject().getId() == "BottomWall")
+                self.getBody().addVelocity(sf::Vector2f(0.f, -50.f));
+        });
 
     if (!puck->init())
     {
@@ -271,7 +289,6 @@ GameObject::Ptr GameObjectFactory::createGoalsensor(sf::RenderWindow& window, ts
     else if (goal->getId() == "RightGoal")
         sideID = 2;
 
-    // add onCollision func later if we actually need it
     collider->registerOnCollisionFunction([sideID](ColliderComponent& self, ColliderComponent& other) {
             auto otherId = other.getGameObject().getId();
             if (otherId == "Puck")

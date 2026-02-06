@@ -1,5 +1,6 @@
 #include "stdafx.h"
 
+#include "AssetManager.hpp"
 #include "RigidBodyComponent.hpp"
 #include "PhysicsManager.hpp"
 #include "GoalHandler.hpp"
@@ -90,7 +91,7 @@ int constexpr MAX_SCORE     = 9;
 	}
 
 	void GoalHandler::handleGoal(int spawnIndex)
-	{
+	{        
 		sf::Vector2f newPos = m_spawns.at(spawnIndex - 1);
         auto         body   = m_puck->getComponent<RigidBodyComponent>()->getB2Body();
         body->SetTransform(PhysicsManager::s2b(newPos), 0);
