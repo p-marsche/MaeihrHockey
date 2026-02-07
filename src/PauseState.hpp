@@ -12,12 +12,12 @@ class PauseState final : public GameState
 public:
     using GameState::GameState;
 
-    void init() override;
-    void initGui() override { };
+    void init() override {};
+    void initGui() override {};
 
-    void update(float delta) override;
-    void draw() override;
-    void exit() override;
+    void update(float delta) override {};
+    void draw() override {};
+    void exit() override {};
 
 private:
     void handleButtons();

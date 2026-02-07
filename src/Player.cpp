@@ -25,7 +25,7 @@ float constexpr INACTIVE_LINEAR_DAMPENING = 0.1f;
 float constexpr ACTIVE_LINEAR_DAMPENING   = 0.2f;
 float constexpr INACTIVE_RESTITUTION      = 0.9f;
 float constexpr ACTIVE_RESTITUTION        = 0.7f;
-
+int constexpr PADDLE_COUNT                = 3;
 
 using CL = CollisionLayers;
 Player::Player(const int playerIndex, sf::RenderWindow& window) :
@@ -64,9 +64,9 @@ m_window(window)
 
 void Player::startMatch(PlayerConfig config)
 {
-    std::array<GameObject::Ptr, 3> temp;
+    std::array<GameObject::Ptr, PADDLE_COUNT> temp;
 
-    for (auto p : m_paddles)
+    for (auto& p : m_paddles)
     {
         int length = p->getId().length();
         std::string idx = "";
@@ -76,7 +76,7 @@ void Player::startMatch(PlayerConfig config)
     }
     m_paddles.clear();
 
-    for (int i = 0; i < 3; ++i)
+    for (unsigned int i = 0; i < temp.size(); ++i)
     {
         m_paddles.push_back(temp[i]);
         setupPaddle(i, config.m_config.at(i));
@@ -84,7 +84,7 @@ void Player::startMatch(PlayerConfig config)
 
     setupStartingPaddle();
     
-    for (auto p : m_paddles)
+    for (auto& p : m_paddles)
     {
         auto coll = p->getComponent<ColliderComponent>();
         coll->registerOnCollisionFunction(
@@ -112,7 +112,7 @@ void Player::setupStartingPaddle()
 
 void Player::setupPaddle(int index, PaddleConfig config)
 {
-    auto go = m_paddles[index];
+    auto& go = m_paddles[index];
     auto rb     = go->getComponent<RigidBodyComponent>();
     auto coll   = go->getComponent<ColliderComponent>();
     auto sprite = go->getComponent<SpriteRenderComponent>();
@@ -203,7 +203,7 @@ void Player::switchPaddle()
 
 void Player::activatePaddle()
 {
-    auto go2 = m_paddles[m_activeIndex];
+    auto& go2 = m_paddles[m_activeIndex];
     go2->addComponent<PlayerMoveComponent>(m_moveComps[m_activeIndex]);
     go2->addComponent<IPlayerAbilityComponent>(m_abilityComps[m_activeIndex]);
     auto body2 = go2->getComponent<RigidBodyComponent>()->getB2Body();
@@ -220,7 +220,7 @@ void Player::deactivatePaddle()
 {
     m_activePaddleMarker[m_activeIndex]->setVisibility(false);
 
-    auto go1   = m_paddles[m_activeIndex];
+    auto& go1   = m_paddles[m_activeIndex];
     auto body1 = go1->getComponent<RigidBodyComponent>()->getB2Body();
     body1->SetLinearDamping(INACTIVE_LINEAR_DAMPENING);
     auto fix1 = go1->getComponent<ColliderComponent>()->getFixture();
@@ -244,7 +244,7 @@ void Player::shutdown()
 
 void Player::createMarkerSprites()
 {
-    auto paddleScale = m_paddles[0]->getComponent<SpriteRenderComponent>()->getSprite().getScale();
+    auto& paddleScale = m_paddles[0]->getComponent<SpriteRenderComponent>()->getSprite().getScale();
 
     for (unsigned int i = 0; i < m_paddles.size(); i++)
     {
