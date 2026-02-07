@@ -16,9 +16,18 @@
 
 namespace mmt_gd
 {
-void GameObjectFactory::createGameObject(sf::RenderWindow& window, tson::Object& obj)
+using Parser = TsonPropertyReader;
+using ObjectFormat = tson::Object;
+
+float constexpr WALL_KNOCKBACK = 20.f;
+float constexpr PADDLE_DAMPING = 0.2f;
+float constexpr PADDLE_RESTITUTION = 0.7f;
+float constexpr PUCK_DAMPING       = 0.05f;
+float constexpr PUCK_RESTITUTION   = 1.f;
+
+void GameObjectFactory::createGameObject(sf::RenderWindow& window, ObjectFormat& obj)
 {
-    std::string     objType = obj.getType();
+    std::string     objType = Parser::getType(obj);
     GameObject::Ptr ptr     = nullptr;
     if (objType == "Puck")
         ptr = createPuck(window, obj);
@@ -46,7 +55,7 @@ void GameObjectFactory::createGameObject(sf::RenderWindow& window, tson::Object&
         std::cerr << "ERROR: GameObjectFactory::createGameObject: Failed to create object of type \"" << objType << "\"";
 }
 
-GameObject::Ptr GameObjectFactory::createPuck(sf::RenderWindow& window, tson::Object& obj)
+GameObject::Ptr GameObjectFactory::createPuck(sf::RenderWindow& window, ObjectFormat& obj)
 {
     auto puck = createObject(obj);
 
@@ -55,7 +64,7 @@ GameObject::Ptr GameObjectFactory::createPuck(sf::RenderWindow& window, tson::Ob
     auto rigidBody = puck->addComponent<RigidBodyComponent>(*puck, b2_dynamicBody);
     auto body      = rigidBody->getB2Body();
     body->SetFixedRotation(true);
-    body->SetLinearDamping(0.05f);
+    body->SetLinearDamping(PUCK_DAMPING);
     body->SetBullet(true);
 
     b2FixtureDef fixtureDef = createFixtureDef(obj);
@@ -64,7 +73,7 @@ GameObject::Ptr GameObjectFactory::createPuck(sf::RenderWindow& window, tson::Ob
     filter.maskBits     = CollisionLayers::GOAL_SENSOR | CollisionLayers::OBJECTS | 
         CollisionLayers::WALL | CollisionLayers::PUCK_WALL;
     fixtureDef.filter   = filter;
-    fixtureDef.restitution = 1.f;
+    fixtureDef.restitution = PUCK_RESTITUTION;
 
     auto collider = puck->addComponent<ColliderComponent>(*puck, *rigidBody, fixtureDef);
     sf::SoundBuffer& buffer   = AssetManager::getInstance().getSoundBuffer("test");
@@ -76,13 +85,15 @@ GameObject::Ptr GameObjectFactory::createPuck(sf::RenderWindow& window, tson::Ob
             audio->playSound();
         });
 
+    float knockback = 50.f;
+
     collider->registerOnCollisionFunction(
-        [](ColliderComponent& self, ColliderComponent& other) 
+        [knockback](ColliderComponent& self, ColliderComponent& other) 
         { 
             if (other.getGameObject().getId() == "TopWall")
-                self.getBody().addVelocity(sf::Vector2f(0.f, 30.f));
+                self.getBody().addVelocity(sf::Vector2f(0.f, knockback));
             else if (other.getGameObject().getId() == "BottomWall")
-                self.getBody().addVelocity(sf::Vector2f(0.f, -50.f));
+                self.getBody().addVelocity(sf::Vector2f(0.f, -1 * knockback));
         });
 
     if (!puck->init())
@@ -95,24 +106,24 @@ GameObject::Ptr GameObjectFactory::createPuck(sf::RenderWindow& window, tson::Ob
     return puck;
 }
 
-GameObject::Ptr GameObjectFactory::createPaddle(sf::RenderWindow& window, tson::Object& obj)
+GameObject::Ptr GameObjectFactory::createPaddle(sf::RenderWindow& window, ObjectFormat& obj)
 {
-    int  playerIndex = TsonPropertyReader::getPlayerIndex(obj);
+    int  playerIndex = Parser::getPlayerIndex(obj);
     auto paddle      = createObject(obj);
 
     addSpriteRenderer(obj, *paddle, window);
 
     auto rigidBody = paddle->addComponent<RigidBodyComponent>(*paddle, b2_dynamicBody);
     rigidBody->getB2Body()->SetFixedRotation(true);
-    rigidBody->getB2Body()->SetLinearDamping(0.2f);
+    rigidBody->getB2Body()->SetLinearDamping(PADDLE_DAMPING);
 
     b2FixtureDef fixtureDef = createFixtureDef(obj);
     b2Filter     filter;
     filter.categoryBits = CollisionLayers::OBJECTS;
-    filter.maskBits     = CollisionLayers::FAKE_WALL | CollisionLayers::OBJECTS | CollisionLayers::WALL |
-                      CollisionLayers::PENALTY;
+    filter.maskBits     = CollisionLayers::FAKE_WALL | CollisionLayers::OBJECTS | 
+                        CollisionLayers::WALL | CollisionLayers::PENALTY;
     fixtureDef.filter = filter;
-    fixtureDef.restitution = 0.7f;
+    fixtureDef.restitution = PADDLE_RESTITUTION;
 
     auto collider = paddle->addComponent<ColliderComponent>(*paddle, *rigidBody, fixtureDef);
 
@@ -126,15 +137,9 @@ GameObject::Ptr GameObjectFactory::createPaddle(sf::RenderWindow& window, tson::
     return paddle;
 }
 
-GameObject::Ptr GameObjectFactory::createWall(sf::RenderWindow& window, tson::Object& obj)
+GameObject::Ptr GameObjectFactory::createWall(sf::RenderWindow& window, ObjectFormat& obj)
 {
     auto wall = createObject(obj);
-
-    /*std::string textureKey = TsonPropertyReader::getTexture(obj);
-		sf::Texture tex = AssetManager::getInstance().getTexture(textureKey);
-		auto spriteComp = wall->addComponent<SpriteRenderComponent>(
-			*paddle, window, tex, "GameObjects",
-			sf::IntRect(0, 0, 0, 0));*/
 
     auto rigidBody = wall->addComponent<RigidBodyComponent>(*wall, b2_staticBody);
 
@@ -146,11 +151,6 @@ GameObject::Ptr GameObjectFactory::createWall(sf::RenderWindow& window, tson::Ob
 
     auto collider = wall->addComponent<ColliderComponent>(*wall, *rigidBody, fixtureDef);
 
-    // add onCollision func later if we actually need it
-    /*collider->registerOnCollisionFunction([](ColliderComponent& self, ColliderComponent& other) {
-
-		});*/
-
     if (!wall->init())
     {
         sf::err() << "Could not initialize wall \n";
@@ -158,18 +158,12 @@ GameObject::Ptr GameObjectFactory::createWall(sf::RenderWindow& window, tson::Ob
 
     EventBus::getInstance().fireEvent(std::make_shared<GameObjectCreateEvent>(wall));
 
-    auto fixPos = PhysicsManager::b2s(wall->getComponent<ColliderComponent>()->getBody().getB2Body()->GetPosition());
-
-    /*std::cout << obj.getName() << std::endl;
-    std::cout << obj.getPosition().x << "  :  " << obj.getPosition().y << std::endl;
-    std::cout << "fixture: " <<  fixPos.x << "  :  " << fixPos.y << std::endl;
-    std::cout << obj.getSize().x << "  :  " << obj.getSize().y << std::endl;
-    std::cout << std::endl;*/
+    //auto fixPos = PhysicsManager::b2s(wall->getComponent<ColliderComponent>()->getBody().getB2Body()->GetPosition());
 
     return wall;
 }
 
-GameObject::Ptr GameObjectFactory::createNeutralzone(sf::RenderWindow& window, tson::Object& obj)
+GameObject::Ptr GameObjectFactory::createNeutralzone(sf::RenderWindow& window, ObjectFormat& obj)
 {
     auto neutral = createObject(obj);
 
@@ -180,16 +174,8 @@ GameObject::Ptr GameObjectFactory::createNeutralzone(sf::RenderWindow& window, t
     filter.categoryBits = CollisionLayers::FAKE_WALL;
     filter.maskBits     = CollisionLayers::OBJECTS;
     fixtureDef.filter   = filter;
-    
-
-    /*fixtureDef.isSensor = true;*/
 
     auto collider = neutral->addComponent<ColliderComponent>(*neutral, *rigidBody, fixtureDef);
-
-    /*collider->registerOnCollisionFunction([](ColliderComponent& self, ColliderComponent& other) 
-        { 
-            other.getBody().getB2Body()->ApplyLinearImpulseToCenter(b2Vec2(50.f, 0.f), true);
-		});*/
 
     if (!neutral->init())
     {
@@ -201,7 +187,7 @@ GameObject::Ptr GameObjectFactory::createNeutralzone(sf::RenderWindow& window, t
     return neutral;
 }
 
-GameObject::Ptr GameObjectFactory::createExtraWall(sf::RenderWindow& window, tson::Object& obj)
+GameObject::Ptr GameObjectFactory::createExtraWall(sf::RenderWindow& window, ObjectFormat& obj)
 {
     auto neutral = createObject(obj);
 
@@ -217,11 +203,11 @@ GameObject::Ptr GameObjectFactory::createExtraWall(sf::RenderWindow& window, tso
 
     auto collider = neutral->addComponent<ColliderComponent>(*neutral, *rigidBody, fixtureDef);
 
-    int dir = (TsonPropertyReader::getWallSide(obj) == "Top") ? (-5) : 5; 
+    float dir = (TsonPropertyReader::getWallSide(obj) == "Top") ? (-1 * WALL_KNOCKBACK) : WALL_KNOCKBACK; 
 
-    collider->registerOnCollisionFunction([](ColliderComponent& self, ColliderComponent& other) 
+    collider->registerOnCollisionFunction([dir](ColliderComponent& self, ColliderComponent& other) 
         { 
-            other.getBody().getB2Body()->ApplyLinearImpulseToCenter(b2Vec2(0.f, 5.f), true);
+            other.getBody().getB2Body()->ApplyLinearImpulseToCenter(b2Vec2(0.f, dir), true);
 		});
 
     if (!neutral->init())
@@ -234,15 +220,9 @@ GameObject::Ptr GameObjectFactory::createExtraWall(sf::RenderWindow& window, tso
     return neutral;
 }
 
-GameObject::Ptr GameObjectFactory::createPenaltyarea(sf::RenderWindow& window, tson::Object& obj)
+GameObject::Ptr GameObjectFactory::createPenaltyarea(sf::RenderWindow& window, ObjectFormat& obj)
 {
     auto penalty = createObject(obj);
-
-    /*std::string textureKey = TsonPropertyReader::getTexture(obj);
-		sf::Texture tex = AssetManager::getInstance().getTexture(textureKey);
-		auto spriteComp = wall->addComponent<SpriteRenderComponent>(
-			*paddle, window, tex, "GameObjects",
-			sf::IntRect(0, 0, 0, 0));*/
 
     auto rigidBody = penalty->addComponent<RigidBodyComponent>(*penalty, b2_staticBody);
 
@@ -254,11 +234,6 @@ GameObject::Ptr GameObjectFactory::createPenaltyarea(sf::RenderWindow& window, t
 
     auto collider = penalty->addComponent<ColliderComponent>(*penalty, *rigidBody, fixtureDef);
 
-    // add onCollision func later if we actually need it
-    /*collider->registerOnCollisionFunction([](ColliderComponent& self, ColliderComponent& other) {
-
-		});*/
-
     if (!penalty->init())
     {
         sf::err() << "Could not initialize wall \n";
@@ -269,7 +244,7 @@ GameObject::Ptr GameObjectFactory::createPenaltyarea(sf::RenderWindow& window, t
     return penalty;
 }
 
-GameObject::Ptr GameObjectFactory::createGoalsensor(sf::RenderWindow& window, tson::Object& obj)
+GameObject::Ptr GameObjectFactory::createGoalsensor(sf::RenderWindow& window, ObjectFormat& obj)
 {
     auto goal = createObject(obj);
 
@@ -305,15 +280,9 @@ GameObject::Ptr GameObjectFactory::createGoalsensor(sf::RenderWindow& window, ts
     return goal;
 }
 
-GameObject::Ptr GameObjectFactory::createGoalbarrier(sf::RenderWindow& window, tson::Object& obj)
+GameObject::Ptr GameObjectFactory::createGoalbarrier(sf::RenderWindow& window, ObjectFormat& obj)
 {
     auto gb = createObject(obj);
-
-    /*std::string textureKey = TsonPropertyReader::getTexture(obj);
-		sf::Texture tex = AssetManager::getInstance().getTexture(textureKey);
-		auto spriteComp = wall->addComponent<SpriteRenderComponent>(
-			*paddle, window, tex, "GameObjects",
-			sf::IntRect(0, 0, 0, 0));*/
 
     auto rigidBody = gb->addComponent<RigidBodyComponent>(*gb, b2_staticBody);
 
@@ -325,11 +294,6 @@ GameObject::Ptr GameObjectFactory::createGoalbarrier(sf::RenderWindow& window, t
 
     auto collider = gb->addComponent<ColliderComponent>(*gb, *rigidBody, fixtureDef);
 
-    // add onCollision func later if we actually need it
-    /*collider->registerOnCollisionFunction([](ColliderComponent& self, ColliderComponent& other) {
-
-		});*/
-
     if (!gb->init())
     {
         sf::err() << "Could not initialize wall \n";
@@ -340,7 +304,7 @@ GameObject::Ptr GameObjectFactory::createGoalbarrier(sf::RenderWindow& window, t
     return gb;
 }
 
-GameObject::Ptr GameObjectFactory::createPuckSpawn(sf::RenderWindow& window, tson::Object& obj)
+GameObject::Ptr GameObjectFactory::createPuckSpawn(sf::RenderWindow& window, ObjectFormat& obj)
 {
     auto spawn = createObject(obj);
 
@@ -349,19 +313,19 @@ GameObject::Ptr GameObjectFactory::createPuckSpawn(sf::RenderWindow& window, tso
     return spawn;
 }
 
-GameObject::Ptr GameObjectFactory::createObject(tson::Object& obj)
+GameObject::Ptr GameObjectFactory::createObject(ObjectFormat& obj)
 {
-    auto         go  = GameObject::create(obj.getName());
-    sf::Vector2f pos = t2s(obj.getPosition());
-    sf::Vector2f size = t2s(obj.getSize());
+    auto         go  = GameObject::create(Parser::getName(obj));
+    sf::Vector2f pos = Parser::getPosition(obj);
+    sf::Vector2f size = Parser::getSize(obj);
     auto         newPos = sf::Vector2f(pos.x + (size.x / 2), pos.y + (size.y / 2));
     go->setPosition(newPos);
     return go;
 }
 
-void GameObjectFactory::addSpriteRenderer(tson::Object& obj, GameObject& go, sf::RenderWindow& window)
+void GameObjectFactory::addSpriteRenderer(ObjectFormat& obj, GameObject& go, sf::RenderWindow& window)
 {
-    std::string textureKey = TsonPropertyReader::getTexture(obj);
+    std::string textureKey = Parser::getTexture(obj);
     AssetManager::getInstance().loadTexture(textureKey, textureKey);
     auto spriteComp = go.addComponent<SpriteRenderComponent>(go,
                                                              window,
@@ -369,15 +333,15 @@ void GameObjectFactory::addSpriteRenderer(tson::Object& obj, GameObject& go, sf:
                                                              "GameObjects",
                                                              sf::IntRect(0, 0, 0, 0));
     auto  textureSize = AssetManager::getInstance().getTexture(textureKey).getSize();
-    float scale       = t2s(obj.getSize()).x / textureSize.x;
+    float scale       = Parser::getSize(obj).x / textureSize.x;
     spriteComp->getSprite().setOrigin(textureSize.x / 2, textureSize.y / 2);
     spriteComp->setScale(scale, scale);
 }
 
-b2FixtureDef GameObjectFactory::createFixtureDef(tson::Object& obj)
+b2FixtureDef GameObjectFactory::createFixtureDef(ObjectFormat& obj)
 {
-    const auto   size      = PhysicsManager::t2b(obj.getSize());
-    const auto   shapeType = TsonPropertyReader::getShape(obj);
+    const auto   size      = PhysicsManager::s2b(Parser::getSize(obj));
+    const auto   shapeType = Parser::getShape(obj);
     b2FixtureDef fixtureDef;
     if (shapeType == "Circle")
     {
@@ -392,14 +356,14 @@ b2FixtureDef GameObjectFactory::createFixtureDef(tson::Object& obj)
         shape->SetAsBox(size.x / 2, size.y / 2, b2Vec2{0, 0}, 0);
         fixtureDef.shape = shape;
     }
-    fixtureDef.density  = TsonPropertyReader::getDensity(obj);
-    fixtureDef.isSensor = TsonPropertyReader::isSensor(obj);
+    fixtureDef.density  = Parser::getDensity(obj);
+    fixtureDef.isSensor = Parser::isSensor(obj);
 
     return fixtureDef;
 }
 
-sf::Vector2f GameObjectFactory::t2s(tson::Vector2i vec)
-{
-    return sf::Vector2f(vec.x, vec.y);
-}
+//sf::Vector2f GameObjectFactory::t2s(tson::Vector2i vec)
+//{
+//    return sf::Vector2f(vec.x, vec.y);
+//}
 } // namespace mmt_gd
