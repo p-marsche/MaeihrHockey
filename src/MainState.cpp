@@ -20,7 +20,7 @@
 
 namespace mmt_gd
 {
-int constexpr ROUND_LENGTH               = 180;
+int constexpr ROUND_LENGTH               = 5;
 float constexpr GOAL_TIME                = 1.8f;
 float constexpr CAMERA_SHAKE_MAGNITUDE_X = 20.f;
 float constexpr CAMERA_SHAKE_MAGNITUDE_Y = 10.f;
@@ -80,6 +80,13 @@ void MainState::initGui()
     m_guiGroups.emplace("Goal", guiGroup);
     m_gui->add(guiGroup);
     m_guiGroups.at("Goal")->setVisible(false);
+
+    guiGroup = tgui::Group::create();
+    filename = "goal.txt";
+    guiGroup->loadWidgetsFromFile(Config::guiPath + filename);
+    m_guiGroups.emplace("End", guiGroup);
+    m_gui->add(guiGroup);
+    m_guiGroups.at("End")->setVisible(false);
 
     guiGroup = tgui::Group::create();
     filename = "pause_menu.txt";
@@ -274,11 +281,8 @@ void MainState::updateTimer(const float deltaTime)
             m_endTimer += deltaTime;
             return;
         }
-        std::cout << "end" << std::endl;
-        
             exit();
-            init();
-  
+            init(); 
     }
 }
 
@@ -320,6 +324,7 @@ void MainState::exit()
     }
     m_listeners.clear();
 
+    m_music.stop();
     m_physicsManager.shutdown();
     m_spriteManager.shutdown();
     m_gameObjectManager.shutdown();
@@ -369,10 +374,7 @@ void MainState::pauseLoop()
 {
     int prevSelected = m_selectedButton;
     if (InputManager::getInstance().isActionJustPressed("down") ||
-        InputManager::getInstance().isActionJustPressed(
-            "rig"
-            "h"
-            "t"))
+        InputManager::getInstance().isActionJustPressed("right"))
         m_selectedButton++;
     else if (InputManager::getInstance().isActionJustPressed("up") ||
              InputManager::getInstance().isActionJustPressed("left"))
