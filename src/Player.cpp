@@ -22,7 +22,7 @@ namespace mmt_gd
 {
 float constexpr MARKER_PADDLE_RATIO       = 1.8f;
 float constexpr INACTIVE_LINEAR_DAMPENING = 0.1f;
-float constexpr ACTIVE_LINEAR_DAMPENING   = 0.2;
+float constexpr ACTIVE_LINEAR_DAMPENING   = 0.2f;
 float constexpr INACTIVE_RESTITUTION      = 0.9f;
 float constexpr ACTIVE_RESTITUTION        = 0.7f;
 
@@ -146,11 +146,11 @@ void Player::update(const float deltaTime)
     if (InputManager::getInstance().isActionJustPressed("switch", m_playerIndex))
         switchPaddle();
 
-    for (int i = 0; i < m_abilityComps.size(); ++i)
+    for (unsigned int i = 0; i < m_abilityComps.size(); ++i)
         if (i == m_activeIndex)
             m_abilityComps[i]->updateInactive(deltaTime);
 
-    for (int i = 0; i < m_passiveComps.size(); ++i)
+    for (unsigned int i = 0; i < m_passiveComps.size(); ++i)
         if (i == m_activeIndex)
             return;
         else if (auto bounce = std::dynamic_pointer_cast<HighBouncePassive>(m_passiveComps[i]))
@@ -159,7 +159,7 @@ void Player::update(const float deltaTime)
 
 void Player::handleCollision(GameObject& go, GameObject& go2)
 {
-    for (int i = 0; i < m_paddles.size(); ++i)
+    for (unsigned int i = 0; i < m_paddles.size(); ++i)
     {
         if (i == m_activeIndex)
             return;
@@ -246,7 +246,7 @@ void Player::createMarkerSprites()
 {
     auto paddleScale = m_paddles[0]->getComponent<SpriteRenderComponent>()->getSprite().getScale();
 
-    for (int i = 0; i < m_paddles.size(); i++)
+    for (unsigned int i = 0; i < m_paddles.size(); i++)
     {
         auto marker = m_paddles[i]->addComponent<SpriteRenderComponent>(
                 *m_paddles[i],
@@ -255,7 +255,7 @@ void Player::createMarkerSprites()
                 "GameObjects",
                 sf::IntRect(0, 0, 0, 0));
         auto textureSize = AssetManager::getInstance().getTexture("Selected Marker").getSize();
-        marker->getSprite().setOrigin(textureSize.x / 2, textureSize.y / 2);
+        marker->getSprite().setOrigin(textureSize.x / 2.f, textureSize.y / 2.f);
         marker->setScale( MARKER_PADDLE_RATIO * paddleScale);
         marker->setVisibility(false);
         marker->init();

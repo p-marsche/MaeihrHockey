@@ -19,7 +19,6 @@ public:
     void updateInactive(float deltaTime) override;
 
 private:
-    int m_cooldown;
-    float m_dashFactor;
+    float m_dashFactor, m_cooldown;
 };
 } // namespace mmt_gd

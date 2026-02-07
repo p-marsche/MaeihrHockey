@@ -130,7 +130,9 @@ bool InputManager::isJoystickButtonBound(JoystickButton button)
 
 void InputManager::processJoystickMoved(const sf::Event& event)
 {
-    int squaredPos = event.joystickMove.position * event.joystickMove.position;
+    // changed squared pos from int to float cause compiler warnings
+    // pls test if that causes any issues
+    float squaredPos = event.joystickMove.position * event.joystickMove.position;
     bool notZero= squaredPos > JoystickMap::ZERO_SQAURED;
 
     if (notZero)

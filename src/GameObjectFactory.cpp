@@ -17,9 +17,8 @@
 namespace mmt_gd
 {
 using Parser = TsonPropertyReader;
-using ObjectFormat = tson::Object;
 
-float constexpr WALL_KNOCKBACK = 20.f;
+float constexpr WALL_KNOCKBACK     = 20.f;
 float constexpr PADDLE_DAMPING = 0.2f;
 float constexpr PADDLE_RESTITUTION = 0.7f;
 float constexpr PUCK_DAMPING       = 0.05f;
@@ -334,7 +333,7 @@ void GameObjectFactory::addSpriteRenderer(ObjectFormat& obj, GameObject& go, sf:
                                                              sf::IntRect(0, 0, 0, 0));
     auto  textureSize = AssetManager::getInstance().getTexture(textureKey).getSize();
     float scale       = Parser::getSize(obj).x / textureSize.x;
-    spriteComp->getSprite().setOrigin(textureSize.x / 2, textureSize.y / 2);
+    spriteComp->getSprite().setOrigin(textureSize.x / 2.f, textureSize.y / 2.f);
     spriteComp->setScale(scale, scale);
 }
 
@@ -361,9 +360,4 @@ b2FixtureDef GameObjectFactory::createFixtureDef(ObjectFormat& obj)
 
     return fixtureDef;
 }
-
-//sf::Vector2f GameObjectFactory::t2s(tson::Vector2i vec)
-//{
-//    return sf::Vector2f(vec.x, vec.y);
-//}
 } // namespace mmt_gd

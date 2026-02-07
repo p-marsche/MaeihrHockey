@@ -94,7 +94,7 @@ void PhysicsManager::update(const float deltaTime)
 {
     m_world->Step(deltaTime, 8, 3);
 
-    for (auto i = 0; i < m_rbodies.size(); ++i)
+    for (unsigned int i = 0; i < m_rbodies.size(); ++i)
     {
         if (m_rbodies.at(i)->getB2Body() == nullptr)
         {

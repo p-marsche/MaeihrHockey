@@ -33,7 +33,12 @@ m_players(),
 m_music(music),
 m_endTimer(0),
 m_playerCount(playerCount),
-m_isPaused(false)
+m_isPaused(false), 
+m_accumulator(0.f),
+m_goalTime(0.f),
+m_scored(false),
+m_timerSeconds(ROUND_LENGTH),
+m_selectedButton(0)
 {
     for (int i = 0; i < m_playerCount; ++i)
         m_players.push_back(std::make_shared<Player>(i, m_game->getWindow()));
@@ -173,7 +178,7 @@ void MainState::init()
     const auto renderComponent = camera->addComponent<CameraRenderComponent>(*camera,
                                                                              m_game->getWindow(),
                                                                              m_game->getWindow().getView());
-    camera->setPosition(sf::Vector2f(m_game->getWindow().getSize().x / 2, m_game->getWindow().getSize().y / 2));
+    camera->setPosition(sf::Vector2f(m_game->getWindow().getSize().x / 2.f, m_game->getWindow().getSize().y / 2.f));
 
     m_cameraShake = std::make_shared<TransformAnimationCameraShake>(sf::Vector2f(CAMERA_SHAKE_MAGNITUDE_X,
                                                                                  CAMERA_SHAKE_MAGNITUDE_Y),
