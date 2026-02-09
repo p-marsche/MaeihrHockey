@@ -23,8 +23,7 @@ public:
     void updateInactive(float deltaTime) override;
 
 private:
-    int   m_cooldown;
-    float m_enlargeFactor, m_durationTimer, m_durationTotal;
+    float m_enlargeFactor, m_durationTimer, m_durationTotal, m_cooldown;
     bool  m_endDuration;
 
     ColliderComponent&  m_collider;

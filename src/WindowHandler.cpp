@@ -56,7 +56,7 @@ void WindowHandler::createWindow(sf::VideoMode mode, int style)
     m_window.create(mode, m_title, style);
     //Image icon = AssetManager.Instance.GetImage("Window Icon");
     //m_window.SetIcon(icon.Size.X, icon.Size.Y, icon.Pixels);
-    sf::View view = sf::View(sf::Vector2f(m_width / 2, m_height / 2), sf::Vector2f(m_width, m_height));
+    sf::View view = sf::View(sf::Vector2f(m_width / 2.f, m_height / 2.f), sf::Vector2f(m_width, m_height));
     view.setViewport(sf::FloatRect(0, 0, 1, 1));
     m_window.setView(view);
 

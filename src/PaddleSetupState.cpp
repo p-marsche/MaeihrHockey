@@ -92,23 +92,22 @@ void PaddleSetupState::exit()
 void PaddleSetupState::handleButtons1()
 {
     if (InputManager::getInstance().isActionJustPressed("down", 0) ||
-            InputManager::getInstance().isActionJustPressed("rig"
-                                                            "h"
-                                                            "t"),
-        0)
+            InputManager::getInstance().isActionJustPressed("right", 0))
     {
         if (!player1ActiveSet)
         {
             int curr = player1Active->getSelectedItemIndex();
             player1Active->deselectItem();
-            curr = curr < player1Active->getItemCount() - 1 ? curr + 1 : 0;
+            int maxIdx = player1Active->getItemCount() - 1;
+            curr = curr < maxIdx ? curr + 1 : 0;
             player1Active->setSelectedItemByIndex(curr);
         }
         else
         {
             int curr = player1Inactive->getSelectedItemIndex();
             player1Inactive->deselectItem();
-            curr = curr < player1Inactive->getItemCount() - 1 ? curr + 1 : 0;
+            int maxIdx = player1Inactive->getItemCount() - 1;
+            curr = curr < maxIdx ? curr + 1 : 0;
             player1Inactive->setSelectedItemByIndex(curr);
         }
     }
@@ -153,14 +152,16 @@ void PaddleSetupState::handleButtons2()
         {
             int curr = player2Active->getSelectedItemIndex();
             player2Active->deselectItem();
-            curr = curr < player2Active->getItemCount() - 1 ? curr + 1 : 0;
+            int maxIdx = player2Active->getItemCount() - 1;
+            curr = curr < maxIdx ? curr + 1 : 0;
             player2Active->setSelectedItemByIndex(curr);
         }
         else
         {
             int curr = player2Inactive->getSelectedItemIndex();
             player2Inactive->deselectItem();
-            curr = curr < player2Inactive->getItemCount() - 1 ? curr + 1 : 0;
+            int maxIdx = player1Inactive->getItemCount() - 1;
+            curr = curr < maxIdx ? curr + 1 : 0;
             player2Inactive->setSelectedItemByIndex(curr);
         }
     }

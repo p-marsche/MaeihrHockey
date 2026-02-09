@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Config.hpp";
+#include "Config.hpp"
 #include "FinalFrontier/dll_export.hpp"
 
 #include <memory>
