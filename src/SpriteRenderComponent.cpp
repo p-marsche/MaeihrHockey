@@ -21,7 +21,8 @@ IRenderComponent(gameObject, renderWindow),
 m_texture(texture),
 m_layerName(std::move(layerName)),
 m_textureRect(textureRect),
-m_hasTextureRect(textureRect.width > 0 && textureRect.height > 0)
+m_hasTextureRect(textureRect.width > 0 && textureRect.height > 0),
+m_state()
 {
     EventBus::getInstance().fireEvent(std::make_shared<RenderableCreateEvent>(m_layerName, *this));
 }
@@ -44,10 +45,26 @@ bool SpriteRenderComponent::init()
     return true;
 }
 
+void SpriteRenderComponent::registerShaderFuncs(const ShaderFunction& func)
+{
+    m_shaderFuncs.push_back(func);
+}
+
+void SpriteRenderComponent::applyShaderFuncs(sf::RenderStates& state)
+{
+    for (const auto& f : m_shaderFuncs)
+    {
+        f(state);
+    }
+}
+
 void SpriteRenderComponent::draw()
 {
     // TODO: adapt transform to have pixel precise movement
+    m_state = m_gameObject.getTransform();
 
-    m_renderWindow.draw(m_sprite, m_gameObject.getTransform());
+    applyShaderFuncs(m_state);
+    
+    m_renderWindow.draw(m_sprite, m_state);
 }
 } // namespace mmt_gd

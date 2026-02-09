@@ -20,7 +20,7 @@
 
 namespace mmt_gd
 {
-int constexpr ROUND_LENGTH               = 5;
+int constexpr ROUND_LENGTH               = 60;
 float constexpr GOAL_TIME                = 1.8f;
 float constexpr CAMERA_SHAKE_MAGNITUDE_X = 20.f;
 float constexpr CAMERA_SHAKE_MAGNITUDE_Y = 10.f;
@@ -366,6 +366,7 @@ void MainState::loadAssets()
 {
     AssetManager::getInstance().loadTexture("Selected Marker", "selected_marker.png");
     AssetManager::getInstance().loadSoundBuffer("test", "test.wav");
+    AssetManager::getInstance().loadFragmentShader("Cooldown", "CooldownShader.frag");
 }
 
 void MainState::pauseGame()

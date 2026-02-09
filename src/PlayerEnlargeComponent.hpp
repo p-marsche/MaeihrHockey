@@ -15,7 +15,7 @@ public:
     using ptr = std::shared_ptr<PlayerEnlargeComponent>;
 
     PlayerEnlargeComponent(GameObject& gameObject, RigidBodyComponent& rigidBody, 
-        ColliderComponent& coll, SpriteRenderComponent& sprite, int playerIndex);
+        ColliderComponent& coll, SpriteRenderComponent& sprite, int playerIndex, sf::Shader* cdShader);
 
     bool init() override;
     void update(float deltaTime) override;
@@ -23,7 +23,7 @@ public:
     void updateInactive(float deltaTime) override;
 
 private:
-    float m_enlargeFactor, m_durationTimer, m_durationTotal, m_cooldown;
+    float m_enlargeFactor, m_durationTimer, m_durationTotal;
     bool  m_endDuration;
 
     ColliderComponent&  m_collider;
