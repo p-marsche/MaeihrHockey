@@ -1,0 +1,41 @@
+# Ergebnisse Usability Testing
+## Feedback - Alles
+
+- [ ] Mittellinie und Torraum markieren
+- [ ] Mehr Kontrast bei Selected Paddle Marker (vorallem beim blauen)
+- [ ] Alternetive: bis X Tore statt auf Zeit
+- [ ] Logo statt Text auf Titlescreen
+- [ ] Crash bei Spielende beheben
+- [ ] Dash als Bestätigungsbutton intuitiver
+- [ ] eventuell Reibung erhöhen
+- [ ] Flo: "Es ist besser als es sein sollte"
+    - mehr Juiciness als andere
+    - Steuerung schlecht aber durch Juiciness negiert
+    - Kann trotzdem noch Juicier sein
+- [ ] Credits einbauen
+    - FH
+    - Uns selbst
+    - Assets (müssen nicht zwingend sein)
+- [ ] Controller Zuweisung beheben (dass man links links und rechts rechts machen kann)
+- [ ] Radi: technisch nichts auszusetzen
+- [ ] Ability Cooldown Visualisierung
+- [ ] Enlarge-Ability als zweite, zusätzliche, Ability wenn man weit hinten ist
+- [ ] Indikator zu welchem Paddle man als nächstes wechselt
+- [ ] Assets überarbeiten
+- [ ] Bei Wechsel statt zyklisch durchgehen mit Joystick Richtung angeben
+- [ ] Unsichtbarer Collider in der Ecke der Arena, damit Puck nicht an der Wand stecken bleiben kann
+- [ ] Jedem Paddle einen Button zuweisen -> um Paddle zu steuern hält man entsprechenden Button (mehrere möglich)
+- [ ] Gut aber auch schade dass bei Anstoss nach Tor nicht beide zum Puck kommen
+- [ ] "Floatiness" gut
+- [ ] offenes Feld wäre cooler (keine Mittellinie)
+- [ ] Bevor Puck respawnt wäre eine kleine Vorbereitungszeit cool (Zeit um Paddles strategisch zu platzieren)
+- [ ] Camera Shake ist mega cool
+- [ ] Es muss einen Grund geben Paddles zu wechseln 
+    - z.B. keine Barriere in der Mitte -> taktisches aufstellen möglich ("Stürmer")
+- [ ] Statt Dash Shockwave
+    - stoßt Puck (und andere Paddles?) weg, anstatt Spieler zu boosten
+- [ ] Enlarge Timer stoppt derzeit wenn man Paddle wechselt
+- [ ] Unterschiedliche Mittelbarriere für jeden Spieler
+    - ermöglicht kleine Zone in der Paddles überlappen und interagieren können
+
+## Feedback - Implementiert
