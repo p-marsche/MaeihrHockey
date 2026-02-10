@@ -267,7 +267,6 @@ void MainState::updateTimer(const float deltaTime)
     {
         if (m_endTimer < 3.f)
         {
-        std::cout << m_endTimer << std::endl;
             int currScore1 = stoi(m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score1")->getText().toStdString());
             int currScore2 = stoi(m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score2")->getText().toStdString());
 
@@ -367,6 +366,8 @@ void MainState::loadAssets()
     AssetManager::getInstance().loadTexture("Selected Marker", "selected_marker.png");
     AssetManager::getInstance().loadSoundBuffer("test", "test.wav");
     AssetManager::getInstance().loadFragmentShader("Cooldown", "CooldownShader.frag");
+    AssetManager::getInstance().loadTexture("PaddlePalette", "PaddlePalette.png");
+    AssetManager::getInstance().getTexture("PaddlePalette").setSmooth(false);
 }
 
 void MainState::pauseGame()

@@ -20,7 +20,7 @@
 
 namespace mmt_gd
 {
-float constexpr MARKER_PADDLE_RATIO       = 1.8f;
+float constexpr MARKER_PADDLE_RATIO       = 1.4f;
 float constexpr INACTIVE_LINEAR_DAMPENING = 0.1f;
 float constexpr ACTIVE_LINEAR_DAMPENING   = 0.2f;
 float constexpr INACTIVE_RESTITUTION      = 0.9f;
@@ -144,17 +144,15 @@ void Player::setupPaddle(int index, PaddleConfig config)
         std::cerr << "Ability not found on " << go->getId() << std::endl;
 
     auto abilityComp = m_abilityComps[index];
-    sprite->registerShaderFuncs([abilityComp](sf::RenderStates& state)
+    abilityComp->getCdShader()->setUniform("palette", AssetManager::getInstance().getTexture("PaddlePalette"));
+    float idx = static_cast<float>(PADDLE_COUNT*m_playerIndex + index);
+    sprite->registerShaderFuncs([abilityComp, idx](sf::RenderStates& state)
     { 
             float       cdProg = abilityComp->getCooldownProgress(); //cd left in %
-            if (cdProg < 1.0f)
-            {
-                sf::Shader* shader = abilityComp->getCdShader();
-                shader->setUniform("progress", cdProg);
-                state.shader = shader;
-            }
-            else
-                state.shader = nullptr;
+            sf::Shader* shader = abilityComp->getCdShader();
+            shader->setUniform("index", idx);
+            shader->setUniform("progress", cdProg);
+            state.shader = shader;
     });
 
 
