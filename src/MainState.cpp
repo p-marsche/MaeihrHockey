@@ -147,9 +147,9 @@ void MainState::init()
 
     initGui();
 
-    m_guiGroups.at("Scoreboard")->setVisible(true);
-    m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score1")->setText(tgui::String(0));
-    m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score2")->setText(tgui::String(0));
+    m_guiGroups["Scoreboard"]->setVisible(true);
+    m_guiGroups["Scoreboard"]->get<tgui::Label>("Score1")->setText(tgui::String(0));
+    m_guiGroups["Scoreboard"]->get<tgui::Label>("Score2")->setText(tgui::String(0));
     m_timerSeconds = ROUND_LENGTH;
     m_accumulator  = 0.f;
     m_endTimer     = 0;

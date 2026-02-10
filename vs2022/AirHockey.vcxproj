@@ -143,6 +143,7 @@
     <ClInclude Include="..\src\AudioComponent.hpp" />
     <ClInclude Include="..\src\ColliderComponent.hpp" />
     <ClInclude Include="..\src\Config.hpp" />
+    <ClInclude Include="..\src\CreditsState.hpp" />
     <ClInclude Include="..\src\GameObjectFactory.hpp" />
     <ClInclude Include="..\src\GameState.hpp" />
     <ClInclude Include="..\src\HighBouncePassive.hpp" />
@@ -214,6 +215,7 @@
     <ClCompile Include="..\src\AudioComponent.cpp" />
     <ClCompile Include="..\src\ColliderComponent.cpp" />
     <ClCompile Include="..\src\Config.cpp" />
+    <ClCompile Include="..\src\CreditsState.cpp" />
     <ClCompile Include="..\src\DebugDraw.cpp" />
     <ClCompile Include="..\src\EventBus.cpp" />
     <ClCompile Include="..\src\GameObjectEvents.cpp" />
