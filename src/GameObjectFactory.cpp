@@ -119,6 +119,12 @@ GameObject::Ptr GameObjectFactory::createPaddle(sf::RenderWindow& window, Object
     b2FixtureDef fixtureDef = createFixtureDef(obj);
     b2Filter     filter;
     filter.categoryBits = CollisionLayers::OBJECTS;
+
+    if (playerIndex == 0)
+        filter.categoryBits = filter.categoryBits | CollisionLayers::PLAYER_1;
+    else if (playerIndex == 1)
+        filter.categoryBits = filter.categoryBits | CollisionLayers::PLAYER_2;
+
     filter.maskBits     = CollisionLayers::FAKE_WALL | CollisionLayers::OBJECTS | 
                         CollisionLayers::WALL | CollisionLayers::PENALTY;
     fixtureDef.filter = filter;
@@ -171,7 +177,18 @@ GameObject::Ptr GameObjectFactory::createNeutralzone(sf::RenderWindow& window, O
     b2FixtureDef fixtureDef = createFixtureDef(obj);
     b2Filter     filter;
     filter.categoryBits = CollisionLayers::FAKE_WALL;
-    filter.maskBits     = CollisionLayers::OBJECTS;
+    switch (Parser::getPlayerIndex(obj))
+    {
+        case 0:
+            filter.maskBits = CollisionLayers::PLAYER_1;
+            break;
+        case 1:
+            filter.maskBits = CollisionLayers::PLAYER_2;
+            break;
+        default:
+            filter.maskBits = CollisionLayers::OBJECTS;
+            break;
+    }
     fixtureDef.filter   = filter;
 
     auto collider = neutral->addComponent<ColliderComponent>(*neutral, *rigidBody, fixtureDef);

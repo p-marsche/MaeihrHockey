@@ -12,5 +12,6 @@ struct Config
     static const std::string imagesPath;
     static const std::string guiPath;
     static const std::string fragShaderPath;
+    static const std::string tilemapPath;
 };
 } // namespace mmt_gd

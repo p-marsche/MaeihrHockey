@@ -66,6 +66,13 @@ void AssetManager::loadFragmentShader(std::string name, std::string filename)
         m_fragShaders[name]->loadFromFile(Config::fragShaderPath + filename, sf::Shader::Type::Fragment);
 }
 
+void AssetManager::loadTileMap(std::string name, std::string filename)
+{
+    auto ret = m_textures.try_emplace(name, std::make_unique<sf::Texture>());
+    if (ret.second)
+        m_textures[name]->loadFromFile(Config::tilemapPath + filename);
+}
+
 void AssetManager::replaceTexture(std::string name, std::string filename)
 {
     if (auto it = m_textures.find(name) != m_textures.end())
@@ -162,6 +169,11 @@ void AssetManager::replaceFragmentShader(std::string name, std::string filename)
     m_fragShaders[name]->loadFromFile(Config::fragShaderPath, sf::Shader::Type::Fragment);
 }
 
+void AssetManager::replaceTileMap(std::string name, std::string filename)
+{
+    replaceTexture(name, filename);
+}
+
 sf::Texture& AssetManager::getTexture(std::string name)
 {
     if (m_textures.find(name) != m_textures.end())
@@ -208,6 +220,11 @@ sf::Shader* AssetManager::getFragmentShader(std::string name)
         return m_fragShaders[name].get();
     else
         std::cerr << "ERROR: Could not get Fragment Shader asset: " << name << std::endl;
+}
+
+sf::Texture& AssetManager::getTileMap(std::string name)
+{
+    return getTexture(name);
 }
 
 AssetManager::~AssetManager()
