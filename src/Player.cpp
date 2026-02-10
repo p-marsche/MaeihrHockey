@@ -55,9 +55,14 @@ m_window(window)
     m_listeners.push_back(creationListenerId);
 
     m_activeFilterMask.categoryBits = CollisionLayers::OBJECTS;
+    if (playerIndex == 0)
+        m_activeFilterMask.categoryBits = m_activeFilterMask.categoryBits | CollisionLayers::PLAYER_1;
+    else if (playerIndex == 1)
+        m_activeFilterMask.categoryBits = m_activeFilterMask.categoryBits | CollisionLayers::PLAYER_2;
+
     m_activeFilterMask.maskBits     = CollisionLayers::FAKE_WALL | CollisionLayers::OBJECTS | CollisionLayers::WALL;
 
-    m_passiveFilterMask.categoryBits = CollisionLayers::OBJECTS;
+    m_passiveFilterMask.categoryBits = m_activeFilterMask.categoryBits;
     m_passiveFilterMask.maskBits     = CollisionLayers::FAKE_WALL | CollisionLayers::OBJECTS | CollisionLayers::WALL |
                                    CollisionLayers::PENALTY;
 }

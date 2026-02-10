@@ -37,7 +37,10 @@ namespace mmt_gd
         PENALTY         = 0x0004,
         GOAL_SENSOR     = 0x0008,
         OBJECTS         = 0x0010,
-        PUCK_WALL       = 0x0020
+        PUCK_WALL       = 0x0020,
+        PLAYER_ALL      = 0x0040,
+        PLAYER_1        = 0x0080,
+        PLAYER_2        = 0x0100
     };
 
 
