@@ -99,14 +99,14 @@ void MainState::initGui()
                         [&paused = m_isPaused, &groups = m_guiGroups]
                         {
                             paused = false;
-                            groups.at("Scoreboard")->setVisible(!paused);
+                            groups.at("Scoreboard")->setVisible(true);
                             groups.at("Goal")->setVisible(false);
-                            groups.at("Pause")->setVisible(paused);
+                            groups.at("Pause")->setVisible(false);
                         });
                 /*else if (name == "Main Menu")
                     w->getSignal("Pressed").connect([&manager = m_gameStateManager] { manager->setState("MenuState"); });*/
                 else if (name == "Quit")
-                    w->getSignal("Pressed").connect([&game = m_game, this] 
+                    w->getSignal("Pressed").connect([&game = m_game] 
                         { 
                             game->shutdown();
                             game->getWindow().close(); 
@@ -385,11 +385,9 @@ void MainState::loadAssets()
 
 void MainState::pauseGame()
 {
-    /*m_guiGroups.at("Scoreboard")->setVisible(!m_isPaused);
-    m_guiGroups.at("Goal")->setVisible(false);
-    m_guiGroups.at("Pause")->setVisible(m_isPaused);*/
     disableGui();
     m_guiGroups.at("Pause")->setVisible(m_isPaused);
+    m_guiGroups.at("Scoreboard")->setVisible(!m_isPaused);
 }
 
 void MainState::pauseLoop()
