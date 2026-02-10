@@ -111,6 +111,9 @@ void GameStateManager::shutdown() const
     {
         m_currentState->exit();
     }
+
+    for (auto& state : m_states)
+        state.second->shutdown();
 }
 
 GameState* GameStateManager::findState(const std::string& stateName)

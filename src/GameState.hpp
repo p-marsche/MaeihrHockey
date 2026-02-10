@@ -36,6 +36,10 @@ public:
     {
     }
 
+    virtual void shutdown()
+    {
+    }
+
     virtual void update(float delta) = 0;
     virtual void draw()              = 0;
     virtual void initGui()           = 0;

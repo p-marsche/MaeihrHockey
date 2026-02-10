@@ -36,13 +36,13 @@ public:
     }
 
     void run();
+    void shutdown() const;
 
 private:
     bool init();
     void initInputManager();
     void update();
     void draw();
-    void shutdown() const;
 
     Config m_config;
 

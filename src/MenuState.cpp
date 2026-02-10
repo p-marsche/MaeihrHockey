@@ -54,7 +54,11 @@ void MenuState::init()
                         [&manager = m_gameStateManager] { manager->setState("SettingsMenuState"); });*/
                 //btn->onPress([&manager = m_gameStateManager] { manager->setState("Settings"); });
                 else if (name == "Quit")
-                    w->getSignal("Pressed").connect([&game = m_game] { game->getWindow().close(); });
+                    w->getSignal("Pressed").connect([&game = m_game] 
+                        { 
+                            game->shutdown();
+                            game->getWindow().close(); 
+                        });
             }
         }
         m_buttons[m_selectedButton]->setFocused(true);

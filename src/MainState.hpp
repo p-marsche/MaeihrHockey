@@ -18,6 +18,7 @@ public:
 
     void init() override;
     void exit() override;
+    void shutdown();
 
     void update(float deltaTime) override;
     void draw() override;
@@ -44,6 +45,7 @@ private:
     int                                     m_timerSeconds;
     float                                   m_accumulator, m_goalTime, m_endTimer;
     std::list<mmt_gd::EventBus::ListenerId> m_listeners;
+    mmt_gd::EventBus::ListenerId            m_configListenerId;
     bool                                    m_scored;
     ITransformAnimation::Ptr                m_cameraShake;
     std::unordered_map<int, PlayerConfig>   m_config;

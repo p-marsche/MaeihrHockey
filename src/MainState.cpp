@@ -20,7 +20,7 @@
 
 namespace mmt_gd
 {
-int constexpr ROUND_LENGTH               = 6;
+int constexpr ROUND_LENGTH               = 180;
 float constexpr GOAL_TIME                = 1.8f;
 float constexpr CAMERA_SHAKE_MAGNITUDE_X = 20.f;
 float constexpr CAMERA_SHAKE_MAGNITUDE_Y = 10.f;
@@ -40,21 +40,7 @@ m_scored(false),
 m_timerSeconds(ROUND_LENGTH),
 m_selectedButton(0)
 {
-    for (int i = 0; i < m_playerCount; ++i)
-        m_players.push_back(std::make_shared<Player>(i, m_game->getWindow()));
-
-    const auto goalListenerId = EventBus::getInstance()
-                                    .addListener(GoalEvent::Type,
-                                                 [this](const IEvent::Ptr& event)
-                                                 {
-                                                     const auto goalEvent = std::static_pointer_cast<GoalEvent>(event);
-                                                     int        playerIndex = goalEvent->getData();
-                                                     activateCameraShake();
-                                                     handleGoal(playerIndex);
-                                                 });
-    m_listeners.push_back(goalListenerId);
-
-    const auto configListenerId = EventBus::getInstance()
+    m_configListenerId = EventBus::getInstance()
                                     .addListener(PlayerConfigFinishEvent::Type,
                                                  [this](const IEvent::Ptr& event)
                                                  { 
@@ -62,12 +48,6 @@ m_selectedButton(0)
                                                        PlayerConfig config = configEvent->getData();
                                                        addConfig(config);
                                                  });
-    m_listeners.push_back(configListenerId);
-
-    const auto resizeListenerId = EventBus::getInstance().addListener(ResizeEvent::Type,
-                                                                      [this](const IEvent::Ptr& event)
-                                                                      { updateCamera(); });
-    m_listeners.push_back(resizeListenerId);
 }
 
 void MainState::initGui()
@@ -126,7 +106,11 @@ void MainState::initGui()
                 /*else if (name == "Main Menu")
                     w->getSignal("Pressed").connect([&manager = m_gameStateManager] { manager->setState("MenuState"); });*/
                 else if (name == "Quit")
-                    w->getSignal("Pressed").connect([&game = m_game] { game->getWindow().close(); });
+                    w->getSignal("Pressed").connect([&game = m_game, this] 
+                        { 
+                            game->shutdown();
+                            game->getWindow().close(); 
+                        });
             }
         }
         m_selectedButton = 0;
@@ -144,6 +128,25 @@ void MainState::enableGui()
 void MainState::init()
 {
     PROFILE_FUNCTION();
+
+    for (int i = 0; i < m_playerCount; ++i)
+        m_players.push_back(std::make_shared<Player>(i, m_game->getWindow()));
+
+    const auto goalListenerId = EventBus::getInstance()
+                                    .addListener(GoalEvent::Type,
+                                                 [this](const IEvent::Ptr& event)
+                                                 {
+                                                     const auto goalEvent = std::static_pointer_cast<GoalEvent>(event);
+                                                     int        playerIndex = goalEvent->getData();
+                                                     activateCameraShake();
+                                                     handleGoal(playerIndex);
+                                                 });
+    m_listeners.push_back(goalListenerId);
+
+    const auto resizeListenerId = EventBus::getInstance().addListener(ResizeEvent::Type,
+                                                                      [this](const IEvent::Ptr& event)
+                                                                      { updateCamera(); });
+    m_listeners.push_back(resizeListenerId);
 
     initGui();
 
@@ -333,8 +336,7 @@ void MainState::exit()
     m_gameObjectManager.shutdown();
     for (auto p : m_players)
         p->shutdown();
-
-
+    m_players.clear();
 
     // TESTCODE
     for (auto& group : m_guiGroups)
@@ -409,5 +411,10 @@ void MainState::pauseLoop()
         m_pauseButtons[prevSelected]->setFocused(false);
         m_pauseButtons[m_selectedButton]->setFocused(true);
     }
+}
+
+void MainState::shutdown()
+{
+    EventBus::getInstance().removeListener(m_configListenerId);
 }
 } // namespace mmt_gd
