@@ -80,10 +80,15 @@ void MenuState::exit()
     PROFILE_FUNCTION();
 
     m_isInit = false;
-    //for (auto grp : m_guiGroups)
-    //{
-    //    grp.second->removeAllWidgets();
-    //}
+    for (auto grp : m_guiGroups)
+    {
+        grp.second->removeAllWidgets();
+    }
+    m_guiGroups.clear();
+
+    for (auto& btn : m_buttons)
+        btn = nullptr;
+
     GameState::exit();
 }
 

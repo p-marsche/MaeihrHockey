@@ -20,7 +20,7 @@
 
 namespace mmt_gd
 {
-int constexpr ROUND_LENGTH               = 60;
+int constexpr ROUND_LENGTH               = 6;
 float constexpr GOAL_TIME                = 1.8f;
 float constexpr CAMERA_SHAKE_MAGNITUDE_X = 20.f;
 float constexpr CAMERA_SHAKE_MAGNITUDE_Y = 10.f;
@@ -267,7 +267,6 @@ void MainState::updateTimer(const float deltaTime)
     {
         if (m_endTimer < 3.f)
         {
-        std::cout << m_endTimer << std::endl;
             int currScore1 = stoi(m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score1")->getText().toStdString());
             int currScore2 = stoi(m_guiGroups.at("Scoreboard")->get<tgui::Label>("Score2")->getText().toStdString());
 
@@ -334,6 +333,18 @@ void MainState::exit()
     m_gameObjectManager.shutdown();
     for (auto p : m_players)
         p->shutdown();
+
+
+
+    // TESTCODE
+    for (auto& group : m_guiGroups)
+    {
+        m_gui->remove(group.second);
+    }
+    m_guiGroups.clear();
+
+    for (auto& btn : m_pauseButtons)
+        btn = nullptr;
 }
 
 void MainState::activateCameraShake()
