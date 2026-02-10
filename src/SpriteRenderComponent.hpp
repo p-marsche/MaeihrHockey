@@ -11,6 +11,7 @@ class SpriteRenderComponent final : public IRenderComponent
 {
 public:
     using Ptr = std::shared_ptr<SpriteRenderComponent>;
+    using ShaderFunction = std::function<void(sf::RenderStates&)>;
 
     SpriteRenderComponent(GameObject&       gameObject,
                           sf::RenderWindow& renderWindow,
@@ -25,6 +26,9 @@ public:
     void update(float deltaTime) override
     {
     }
+
+    void registerShaderFuncs(const ShaderFunction& func);
+    void applyShaderFuncs(sf::RenderStates& state);
 
     void draw() override;
 
@@ -51,9 +55,11 @@ public:
 
 private:
     sf::Texture& m_texture;
+    sf::RenderStates m_state;
     sf::Sprite   m_sprite;
     std::string  m_layerName;
     sf::IntRect  m_textureRect;
     bool         m_hasTextureRect = false;
+    std::list<ShaderFunction> m_shaderFuncs;
 };
 } // namespace mmt_gd

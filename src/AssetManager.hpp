@@ -30,6 +30,7 @@ public:
     void loadFont(std::string name, std::string filename);
     void loadMusic(std::string name, std::string filename);
     void loadImage(std::string name, std::string filename);
+    void loadFragmentShader(std::string name, std::string filename);
 
     // explicit replace functions
     void replaceTexture(std::string name, std::string filename);
@@ -37,12 +38,14 @@ public:
     void replaceFont(std::string name, std::string filename);
     void replaceMusic(std::string name, std::string filename);
     void replaceImage(std::string name, std::string filename);
+    void replaceFragmentShader(std::string name, std::string filename);
 
     sf::Texture&     getTexture(std::string name);
     sf::SoundBuffer& getSoundBuffer(std::string name);
     sf::Font&        getFont(std::string name);
     sf::Music&       getMusic(std::string name);
     sf::Image&       getImage(std::string name);
+    sf::Shader*      getFragmentShader(std::string name);
 
 private:
     std::unordered_map<std::string, std::unique_ptr<sf::Texture>>     m_textures;
@@ -50,6 +53,7 @@ private:
     std::unordered_map<std::string, std::unique_ptr<sf::Font>>        m_fonts;
     std::unordered_map<std::string, std::unique_ptr<sf::Music>>       m_music;
     std::unordered_map<std::string, std::unique_ptr<sf::Image>>       m_images;
+    std::unordered_map<std::string, std::unique_ptr<sf::Shader>>      m_fragShaders;
 
     AssetManager()
     {

@@ -255,6 +255,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\assets\shaders\frag\CooldownShader.frag" />
     <None Include="..\src\VectorAlgebra2D.inl" />
     <None Include="..\src\VectorAlgebra3D.inl" />
   </ItemGroup>

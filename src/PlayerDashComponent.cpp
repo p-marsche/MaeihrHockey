@@ -10,9 +10,8 @@ namespace mmt_gd
 float constexpr BASE_COOLDOWN = 3.f;
 float constexpr BASE_DASH_FACTOR = 3.f;
 
-PlayerDashComponent::PlayerDashComponent(GameObject& gameObject, RigidBodyComponent& rigidBody, const int playerIndex) :
-IPlayerAbilityComponent(gameObject, rigidBody, playerIndex),
-m_cooldown(BASE_COOLDOWN),
+PlayerDashComponent::PlayerDashComponent(GameObject& gameObject, RigidBodyComponent& rigidBody, const int playerIndex, sf::Shader* cdShader) :
+IPlayerAbilityComponent(gameObject, rigidBody, playerIndex, BASE_COOLDOWN, cdShader),
 m_dashFactor(BASE_DASH_FACTOR)
 {
 }

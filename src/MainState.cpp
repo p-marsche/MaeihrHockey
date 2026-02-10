@@ -366,6 +366,7 @@ void MainState::loadAssets()
 {
     AssetManager::getInstance().loadTexture("Selected Marker", "selected_marker.png");
     AssetManager::getInstance().loadSoundBuffer("test", "test.wav");
+    AssetManager::getInstance().loadFragmentShader("Cooldown", "CooldownShader.frag");
 }
 
 void MainState::pauseGame()

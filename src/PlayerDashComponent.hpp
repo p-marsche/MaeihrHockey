@@ -12,13 +12,13 @@ class PlayerDashComponent final : public IPlayerAbilityComponent
 public:
     using ptr = std::shared_ptr<PlayerDashComponent>;
 
-    PlayerDashComponent(GameObject& gameObject, RigidBodyComponent& rigidBody, int playerIndex);
+    PlayerDashComponent(GameObject& gameObject, RigidBodyComponent& rigidBody, int playerIndex, sf::Shader* cdShader);
 
     bool init() override;
     void update(float deltaTime) override;
     void updateInactive(float deltaTime) override;
 
 private:
-    float m_dashFactor, m_cooldown;
+    float m_dashFactor;
 };
 } // namespace mmt_gd

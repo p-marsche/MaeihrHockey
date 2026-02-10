@@ -11,4 +11,5 @@ const std::string Config::fontsPath     = assetBasePath + "fonts/";
 const std::string Config::musicPath     = assetBasePath + "music/";
 const std::string Config::imagesPath	= assetBasePath + "images/";
 const std::string Config::guiPath       = assetBasePath + "gui/";
+const std::string Config::fragShaderPath = assetBasePath + "shaders/frag/";
 } // namespace mmt_gd

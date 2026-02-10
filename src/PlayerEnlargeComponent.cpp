@@ -7,16 +7,15 @@
 
     namespace mmt_gd
 {
-    float constexpr BASE_COOLDOWN    = 3.f;
     float constexpr BASE_ENLARGE_FACTOR = 1.5f;
     float constexpr BASE_DURATION       = 1.5f;
+    float constexpr BASE_COOLDOWN       = 3.f; // try +BASE_DURATION later?
 
     PlayerEnlargeComponent::PlayerEnlargeComponent(GameObject& gameObject, RigidBodyComponent& rigidBody, 
-        ColliderComponent& coll, SpriteRenderComponent& sprite, const int playerIndex) :
-    IPlayerAbilityComponent(gameObject, rigidBody, playerIndex),
+        ColliderComponent& coll, SpriteRenderComponent& sprite, const int playerIndex, sf::Shader* cdShader) :
+    IPlayerAbilityComponent(gameObject, rigidBody, playerIndex, BASE_COOLDOWN, cdShader),
     m_collider(coll),
     m_sprite(sprite),
-    m_cooldown(BASE_COOLDOWN),
     m_enlargeFactor(BASE_ENLARGE_FACTOR),
     m_durationTotal(BASE_DURATION),
     m_durationTimer(0.f),
@@ -52,7 +51,7 @@
         if (InputManager::getInstance().isActionJustPressed("ability", m_playerIndex))
         {
             changeSize(true);
-            m_cdTimer = m_cooldown + m_durationTotal;
+            m_cdTimer = m_cooldown;
             m_durationTimer = m_durationTotal;
             m_endDuration   = false;
         }

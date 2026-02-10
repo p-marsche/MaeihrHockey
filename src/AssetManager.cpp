@@ -59,12 +59,19 @@ void AssetManager::loadImage(std::string name, std::string filename)
         m_images[name]->loadFromFile(Config::imagesPath + filename);
 }
 
+void AssetManager::loadFragmentShader(std::string name, std::string filename)
+{
+    auto ret = m_fragShaders.try_emplace(name, std::make_unique<sf::Shader>());
+    if (ret.second)
+        m_fragShaders[name]->loadFromFile(Config::fragShaderPath + filename, sf::Shader::Type::Fragment);
+}
+
 void AssetManager::replaceTexture(std::string name, std::string filename)
 {
     if (auto it = m_textures.find(name) != m_textures.end())
     {
         auto extracted = m_textures.extract(name);
-        auto ptr       = extracted.mapped().release();
+        auto ptr = extracted.mapped().release();
         if (ptr)
         {
             delete ptr;
@@ -80,7 +87,7 @@ void AssetManager::replaceSoundBuffer(std::string name, std::string filename)
     if (auto it = m_soundBuffers.find(name) != m_soundBuffers.end())
     {
         auto extracted = m_soundBuffers.extract(name);
-        auto ptr       = extracted.mapped().release();
+        auto ptr = extracted.mapped().release();
         if (ptr)
         {
             delete ptr;
@@ -96,7 +103,7 @@ void AssetManager::replaceFont(std::string name, std::string filename)
     if (auto it = m_fonts.find(name) != m_fonts.end())
     {
         auto extracted = m_fonts.extract(name);
-        auto ptr       = extracted.mapped().release();
+        auto ptr = extracted.mapped().release();
         if (ptr)
         {
             delete ptr;
@@ -112,7 +119,7 @@ void AssetManager::replaceMusic(std::string name, std::string filename)
     if (auto it = m_music.find(name) != m_music.end())
     {
         auto extracted = m_music.extract(name);
-        auto ptr       = extracted.mapped().release();
+        auto ptr = extracted.mapped().release();
         if (ptr)
         {
             delete ptr;
@@ -128,7 +135,7 @@ void AssetManager::replaceImage(std::string name, std::string filename)
     if (auto it = m_images.find(name) != m_images.end())
     {
         auto extracted = m_images.extract(name);
-        auto ptr       = extracted.mapped().release();
+        auto ptr = extracted.mapped().release();
         if (ptr)
         {
             delete ptr;
@@ -137,6 +144,22 @@ void AssetManager::replaceImage(std::string name, std::string filename)
     }
     m_images.emplace(name, std::make_unique<sf::Image>());
     m_images[name]->loadFromFile(Config::imagesPath + filename);
+}
+
+void AssetManager::replaceFragmentShader(std::string name, std::string filename)
+{
+    if (auto it = m_fragShaders.find(name) != m_fragShaders.end())
+    {
+        auto extracted = m_fragShaders.extract(name);
+        auto ptr       = extracted.mapped().release();
+        if (ptr)
+        {
+            delete ptr;
+            ptr = nullptr;
+        }
+    }
+    m_fragShaders.emplace(name, std::make_unique<sf::Shader>());
+    m_fragShaders[name]->loadFromFile(Config::fragShaderPath, sf::Shader::Type::Fragment);
 }
 
 sf::Texture& AssetManager::getTexture(std::string name)
@@ -179,6 +202,14 @@ sf::Image& AssetManager::getImage(std::string name)
         std::cerr << "ERROR: Could not get Image asset: " << name << std::endl;
 }
 
+sf::Shader* AssetManager::getFragmentShader(std::string name)
+{
+    if (m_fragShaders.find(name) != m_fragShaders.end())
+        return m_fragShaders[name].get();
+    else
+        std::cerr << "ERROR: Could not get Fragment Shader asset: " << name << std::endl;
+}
+
 AssetManager::~AssetManager()
 {
     m_textures.clear();
@@ -186,5 +217,6 @@ AssetManager::~AssetManager()
     m_soundBuffers.clear();
     m_fonts.clear();
     m_images.clear();
+    m_fragShaders.clear();
 }
 } // namespace mmt_gd

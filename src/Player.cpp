@@ -129,13 +129,29 @@ void Player::setupPaddle(int index, PaddleConfig config)
     else
         std::cerr << "Passive not found on " << go->getId() << std::endl;
 
+    sf::Shader* cd      = AssetManager::getInstance().getFragmentShader("Cooldown");
     auto ability = config.m_ability;
     if (ability == PaddleAbility::DASH)
-        m_abilityComps.push_back(std::make_shared<PlayerDashComponent>(*go, *rb, m_playerIndex));
+        m_abilityComps.push_back(std::make_shared<PlayerDashComponent>(*go, *rb, m_playerIndex, cd));
     else if (ability == PaddleAbility::ENLARGE)
-        m_abilityComps.push_back(std::make_shared<PlayerEnlargeComponent>(*go, *rb, *coll, *sprite, m_playerIndex));
+        m_abilityComps.push_back(std::make_shared<PlayerEnlargeComponent>(*go, *rb, *coll, *sprite, m_playerIndex, cd));
     else
-        std::cerr << "PAbility not found on " << go->getId() << std::endl;
+        std::cerr << "Ability not found on " << go->getId() << std::endl;
+
+    auto abilityComp = m_abilityComps[index];
+    sprite->registerShaderFuncs([abilityComp](sf::RenderStates& state)
+    { 
+            float       cdProg = abilityComp->getCooldownProgress(); //cd left in %
+            if (cdProg < 1.0f)
+            {
+                sf::Shader* shader = abilityComp->getCdShader();
+                shader->setUniform("progress", cdProg);
+                state.shader = shader;
+            }
+            else
+                state.shader = nullptr;
+    });
+
 
     if (index != 1)
         m_passiveComps[index]->apply();
