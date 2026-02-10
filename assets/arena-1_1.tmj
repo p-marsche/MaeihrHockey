@@ -54,38 +54,6 @@
                  "y":0
                 }, 
                 {
-                 "height":5,
-                 "id":39,
-                 "name":"TopExtraWall",
-                 "properties":[
-                        {
-                         "name":"Density",
-                         "type":"float",
-                         "value":0
-                        }, 
-                        {
-                         "name":"Sensor",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"Shape",
-                         "type":"string",
-                         "value":"Box"
-                        }, 
-                        {
-                         "name":"WallSide",
-                         "type":"string",
-                         "value":"Top"
-                        }],
-                 "rotation":0,
-                 "type":"ExtraWall",
-                 "visible":true,
-                 "width":1920,
-                 "x":0,
-                 "y":32
-                }, 
-                {
                  "height":32,
                  "id":3,
                  "name":"BottomWall",
@@ -111,38 +79,6 @@
                  "width":1920,
                  "x":0,
                  "y":992
-                }, 
-                {
-                 "height":5,
-                 "id":40,
-                 "name":"BottomExtraWall",
-                 "properties":[
-                        {
-                         "name":"Density",
-                         "type":"float",
-                         "value":0
-                        }, 
-                        {
-                         "name":"Sensor",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"Shape",
-                         "type":"string",
-                         "value":"Box"
-                        }, 
-                        {
-                         "name":"WallSide",
-                         "type":"string",
-                         "value":"Bot"
-                        }],
-                 "rotation":0,
-                 "type":"ExtraWall",
-                 "visible":true,
-                 "width":1920,
-                 "x":0,
-                 "y":987
                 }, 
                 {
                  "height":320,
@@ -452,8 +388,7 @@
                  "width":64,
                  "x":928,
                  "y":0
-                },
-            
+                }, 
                 {
                  "ellipse":true,
                  "height":80,
@@ -524,7 +459,8 @@
                  "width":120,
                  "x":576,
                  "y":432
-                }, 
+                },
+            
                 {
                  "ellipse":true,
                  "height":120,
@@ -768,6 +704,70 @@
                  "width":0,
                  "x":1088,
                  "y":512
+                }, 
+                {
+                 "height":40,
+                 "id":39,
+                 "name":"BottomExtraWall",
+                 "properties":[
+                        {
+                         "name":"Density",
+                         "type":"float",
+                         "value":0
+                        }, 
+                        {
+                         "name":"Sensor",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"Shape",
+                         "type":"string",
+                         "value":"Box"
+                        }, 
+                        {
+                         "name":"WallSide",
+                         "type":"string",
+                         "value":"Bottom"
+                        }],
+                 "rotation":0,
+                 "type":"ExtraWall",
+                 "visible":true,
+                 "width":1920,
+                 "x":0,
+                 "y":984
+                }, 
+                {
+                 "height":40,
+                 "id":41,
+                 "name":"TopExtraWall",
+                 "properties":[
+                        {
+                         "name":"Density",
+                         "type":"float",
+                         "value":0
+                        }, 
+                        {
+                         "name":"Sensor",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"Shape",
+                         "type":"string",
+                         "value":"Box"
+                        }, 
+                        {
+                         "name":"WallSide",
+                         "type":"string",
+                         "value":"Top"
+                        }],
+                 "rotation":0,
+                 "type":"ExtraWall",
+                 "visible":true,
+                 "width":1920,
+                 "x":0,
+                 "y":0
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -776,7 +776,7 @@
          "y":0
         }],
  "nextlayerid":6,
- "nextobjectid":41,
+ "nextobjectid":42,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
@@ -791,7 +791,7 @@
          "margin":0,
          "name":"arena-tileset",
          "spacing":0,
-         "tilecount":0,
+         "tilecount":25,
          "tileheight":128,
          "tilewidth":128
         }],

@@ -20,7 +20,7 @@
 
 namespace mmt_gd
 {
-int constexpr ROUND_LENGTH               = 5;
+int constexpr ROUND_LENGTH               = 180;
 float constexpr GOAL_TIME                = 1.8f;
 float constexpr CAMERA_SHAKE_MAGNITUDE_X = 20.f;
 float constexpr CAMERA_SHAKE_MAGNITUDE_Y = 10.f;
@@ -162,7 +162,7 @@ void MainState::init()
 
     // Load tile map
     tson::Tileson tileson;
-    const auto    map = tileson.parse(fs::path("../assets/arena-1.tmj"));
+    const auto    map = tileson.parse(fs::path("../assets/arena-1_1.tmj"));
     if (map->getStatus() == tson::ParseStatus::OK)
     {
         TileMapLoader::loadTileLayers(map, m_spriteManager);

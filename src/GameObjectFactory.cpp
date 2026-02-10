@@ -202,7 +202,7 @@ GameObject::Ptr GameObjectFactory::createExtraWall(sf::RenderWindow& window, Obj
 
     auto collider = neutral->addComponent<ColliderComponent>(*neutral, *rigidBody, fixtureDef);
 
-    float dir = (TsonPropertyReader::getWallSide(obj) == "Top") ? (-1 * WALL_KNOCKBACK) : WALL_KNOCKBACK; 
+    float dir = (TsonPropertyReader::getWallSide(obj) == "Top") ? WALL_KNOCKBACK : -WALL_KNOCKBACK; 
 
     collider->registerOnCollisionFunction([dir](ColliderComponent& self, ColliderComponent& other) 
         { 
