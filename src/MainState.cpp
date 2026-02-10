@@ -165,7 +165,7 @@ void MainState::init()
 
     // Load tile map
     tson::Tileson tileson;
-    const auto    map = tileson.parse(fs::path("../assets/arena-1.tmj"));
+    const auto    map = tileson.parse(fs::path("../assets/arena-1_2.tmj"));
     if (map->getStatus() == tson::ParseStatus::OK)
     {
         TileMapLoader::loadTileLayers(map, m_spriteManager);
@@ -379,6 +379,8 @@ void MainState::loadAssets()
     AssetManager::getInstance().loadTexture("Selected Marker", "selected_marker.png");
     AssetManager::getInstance().loadSoundBuffer("test", "test.wav");
     AssetManager::getInstance().loadFragmentShader("Cooldown", "CooldownShader.frag");
+    AssetManager::getInstance().loadTexture("PaddlePalette", "PaddlePalette.png");
+    AssetManager::getInstance().getTexture("PaddlePalette").setSmooth(false);
 }
 
 void MainState::pauseGame()

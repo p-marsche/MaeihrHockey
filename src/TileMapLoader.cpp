@@ -18,7 +18,7 @@ void TileMapLoader::loadTileSetTextures(const std::unique_ptr<tson::Map>& map)
         std::cout << "Load tileset: " << tileSet.getName() << " width filename: " << tileSet.getImagePath()
                   << " and tile size: " << tileSet.getTileSize().x << ", " << tileSet.getTileSize().y << '\n';
 
-        AssetManager::getInstance().loadTexture(tileSet.getName(), tileSet.getImagePath().string());
+        AssetManager::getInstance().loadTileMap(tileSet.getName(), tileSet.getImagePath().string());
     }
 }
 
@@ -33,7 +33,7 @@ void TileMapLoader::createTileSprite(
     // get tileSet and tileSet texture
     const auto* const  tileSet = map->getTilesetByGid(gid);
     const sf::Vector2i tileSize(map->getTileSize().x, map->getTileSize().y);
-    const auto&        texture = AssetManager::getInstance().getTexture(tileSet->getName());
+    const auto&        texture = AssetManager::getInstance().getTileMap(tileSet->getName());
 
     // horizontal tile count in tileSet texture
     const int tileCountX = texture.getSize().x / tileSize.x;

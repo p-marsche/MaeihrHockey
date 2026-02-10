@@ -31,6 +31,7 @@ public:
     void loadMusic(std::string name, std::string filename);
     void loadImage(std::string name, std::string filename);
     void loadFragmentShader(std::string name, std::string filename);
+    void loadTileMap(std::string name, std::string filename);
 
     // explicit replace functions
     void replaceTexture(std::string name, std::string filename);
@@ -39,6 +40,7 @@ public:
     void replaceMusic(std::string name, std::string filename);
     void replaceImage(std::string name, std::string filename);
     void replaceFragmentShader(std::string name, std::string filename);
+    void replaceTileMap(std::string name, std::string filename);
 
     sf::Texture&     getTexture(std::string name);
     sf::SoundBuffer& getSoundBuffer(std::string name);
@@ -46,6 +48,7 @@ public:
     sf::Music&       getMusic(std::string name);
     sf::Image&       getImage(std::string name);
     sf::Shader*      getFragmentShader(std::string name);
+    sf::Texture&     getTileMap(std::string name);
 
 private:
     std::unordered_map<std::string, std::unique_ptr<sf::Texture>>     m_textures;

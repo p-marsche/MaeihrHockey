@@ -18,8 +18,8 @@ namespace mmt_gd
 {
 using Parser = TsonPropertyReader;
 
-float constexpr WALL_KNOCKBACK     = 20.f;
-float constexpr PADDLE_DAMPING = 0.2f;
+float constexpr WALL_KNOCKBACK     = 0.3f;
+float constexpr PADDLE_DAMPING     = 0.2f;
 float constexpr PADDLE_RESTITUTION = 0.7f;
 float constexpr PUCK_DAMPING       = 0.05f;
 float constexpr PUCK_RESTITUTION   = 1.f;
@@ -119,6 +119,12 @@ GameObject::Ptr GameObjectFactory::createPaddle(sf::RenderWindow& window, Object
     b2FixtureDef fixtureDef = createFixtureDef(obj);
     b2Filter     filter;
     filter.categoryBits = CollisionLayers::OBJECTS;
+
+    if (playerIndex == 0)
+        filter.categoryBits = filter.categoryBits | CollisionLayers::PLAYER_1;
+    else if (playerIndex == 1)
+        filter.categoryBits = filter.categoryBits | CollisionLayers::PLAYER_2;
+
     filter.maskBits     = CollisionLayers::FAKE_WALL | CollisionLayers::OBJECTS | 
                         CollisionLayers::WALL | CollisionLayers::PENALTY;
     fixtureDef.filter = filter;
@@ -157,7 +163,20 @@ GameObject::Ptr GameObjectFactory::createWall(sf::RenderWindow& window, ObjectFo
 
     EventBus::getInstance().fireEvent(std::make_shared<GameObjectCreateEvent>(wall));
 
-    //auto fixPos = PhysicsManager::b2s(wall->getComponent<ColliderComponent>()->getBody().getB2Body()->GetPosition());
+    float dir = 0.f;
+    if (TsonPropertyReader::getName(obj) == "TopWall") 
+        dir = (-1.0 * WALL_KNOCKBACK);
+    else if (TsonPropertyReader::getName(obj) == "BottomWall") 
+        dir = WALL_KNOCKBACK;
+
+    collider->registerOnCollisionFunction(
+        [dir](ColliderComponent& self, ColliderComponent& other)
+        { 
+            if (!(other.getGameObject().getId() == "Puck"))
+                return;
+            auto vel = other.getBody().getB2Body()->GetLinearVelocity();
+            other.getBody().getB2Body()->SetLinearVelocity(b2Vec2(vel.x, vel.y+dir)); 
+        });
 
     return wall;
 }
@@ -171,7 +190,18 @@ GameObject::Ptr GameObjectFactory::createNeutralzone(sf::RenderWindow& window, O
     b2FixtureDef fixtureDef = createFixtureDef(obj);
     b2Filter     filter;
     filter.categoryBits = CollisionLayers::FAKE_WALL;
-    filter.maskBits     = CollisionLayers::OBJECTS;
+    switch (Parser::getPlayerIndex(obj))
+    {
+        case 0:
+            filter.maskBits = CollisionLayers::PLAYER_1;
+            break;
+        case 1:
+            filter.maskBits = CollisionLayers::PLAYER_2;
+            break;
+        default:
+            filter.maskBits = CollisionLayers::OBJECTS;
+            break;
+    }
     fixtureDef.filter   = filter;
 
     auto collider = neutral->addComponent<ColliderComponent>(*neutral, *rigidBody, fixtureDef);
@@ -202,7 +232,7 @@ GameObject::Ptr GameObjectFactory::createExtraWall(sf::RenderWindow& window, Obj
 
     auto collider = neutral->addComponent<ColliderComponent>(*neutral, *rigidBody, fixtureDef);
 
-    float dir = (TsonPropertyReader::getWallSide(obj) == "Top") ? (-1 * WALL_KNOCKBACK) : WALL_KNOCKBACK; 
+    float dir = (TsonPropertyReader::getWallSide(obj) == "Top") ? WALL_KNOCKBACK : -WALL_KNOCKBACK; 
 
     collider->registerOnCollisionFunction([dir](ColliderComponent& self, ColliderComponent& other) 
         { 
@@ -324,7 +354,8 @@ GameObject::Ptr GameObjectFactory::createObject(ObjectFormat& obj)
 
 void GameObjectFactory::addSpriteRenderer(ObjectFormat& obj, GameObject& go, sf::RenderWindow& window)
 {
-    std::string textureKey = Parser::getTexture(obj);
+    //std::string textureKey = Parser::getTexture(obj);
+    std::string textureKey = "PaddleBase2.png";
     AssetManager::getInstance().loadTexture(textureKey, textureKey);
     auto spriteComp = go.addComponent<SpriteRenderComponent>(go,
                                                              window,
