@@ -286,8 +286,7 @@ void MainState::updateTimer(const float deltaTime)
             m_endTimer += deltaTime;
             return;
         }
-            exit();
-            init(); 
+        m_gameStateManager->setState("MenuState");
     }
 }
 
@@ -371,8 +370,10 @@ void MainState::loadAssets()
 
 void MainState::pauseGame()
 {
-    m_guiGroups.at("Scoreboard")->setVisible(!m_isPaused);
+    /*m_guiGroups.at("Scoreboard")->setVisible(!m_isPaused);
     m_guiGroups.at("Goal")->setVisible(false);
+    m_guiGroups.at("Pause")->setVisible(m_isPaused);*/
+    disableGui();
     m_guiGroups.at("Pause")->setVisible(m_isPaused);
 }
 
