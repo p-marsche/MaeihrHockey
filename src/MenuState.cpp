@@ -10,6 +10,8 @@ namespace mmt_gd
 {
 using namespace std;
 
+const std::string UI_GROUP_NAME = "MainMenu";
+
 void MenuState::init()
 {
     PROFILE_FUNCTION();
@@ -17,6 +19,8 @@ void MenuState::init()
 
     if (m_isInit)
     {
+        m_guiGroups[UI_GROUP_NAME]->setVisible(true);
+        m_buttons[m_selectedButton]->setFocused(true);
         return;
     }
 
@@ -29,9 +33,9 @@ void MenuState::init()
     // LoadGui
     auto        guiGroup = tgui::Group::create();
     guiGroup->loadWidgetsFromFile(Config::guiPath + "main_menu.txt");
-    m_guiGroups.emplace("MainMenu", guiGroup);
+    m_guiGroups.emplace(UI_GROUP_NAME, guiGroup);
     m_gui->add(guiGroup);
-    m_guiGroups.at("MainMenu")->setVisible(true);
+    m_guiGroups[UI_GROUP_NAME]->setVisible(true);
 
     auto buttonGroup = guiGroup->get("Buttons");
     if (const auto grp = dynamic_pointer_cast<tgui::Group>(buttonGroup))
@@ -53,6 +57,8 @@ void MenuState::init()
                     w->getSignal("Pressed").connect(
                         [&manager = m_gameStateManager] { manager->setState("SettingsMenuState"); });*/
                 //btn->onPress([&manager = m_gameStateManager] { manager->setState("Settings"); });
+                else if (name == "Credits")
+                    w->getSignal("Pressed").connect([&manager = m_gameStateManager] { manager->setState("Credits"); });
                 else if (name == "Quit")
                     w->getSignal("Pressed").connect([&game = m_game] 
                         { 

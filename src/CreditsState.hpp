@@ -7,7 +7,7 @@
 
 namespace mmt_gd
 {
-class MenuState final : public GameState
+class CreditsState final : public GameState
 {
 public:
     using GameState::GameState;
@@ -20,11 +20,8 @@ public:
     void exit() override;
 
 private:
-    void handleButtons();
-
     sf::View m_view;
 
-    std::array<tgui::Widget::Ptr, 3> m_buttons;
-    int                            m_selectedButton;
+    tgui::Widget::Ptr m_backButton;
 };
 } // namespace mmt_gd
