@@ -20,17 +20,19 @@ std::shared_ptr<b2World> PhysicsManager::m_world = std::make_shared<b2World>(b2V
 
 void PhysicsManager::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
 {
-    contact->SetRestitutionThreshold(0.0f);
+    contact->SetRestitutionThreshold(1.0f);
     auto* const colliderA = reinterpret_cast<ColliderComponent*>(contact->GetFixtureA()->GetUserData().pointer);
     auto* const colliderB = reinterpret_cast<ColliderComponent*>(contact->GetFixtureB()->GetUserData().pointer);
     if (colliderA->getGameObject().getId() == "Puck")
     {
+        contact->SetRestitutionThreshold(0.0f);
         IPlayerPassiveComponent* passive = colliderB->getGameObject().getComponent<IPlayerPassiveComponent>().get();
         if (passive != nullptr)
             passive->apply(*contact);
     }
     else if (colliderB->getGameObject().getId() == "Puck")
     {
+        contact->SetRestitutionThreshold(0.0f);
         IPlayerPassiveComponent* passive = colliderA->getGameObject().getComponent<IPlayerPassiveComponent>().get();
         if (passive != nullptr)
             passive->apply(*contact);
