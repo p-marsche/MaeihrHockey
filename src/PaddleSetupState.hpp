@@ -26,12 +26,12 @@ private:
 
     sf::View m_view;
 
-    tgui::ListBox::Ptr player1Active;
-    tgui::ListBox::Ptr player1Inactive;
-    tgui::ListBox::Ptr player2Active;
-    tgui::ListBox::Ptr player2Inactive;
+    tgui::ListBox::Ptr m_player1Active;
+    tgui::ListBox::Ptr m_player1Inactive;
+    tgui::ListBox::Ptr m_player2Active;
+    tgui::ListBox::Ptr m_player2Inactive;
 
-    bool player1ActiveSet;
-    bool player2ActiveSet;
+    bool m_player1ActiveSet;
+    bool m_player2ActiveSet;
 };
 } // namespace mmt_gd

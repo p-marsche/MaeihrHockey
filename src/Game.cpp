@@ -118,6 +118,7 @@ bool Game::init()
     m_gameStateManager.registerState("MenuState", make_shared<MenuState>(&m_gameStateManager, this, gui));
     m_gameStateManager.registerState("MainState", make_shared<MainState>(&m_gameStateManager, this, gui, mainmusic, 2));
     m_gameStateManager.registerState("Credits", make_shared<CreditsState>(&m_gameStateManager, this, gui));
+    m_gameStateManager.registerState("PaddleSetup", make_shared<PaddleSetupState>(&m_gameStateManager, this, gui));
 
     //
     m_windowHandler.init(m_config.m_windowName, m_config.m_resolution.x, m_config.m_resolution.y, gui);

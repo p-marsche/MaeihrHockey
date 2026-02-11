@@ -42,9 +42,9 @@ void PaddleSetupState::init()
             if (const auto box = dynamic_pointer_cast<tgui::ListBox>(w))
             {
                 if (box->getWidgetName().toStdString() == "Active1")
-                    player1Active = box;
+                    m_player1Active = box;
                 else
-                    player1Inactive = box;
+                    m_player1Inactive = box;
             }
         }
     }
@@ -55,15 +55,15 @@ void PaddleSetupState::init()
             if (const auto box = dynamic_pointer_cast<tgui::ListBox>(w))
             {
                 if (box->getWidgetName().toStdString() == "Active2")
-                    player2Active = box;
+                    m_player2Active = box;
                 else
-                    player2Inactive = box;
+                    m_player2Inactive = box;
             }
         }
     }
 
-    player1ActiveSet = false;
-    player2ActiveSet = false;
+    m_player1ActiveSet = false;
+    m_player2ActiveSet = false;
 }
 
 void PaddleSetupState::update(float delta)
@@ -94,51 +94,51 @@ void PaddleSetupState::handleButtons1()
     if (InputManager::getInstance().isActionJustPressed("down", 0) ||
             InputManager::getInstance().isActionJustPressed("right", 0))
     {
-        if (!player1ActiveSet)
+        if (!m_player1ActiveSet)
         {
-            int curr = player1Active->getSelectedItemIndex();
-            player1Active->deselectItem();
-            int maxIdx = player1Active->getItemCount() - 1;
+            int curr = m_player1Active->getSelectedItemIndex();
+            m_player1Active->deselectItem();
+            int maxIdx = m_player1Active->getItemCount() - 1;
             curr = curr < maxIdx ? curr + 1 : 0;
-            player1Active->setSelectedItemByIndex(curr);
+            m_player1Active->setSelectedItemByIndex(curr);
         }
         else
         {
-            int curr = player1Inactive->getSelectedItemIndex();
-            player1Inactive->deselectItem();
-            int maxIdx = player1Inactive->getItemCount() - 1;
+            int curr = m_player1Inactive->getSelectedItemIndex();
+            m_player1Inactive->deselectItem();
+            int maxIdx = m_player1Inactive->getItemCount() - 1;
             curr = curr < maxIdx ? curr + 1 : 0;
-            player1Inactive->setSelectedItemByIndex(curr);
+            m_player1Inactive->setSelectedItemByIndex(curr);
         }
     }
     else if (InputManager::getInstance().isActionJustPressed("up", 0) ||
              InputManager::getInstance().isActionJustPressed("left", 0))
     {
-        if (!player1ActiveSet)
+        if (!m_player1ActiveSet)
         {
-            int curr = player1Inactive->getSelectedItemIndex();
-            player1Inactive->deselectItem();
-            curr = curr > 0 ? curr - 1 : player1Inactive->getItemCount() - 1;
-            player1Inactive->setSelectedItemByIndex(curr);
+            int curr = m_player1Active->getSelectedItemIndex();
+            m_player1Active->deselectItem();
+            curr = curr > 0 ? curr - 1 : m_player1Active->getItemCount() - 1;
+            m_player1Active->setSelectedItemByIndex(curr);
         }
         else
         {
-            int curr = player1Inactive->getSelectedItemIndex();
-            player1Inactive->deselectItem();
-            curr = curr > 0 ? curr - 1 : player1Inactive->getItemCount() - 1;
-            player1Inactive->setSelectedItemByIndex(curr);
+            int curr = m_player1Inactive->getSelectedItemIndex();
+            m_player1Inactive->deselectItem();
+            curr = curr > 0 ? curr - 1 : m_player1Inactive->getItemCount() - 1;
+            m_player1Inactive->setSelectedItemByIndex(curr);
         }
     }
     else if (InputManager::getInstance().isActionJustPressed("switch"), 0)
     {
-        if (!player1ActiveSet)
-            player1ActiveSet = true;
-        else if (player1ActiveSet && player2ActiveSet)
+        if (!m_player1ActiveSet)
+            m_player1ActiveSet = true;
+        else if (m_player1ActiveSet && m_player2ActiveSet)
             sendEvent();
     }
     else if (InputManager::getInstance().isActionJustPressed("ability"), 0)
     {
-        player1ActiveSet = false;
+        m_player1ActiveSet = false;
     }
 }
 
@@ -148,49 +148,49 @@ void PaddleSetupState::handleButtons2()
             InputManager::getInstance().isActionJustPressed("right"),
         1)
     {
-        if (!player2ActiveSet)
+        if (!m_player2ActiveSet)
         {
-            int curr = player2Active->getSelectedItemIndex();
-            player2Active->deselectItem();
-            int maxIdx = player2Active->getItemCount() - 1;
+            int curr = m_player2Active->getSelectedItemIndex();
+            m_player2Active->deselectItem();
+            int maxIdx = m_player2Active->getItemCount() - 1;
             curr = curr < maxIdx ? curr + 1 : 0;
-            player2Active->setSelectedItemByIndex(curr);
+            m_player2Active->setSelectedItemByIndex(curr);
         }
         else
         {
-            int curr = player2Inactive->getSelectedItemIndex();
-            player2Inactive->deselectItem();
-            int maxIdx = player1Inactive->getItemCount() - 1;
+            int curr = m_player2Inactive->getSelectedItemIndex();
+            m_player2Inactive->deselectItem();
+            int maxIdx = m_player1Inactive->getItemCount() - 1;
             curr = curr < maxIdx ? curr + 1 : 0;
-            player2Inactive->setSelectedItemByIndex(curr);
+            m_player2Inactive->setSelectedItemByIndex(curr);
         }
     }
     else if (InputManager::getInstance().isActionJustPressed("up", 1) ||
              InputManager::getInstance().isActionJustPressed("left", 1))
     {
-        if (!player2ActiveSet)
+        if (!m_player2ActiveSet)
         {
-            int curr = player2Inactive->getSelectedItemIndex();
-            player2Inactive->deselectItem();
-            curr = curr > 0 ? curr - 1 : player2Inactive->getItemCount() - 1;
-            player2Inactive->setSelectedItemByIndex(curr);
+            int curr = m_player2Active->getSelectedItemIndex();
+            m_player2Active->deselectItem();
+            curr = curr > 0 ? curr - 1 : m_player2Active->getItemCount() - 1;
+            m_player2Active->setSelectedItemByIndex(curr);
         }
         else
         {
-            int curr = player2Inactive->getSelectedItemIndex();
-            player2Inactive->deselectItem();
-            curr = curr > 0 ? curr - 1 : player2Inactive->getItemCount() - 1;
-            player2Inactive->setSelectedItemByIndex(curr);
+            int curr = m_player2Inactive->getSelectedItemIndex();
+            m_player2Inactive->deselectItem();
+            curr = curr > 0 ? curr - 1 : m_player2Inactive->getItemCount() - 1;
+            m_player2Inactive->setSelectedItemByIndex(curr);
         }
     }
     else if (InputManager::getInstance().isActionJustPressed("switch"), 1)
     {
-        if (!player2ActiveSet)
-            player2ActiveSet = true;
+        if (!m_player2ActiveSet)
+            m_player2ActiveSet = true;
     }
     else if (InputManager::getInstance().isActionJustPressed("ability"), 1)
     {
-        player2ActiveSet = false;
+        m_player2ActiveSet = false;
     }
 }
 
@@ -202,29 +202,29 @@ void PaddleSetupState::sendEvent()
     config2.m_playerIndex = 1;
 
     PaddleAbility ability1;
-    if (player1Active->getSelectedItem().toStdString() == "Enlarge")
+    if (m_player1Active->getSelectedItem().toStdString() == "Enlarge")
         ability1 = PaddleAbility::ENLARGE;
     else    
         ability1 = PaddleAbility::DASH;
 
     PaddleAbility ability2;
-    if (player2Active->getSelectedItem().toStdString() == "Enlarge")
+    if (m_player2Active->getSelectedItem().toStdString() == "Enlarge")
         ability2 = PaddleAbility::ENLARGE;
     else
         ability2 = PaddleAbility::DASH;
 
     PaddlePassive passive1;
-    if (player1Inactive->getSelectedItem().toStdString() == "Heavy")
+    if (m_player1Inactive->getSelectedItem().toStdString() == "Heavy")
         passive1 = PaddlePassive::HEAVY;
-    else if (player1Inactive->getSelectedItem().toStdString() == "Bouncy")
+    else if (m_player1Inactive->getSelectedItem().toStdString() == "Bouncy")
         passive1 = PaddlePassive::BOUNCY;
     else
         passive1 = PaddlePassive::NOTHING;
 
     PaddlePassive passive2;
-    if (player2Inactive->getSelectedItem().toStdString() == "Heavy")
+    if (m_player2Inactive->getSelectedItem().toStdString() == "Heavy")
         passive2 = PaddlePassive::HEAVY;
-    else if (player2Inactive->getSelectedItem().toStdString() == "Bouncy")
+    else if (m_player2Inactive->getSelectedItem().toStdString() == "Bouncy")
         passive2 = PaddlePassive::BOUNCY;
     else
         passive2 = PaddlePassive::NOTHING;
