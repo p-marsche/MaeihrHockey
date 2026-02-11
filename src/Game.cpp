@@ -91,7 +91,7 @@ void Game::initInputManager()
     m_inputManager->bind("down", sf::Keyboard::Down, 1);
     m_inputManager->bind("right", sf::Keyboard::Right, 1);
     m_inputManager->bind("switch", sf::Keyboard::RShift, 1);
-    m_inputManager->bind("ability", sf::Keyboard::Num0, 1);
+    m_inputManager->bind("ability", sf::Keyboard::Numpad0, 1);
 
     m_inputManager->bind("up", JoystickMap::Direction::Up, 1);
     m_inputManager->bind("left", JoystickMap::Direction::Left, 1);

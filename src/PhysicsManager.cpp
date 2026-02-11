@@ -40,6 +40,15 @@ void PhysicsManager::EndContact(b2Contact* contact)
 
 void PhysicsManager::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
 {
+    //b2Body* bodyA = contact->GetFixtureA()->GetBody();
+    //b2Body* bodyB = contact->GetFixtureB()->GetBody();
+    //b2WorldManifold manifold;
+    //contact->GetWorldManifold(&manifold);
+    //b2Vec2 contactNormal = manifold.normal;
+    //float  impulsMagnitude = impulse->normalImpulses[0];
+
+    //// go A: Impuls = -1 * normal * magnitude
+    //// go B: Impuls = +1 * normal * magnitude
 }
 
 void PhysicsManager::init()
