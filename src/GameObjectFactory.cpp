@@ -18,7 +18,7 @@ namespace mmt_gd
 {
 using Parser = TsonPropertyReader;
 
-float constexpr WALL_KNOCKBACK     = 0.3f;
+float constexpr WALL_KNOCKBACK     = 0.1f;
 float constexpr PADDLE_DAMPING     = 0.2f;
 float constexpr PADDLE_RESTITUTION = 0.7f;
 float constexpr PUCK_DAMPING       = 0.05f;

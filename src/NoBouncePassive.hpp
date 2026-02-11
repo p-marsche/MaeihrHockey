@@ -4,10 +4,10 @@
 
 namespace mmt_gd
 {
-class HighBouncePassive final : public IPlayerPassiveComponent
+class NoBouncePassive final : public IPlayerPassiveComponent
 {
 public:
-    HighBouncePassive(GameObject& go);
+    NoBouncePassive(GameObject& go);
 
     void virtual apply(b2Contact& contact) override;
 
