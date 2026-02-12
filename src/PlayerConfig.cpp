@@ -40,6 +40,8 @@ std::string PaddleConfig::PassiveToString(PaddlePassive in)
             return "Bouncy";
         case PaddlePassive::TRAP:
             return "Trap";
+        case PaddlePassive::HEAVY:
+            return "Heavy";
         default:
             return "Invalid";
     }
@@ -54,6 +56,8 @@ PaddlePassive PaddleConfig::GetNextPassive(PaddlePassive in)
         case PaddlePassive::BOUNCY:
             return PaddlePassive::TRAP;
         case PaddlePassive::TRAP:
+            return PaddlePassive::HEAVY;
+        case PaddlePassive::HEAVY:
             return PaddlePassive::NOTHING;
         default:
             return PaddlePassive::NOTHING;
