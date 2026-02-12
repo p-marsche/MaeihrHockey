@@ -122,6 +122,9 @@ void SelectionState::update(float deltaTime)
 {
     processPlayerInput(0);
     processPlayerInput(1);
+
+    if (m_playerReady[0] == true && m_playerReady[1] == true)
+        startMatch();
 }
 
 void SelectionState::processPlayerInput(int playerIndex)
@@ -130,30 +133,30 @@ void SelectionState::processPlayerInput(int playerIndex)
 
     if (m_playerReady.at(playerIndex))
     {
-        if (InputManager::getInstance().isActionPressed(("Pause"), playerIndex))
+        if (InputManager::getInstance().isActionJustPressed("Pause", playerIndex))
             setReadyStatus(playerIndex, false);
         return;
     }
 
-    if (InputManager::getInstance().isActionPressed(("up"), playerIndex))
+    if (InputManager::getInstance().isActionJustPressed("up", playerIndex))
         if (m_focusIndex.at(playerIndex) > 0)
             m_focusIndex.at(playerIndex)--;
-    if (InputManager::getInstance().isActionPressed(("down"), playerIndex))
+    if (InputManager::getInstance().isActionJustPressed("down", playerIndex))
         if (m_focusIndex.at(playerIndex) < static_cast<int>(m_labels.at(playerIndex).size()-1))
             m_focusIndex.at(playerIndex)++;
 
-    if (InputManager::getInstance().isActionPressed(("left"), playerIndex))
+    if (InputManager::getInstance().isActionJustPressed("left", playerIndex))
         updateConfig(playerIndex, false);
-    if (InputManager::getInstance().isActionPressed(("right"), playerIndex))
+    if (InputManager::getInstance().isActionJustPressed("right", playerIndex))
         updateConfig(playerIndex, true);
-    if (m_focusIndex.at(playerIndex) == m_labels.size() - 1)
+    if (m_focusIndex.at(playerIndex) == m_labels.at(playerIndex).size() - 1)
     {
-        if (InputManager::getInstance().isActionJustPressed(("switch"), playerIndex) && !m_playerReady.at(playerIndex))
+        if (InputManager::getInstance().isActionJustPressed("switch", playerIndex) && !m_playerReady.at(playerIndex))
             setReadyStatus(playerIndex, true);
-        else if ((InputManager::getInstance().isActionJustPressed(("switch"), playerIndex)
-            || InputManager::getInstance().isActionJustPressed(("dash"), playerIndex))
+        else if ((InputManager::getInstance().isActionJustPressed("switch", playerIndex)
+            || InputManager::getInstance().isActionJustPressed("dash", playerIndex))
             && m_playerReady.at(playerIndex))
-            setReadyStatus(playerIndex, false);
+             setReadyStatus(playerIndex, false);
     }
 
     updateFocus(playerIndex);
