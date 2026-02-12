@@ -9,6 +9,7 @@
 #include "MainState.hpp"
 #include "MenuState.hpp"
 #include "PauseState.hpp"
+#include "SelectionState.hpp"
 #include "PaddleSetupState.hpp"
 
 #include <sstream>
@@ -116,6 +117,7 @@ bool Game::init()
     AssetManager::getInstance().loadMusic("music", "music2.ogg");
     sf::Music& mainmusic = AssetManager::getInstance().getMusic("music");
     m_gameStateManager.registerState("MenuState", make_shared<MenuState>(&m_gameStateManager, this, gui));
+    m_gameStateManager.registerState("SelectionState", make_shared<SelectionState>(&m_gameStateManager, this, gui));
     m_gameStateManager.registerState("MainState", make_shared<MainState>(&m_gameStateManager, this, gui, mainmusic, 2));
     m_gameStateManager.registerState("Credits", make_shared<CreditsState>(&m_gameStateManager, this, gui));
 

@@ -155,6 +155,7 @@
     <ClInclude Include="..\src\PlayerConfig.hpp" />
     <ClInclude Include="..\src\PlayerConfigEvent.hpp" />
     <ClInclude Include="..\src\ResizeEvent.hpp" />
+    <ClInclude Include="..\src\SelectionState.hpp" />
     <ClInclude Include="..\src\WindowHandler.hpp" />
     <ClInclude Include="..\src\GoalEvent.hpp" />
     <ClInclude Include="..\src\GoalHandler.hpp" />
@@ -222,11 +223,13 @@
     <ClCompile Include="..\src\GameObjectFactory.cpp" />
     <ClCompile Include="..\src\GameObjectManager.cpp" />
     <ClCompile Include="..\src\PaddleSetupState.cpp" />
+    <ClCompile Include="..\src\PlayerConfig.cpp" />
     <ClCompile Include="..\src\PlayerConfigEvent.cpp" />
     <ClCompile Include="..\src\ResizeEvent.cpp" />
     <ClCompile Include="..\src\HighBouncePassive.cpp" />
     <ClCompile Include="..\src\NoBouncePassive.cpp" />
     <ClCompile Include="..\src\NoEffectPassive.cpp" />
+    <ClCompile Include="..\src\SelectionState.cpp" />
     <ClCompile Include="..\src\WindowHandler.cpp" />
     <ClCompile Include="..\src\GoalEvent.cpp" />
     <ClCompile Include="..\src\GoalHandler.cpp" />
@@ -257,6 +260,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\assets\shaders\frag\CooldownShader.frag" />
+    <None Include="..\assets\shaders\frag\PreviewShader.frag" />
     <None Include="..\src\VectorAlgebra2D.inl" />
     <None Include="..\src\VectorAlgebra3D.inl" />
   </ItemGroup>

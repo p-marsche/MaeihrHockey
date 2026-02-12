@@ -11,7 +11,7 @@ class IPlayerAbilityComponent : public IComponent
 public:
     using ptr = std::shared_ptr<IPlayerAbilityComponent>;
 
-    IPlayerAbilityComponent(GameObject& gameObject, RigidBodyComponent& rigidBody, int playerIndex, int cooldown, sf::Shader* cdShader)
+    IPlayerAbilityComponent(GameObject& gameObject, RigidBodyComponent& rigidBody, int playerIndex, float cooldown, sf::Shader* cdShader)
         : IComponent(gameObject)
         , m_playerIndex(playerIndex)
         , m_rigidBody(rigidBody)

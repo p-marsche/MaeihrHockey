@@ -1,0 +1,385 @@
+Renderer.1 {
+    BackgroundColor = transparent;
+    BorderColor = #3C3C3C;
+    Borders = (0, 0, 0, 0);
+    TextColor = #3C3C3C;
+    TextureBackground = None;
+}
+
+Renderer.2 {
+    BackgroundColor = white;
+    BorderColor = black;
+    TextureBackground = None;
+}
+
+Renderer.3 {
+}
+
+Renderer.4 {
+    Texture = "arrowLeft.png" Smooth;
+    TransparentTexture = false;
+}
+
+Renderer.5 {
+    Texture = "arrowRight.png" Smooth;
+    TransparentTexture = false;
+}
+
+Renderer.6 {
+    Texture = "arrowLeft.png" Smooth;
+    TransparentTexture = false;
+}
+
+Renderer.7 {
+    Texture = "arrowLeft.png" Smooth;
+    TransparentTexture = false;
+}
+
+Renderer.8 {
+    Texture = "arrowRight.png" Smooth;
+    TransparentTexture = false;
+}
+
+Renderer.9 {
+    Texture = "arrowRight.png" Smooth;
+    TransparentTexture = false;
+}
+
+Label.Title {
+    AutoSize = true;
+    HorizontalAlignment = Center;
+    Position = ((parent.width - width) / 2, 0);
+    Renderer = &1;
+    Size = (859.4, 107);
+    Text = "Choose your abilities";
+    TextSize = 80;
+    VerticalAlignment = Center;
+}
+
+Panel.Panel1 {
+    Position = (100, (title.top + title.height) + 20);
+    Renderer = &2;
+    Size = (250, 250);
+}
+
+Panel.Panel2 {
+    Position = (Panel1.left, (Panel1.top + Panel1.height) + 20);
+    Renderer = &2;
+    Size = (Panel1.width, Panel1.height);
+}
+
+Panel.Panel3 {
+    Position = (Panel1.left, (Panel2.top + Panel2.height) + 20);
+    Renderer = &2;
+    Size = (Panel1.width, Panel1.height);
+}
+
+Panel.Panel4 {
+    Position = ((parent.width - width) - 100, (title.top + title.height) + 20);
+    Renderer = &2;
+    Size = (Panel1.width, Panel1.height);
+}
+
+Panel.Panel5 {
+    Position = (Panel4.left, Panel2.top);
+    Renderer = &2;
+    Size = (Panel4.width, Panel4.height);
+}
+
+Panel.Panel6 {
+    Position = (Panel4.left, Panel3.top);
+    Renderer = &2;
+    Size = (Panel4.width, Panel4.height);
+}
+
+Group.Group1 {
+    Position = ((Panel1.left + Panel1.width) + 50, Panel1.top);
+    Renderer = &3;
+    Size = (500, Panel1.height);
+
+    Label.Active1 {
+        HorizontalAlignment = Center;
+        Position = ((Group1.left + (parent.width / 2)) - (width / 2), Group1.top + (parent.height / 6));
+        Renderer = &1;
+        Size = (250, 81);
+        Text = Dash;
+        TextSize = 50;
+        VerticalAlignment = Center;
+    }
+
+    Label.Passive1 {
+        HorizontalAlignment = Center;
+        Position = ((Group1.left + (parent.width / 2)) - (width / 2), ((Group1.top + parent.height) - height) - (parent.height / 6));
+        Renderer = &1;
+        Size = (250, 81);
+        Text = Normal;
+        TextSize = 50;
+        VerticalAlignment = Center;
+    }
+
+    Picture.Picture1 {
+        Position = (Active1.left - width, Active1.top + (height / 2));
+        Renderer = &4;
+        Size = (Active1.height / 2, Active1.height / 2);
+    }
+
+    Picture.Picture2 {
+        Position = (Active1.left - width, Passive1.top + (height / 2));
+        Renderer = &4;
+        Size = (Picture1.width, Active1.height / 2);
+    }
+
+    Picture.Picture3 {
+        Position = (Active1.left + Active1.width, Picture1.top);
+        Renderer = &5;
+        Size = (Picture1.width, Picture1.height);
+    }
+
+    Picture.Picture5 {
+        Position = (Active1.left + Active1.width, Picture2.top);
+        Renderer = &5;
+        Size = (Picture1.width, Picture1.height);
+    }
+}
+
+Label.Done1 {
+    AutoSize = true;
+    Position = ((Group3.left + (Group3.width / 2)) - (width / 2), (Panel3.top + Panel3.height) + 30);
+    Size = (183.6, 91);
+    Text = Done;
+    TextSize = 60;
+
+    Renderer {
+        BackgroundColor = transparent;
+        BorderColor = #3C3C3C;
+        Borders = (5, 5, 5, 5);
+        TextColor = #3C3C3C;
+        TextureBackground = None;
+    }
+}
+
+Group.Group2 {
+    Position = ((Panel1.left + Panel1.width) + 50, Panel2.top);
+    Renderer = &3;
+    Size = (500, Panel1.height);
+
+    Label.Active2 {
+        HorizontalAlignment = Center;
+        Position = ((Group1.left + (parent.width / 2)) - (width / 2), Group1.top + (parent.height / 6));
+        Renderer = &1;
+        Size = (250, 81);
+        Text = Dash;
+        TextSize = 50;
+        VerticalAlignment = Center;
+    }
+
+    Label.Passive2 {
+        HorizontalAlignment = Center;
+        Position = ((Group1.left + (parent.width / 2)) - (width / 2), ((Group1.top + parent.height) - height) - (parent.height / 6));
+        Renderer = &1;
+        Size = (250, 81);
+        Text = Normal;
+        TextSize = 50;
+        VerticalAlignment = Center;
+    }
+
+    Picture.Picture4 {
+        Renderer = &6;
+    }
+
+    Picture.Picture6 {
+        Renderer = &7;
+    }
+
+    Picture.Picture7 {
+        Renderer = &8;
+    }
+
+    Picture.Picture8 {
+        Renderer = &9;
+    }
+}
+
+Group.Group3 {
+    Position = ((Panel1.left + Panel1.width) + 50, Panel3.top);
+    Renderer = &3;
+    Size = (500, Panel1.height);
+
+    Label.Active3 {
+        HorizontalAlignment = Center;
+        Position = ((Group1.left + (parent.width / 2)) - (width / 2), Group1.top + (parent.height / 6));
+        Renderer = &1;
+        Size = (250, 81);
+        Text = Dash;
+        TextSize = 50;
+        VerticalAlignment = Center;
+    }
+
+    Label.Passive3 {
+        HorizontalAlignment = Center;
+        Position = ((Group1.left + (parent.width / 2)) - (width / 2), ((Group1.top + parent.height) - height) - (parent.height / 6));
+        Renderer = &1;
+        Size = (250, 81);
+        Text = Normal;
+        TextSize = 50;
+        VerticalAlignment = Center;
+    }
+
+    Picture.Picture9 {
+        Renderer = &6;
+    }
+
+    Picture.Picture10 {
+        Renderer = &7;
+    }
+
+    Picture.Picture11 {
+        Renderer = &8;
+    }
+
+    Picture.Picture12 {
+        Renderer = &9;
+    }
+}
+
+Group.Group4 {
+    Position = ((Panel4.left - width) - 50, Panel4.top);
+    Renderer = &3;
+    Size = (500, Panel1.height);
+
+    Label.Active4 {
+        HorizontalAlignment = Center;
+        Position = ((Group1.left + (parent.width / 2)) - (width / 2), Group1.top + (parent.height / 6));
+        Renderer = &1;
+        Size = (250, 81);
+        Text = Dash;
+        TextSize = 50;
+        VerticalAlignment = Center;
+    }
+
+    Label.Passive4 {
+        HorizontalAlignment = Center;
+        Position = ((Group1.left + (parent.width / 2)) - (width / 2), ((Group1.top + parent.height) - height) - (parent.height / 6));
+        Renderer = &1;
+        Size = (250, 81);
+        Text = Normal;
+        TextSize = 50;
+        VerticalAlignment = Center;
+    }
+
+    Picture.Picture13 {
+        Renderer = &6;
+    }
+
+    Picture.Picture14 {
+        Renderer = &7;
+    }
+
+    Picture.Picture15 {
+        Renderer = &8;
+    }
+
+    Picture.Picture16 {
+        Renderer = &9;
+    }
+}
+
+Group.Group5 {
+    Position = (Group4.left, Panel5.top);
+    Renderer = &3;
+    Size = (500, Panel1.height);
+
+    Label.Active5 {
+        HorizontalAlignment = Center;
+        Position = ((Group1.left + (parent.width / 2)) - (width / 2), Group1.top + (parent.height / 6));
+        Renderer = &1;
+        Size = (250, 81);
+        Text = Dash;
+        TextSize = 50;
+        VerticalAlignment = Center;
+    }
+
+    Label.Passive5 {
+        HorizontalAlignment = Center;
+        Position = ((Group1.left + (parent.width / 2)) - (width / 2), ((Group1.top + parent.height) - height) - (parent.height / 6));
+        Renderer = &1;
+        Size = (250, 81);
+        Text = Normal;
+        TextSize = 50;
+        VerticalAlignment = Center;
+    }
+
+    Picture.Picture17 {
+        Renderer = &6;
+    }
+
+    Picture.Picture18 {
+        Renderer = &7;
+    }
+
+    Picture.Picture19 {
+        Renderer = &8;
+    }
+
+    Picture.Picture20 {
+        Renderer = &9;
+    }
+}
+
+Group.Group6 {
+    Position = ((Panel4.left - width) - 50, Panel6.top);
+    Renderer = &3;
+    Size = (500, Panel1.height);
+
+    Label.Active6 {
+        HorizontalAlignment = Center;
+        Position = ((Group1.left + (parent.width / 2)) - (width / 2), Group1.top + (parent.height / 6));
+        Renderer = &1;
+        Size = (250, 81);
+        Text = Dash;
+        TextSize = 50;
+        VerticalAlignment = Center;
+    }
+
+    Label.Passive6 {
+        HorizontalAlignment = Center;
+        Position = ((Group1.left + (parent.width / 2)) - (width / 2), ((Group1.top + parent.height) - height) - (parent.height / 6));
+        Renderer = &1;
+        Size = (250, 81);
+        Text = Normal;
+        TextSize = 50;
+        VerticalAlignment = Center;
+    }
+
+    Picture.Picture21 {
+        Renderer = &6;
+    }
+
+    Picture.Picture22 {
+        Renderer = &7;
+    }
+
+    Picture.Picture23 {
+        Renderer = &8;
+    }
+
+    Picture.Picture24 {
+        Renderer = &9;
+    }
+}
+
+Label.Done2 {
+    AutoSize = true;
+    Position = ((Group6.left + (Group6.width / 2)) - (width / 2), (Panel3.top + Panel3.height) + 30);
+    Size = (183.6, 91);
+    Text = Done;
+    TextSize = 60;
+
+    Renderer {
+        BackgroundColor = transparent;
+        BorderColor = #3C3C3C;
+        Borders = (5, 5, 5, 5);
+        TextColor = #3C3C3C;
+        TextureBackground = None;
+    }
+}

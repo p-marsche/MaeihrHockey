@@ -401,7 +401,7 @@
                  "type":"InvisibleWall",
                  "visible":true,
                  "width":64,
-                 "x":864,
+                 "x":664,
                  "y":0
                 }, 
                 {
@@ -813,7 +813,7 @@
                  "type":"InvisibleWall",
                  "visible":true,
                  "width":64,
-                 "x":992,
+                 "x":1192,
                  "y":0
                 }],
          "opacity":1,

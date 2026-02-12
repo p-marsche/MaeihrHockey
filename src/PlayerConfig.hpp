@@ -6,15 +6,15 @@ namespace mmt_gd
 {
 	enum PaddleAbility
 	{
-		DASH,
-		ENLARGE
+		DASH = 0,
+		ENLARGE = 1
 	};
 
 	enum PaddlePassive
 	{
-		KILL,
-		BOUNCY,
-		NOTHING
+        NOTHING = 0,
+		BOUNCY = 1,
+        TRAP = 2
 	};
 
 	// paddleIndex = 0, 1, 2
@@ -24,6 +24,11 @@ namespace mmt_gd
         int m_paddleIndex;
         PaddleAbility m_ability;
         PaddlePassive m_passive;
+
+		static std::string ActiveToString(PaddleAbility in);
+		static PaddleAbility GetNextActive(PaddleAbility in);
+		static std::string PassiveToString(PaddlePassive in);
+        static PaddlePassive GetNextPassive(PaddlePassive in);
 	};
 
 	// playerIndex = 0, 1

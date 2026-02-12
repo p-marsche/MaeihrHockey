@@ -116,7 +116,7 @@ void Player::setupPaddle(int index, PaddleConfig config)
     auto passive = config.m_passive;
     if (passive == PaddlePassive::BOUNCY)
         m_passiveComps.push_back(std::make_shared<HighBouncePassive>(*go));
-    else if (passive == PaddlePassive::KILL)
+    else if (passive == PaddlePassive::TRAP)
         m_passiveComps.push_back(std::make_shared<NoBouncePassive>(*go));
     else if (passive == PaddlePassive::NOTHING)
         m_passiveComps.push_back(std::make_shared<NoEffectPassive>(*go));
