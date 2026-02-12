@@ -55,9 +55,9 @@
 - [x] Assets überarbeiten
 - [x] Unsichtbarer Collider in der Ecke der Arena, damit Puck nicht an der Wand stecken bleiben kann
     - andere Lösung
-- [ ] Bevor Puck respawnt wäre eine kleine Vorbereitungszeit cool (Zeit um Paddles strategisch zu platzieren)
+- [x] Bevor Puck respawnt wäre eine kleine Vorbereitungszeit cool (Zeit um Paddles strategisch zu platzieren)
 - [x] Es muss einen Grund geben Paddles zu wechseln
     - sollte nun durch verschiedene Abilities gegeben sein
-- [ ] Enlarge Timer stoppt derzeit wenn man Paddle wechselt
+- [x] Enlarge Timer stoppt derzeit wenn man Paddle wechselt
 - [x] Unterschiedliche Mittelbarriere für jeden Spieler
     - ermöglicht kleine Zone in der Paddles überlappen und interagieren können
