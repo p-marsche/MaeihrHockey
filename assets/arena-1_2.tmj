@@ -272,6 +272,11 @@
                          "name":"Shape",
                          "type":"string",
                          "value":"Circle"
+                        }, 
+                        {
+                         "name":"Texture",
+                         "type":"string",
+                         "value":"white-circle.png"
                         }],
                  "rotation":0,
                  "type":"PenaltyArea",
@@ -300,6 +305,11 @@
                          "name":"Shape",
                          "type":"string",
                          "value":"Circle"
+                        }, 
+                        {
+                         "name":"Texture",
+                         "type":"string",
+                         "value":"white-circle.png"
                         }],
                  "rotation":0,
                  "type":"PenaltyArea",
