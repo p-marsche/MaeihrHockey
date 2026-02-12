@@ -212,7 +212,7 @@ void PaddleSetupState::sendEvent()
 
     PaddlePassive passive1;
     if (m_player1Inactive->getSelectedItem().toStdString() == "Heavy")
-        passive1 = PaddlePassive::HEAVY;
+        passive1 = PaddlePassive::KILL;
     else if (m_player1Inactive->getSelectedItem().toStdString() == "Bouncy")
         passive1 = PaddlePassive::BOUNCY;
     else
@@ -220,7 +220,7 @@ void PaddleSetupState::sendEvent()
 
     PaddlePassive passive2;
     if (m_player2Inactive->getSelectedItem().toStdString() == "Heavy")
-        passive2 = PaddlePassive::HEAVY;
+        passive2 = PaddlePassive::KILL;
     else if (m_player2Inactive->getSelectedItem().toStdString() == "Bouncy")
         passive2 = PaddlePassive::BOUNCY;
     else
