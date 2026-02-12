@@ -22,8 +22,6 @@ void PaddleSetupState::init()
         return;
     }
 
-    m_view = m_game->getWindow().getView();
-
     m_isInit = true;
 
     // LoadGui
@@ -62,18 +60,22 @@ void PaddleSetupState::init()
         }
     }
 
-    m_player1ActiveSet = false;
-    m_player2ActiveSet = false;
+    m_player1Progress = SetupStep::Active;
+    m_player2Progress = SetupStep::Active;
 }
 
 void PaddleSetupState::update(float delta)
 {
     PROFILE_FUNCTION();
 
-    m_game->getWindow().setView(m_view);
-
     handleButtons1();
-    //handleButtons2();
+    handleButtons2();
+
+    if (m_player1Progress == SetupStep::Finished && m_player2Progress == SetupStep::Finished)
+    {
+        sendEvent();
+        m_gameStateManager->setState("MainState");
+    }
 }
 
 void PaddleSetupState::draw()
@@ -91,60 +93,59 @@ void PaddleSetupState::exit()
 
 void PaddleSetupState::handleButtons1()
 {
-    //if (InputManager::getInstance().isActionJustPressed("down", 0))
-    //{
-    //    if (!m_player1ActiveSet)
-    //    {
-    //        int curr = m_player1Active->getSelectedItemIndex();
-    //        m_player1Active->deselectItem();
-    //        int maxIdx = m_player1Active->getItemCount() - 1;
-    //        curr = curr < maxIdx ? curr + 1 : 0;
-    //        m_player1Active->setSelectedItemByIndex(curr);
-    //    }
-    //    else
-    //    {
-    //        int curr = m_player1Inactive->getSelectedItemIndex();
-    //        m_player1Inactive->deselectItem();
-    //        int maxIdx = m_player1Inactive->getItemCount() - 1;
-    //        curr = curr < maxIdx ? curr + 1 : 0;
-    //        m_player1Inactive->setSelectedItemByIndex(curr);
-    //    }
-    //}
-    //else if (InputManager::getInstance().isActionJustPressed("up", 0))
-    //{
-    //     if (!m_player1ActiveSet)
-    //    {
-    //        int curr = m_player1Active->getSelectedItemIndex();
-    //        m_player1Active->deselectItem();
-    //        curr = curr > 0 ? curr - 1 : m_player1Active->getItemCount() - 1;
-    //        m_player1Active->setSelectedItemByIndex(curr);
-    //    }
-    //    else
-    //    {
-    //        int curr = m_player1Inactive->getSelectedItemIndex();
-    //        m_player1Inactive->deselectItem();
-    //        curr = curr > 0 ? curr - 1 : m_player1Inactive->getItemCount() - 1;
-    //        m_player1Inactive->setSelectedItemByIndex(curr);
-    //    }
-    //}
-    if (InputManager::getInstance().isActionJustPressed("switch"), 0)
+    if (InputManager::getInstance().isActionJustPressed("down", 0))
     {
-        if (!m_player1ActiveSet)
-            m_player1ActiveSet = true;
-        else if (m_player1ActiveSet && m_player2ActiveSet)
-            sendEvent();
+        if (m_player1Progress == SetupStep::Active)
+        {
+            int curr = m_player1Active->getSelectedItemIndex();
+            m_player1Active->deselectItem();
+            int maxIdx = m_player1Active->getItemCount() - 1;
+            curr = curr < maxIdx ? curr + 1 : 0;
+            m_player1Active->setSelectedItemByIndex(curr);
+        }
+        else if (m_player1Progress == SetupStep::Passive)
+        {
+            int curr = m_player1Inactive->getSelectedItemIndex();
+            m_player1Inactive->deselectItem();
+            int maxIdx = m_player1Inactive->getItemCount() - 1;
+            curr = curr < maxIdx ? curr + 1 : 0;
+            m_player1Inactive->setSelectedItemByIndex(curr);
+        }
     }
-    /*else if (InputManager::getInstance().isActionJustPressed("ability"), 0)
+    else if (InputManager::getInstance().isActionJustPressed("up", 0))
     {
-        m_player1ActiveSet = false;
-    }*/
+        if (m_player1Progress == SetupStep::Active)
+        {
+            int curr = m_player1Active->getSelectedItemIndex();
+            m_player1Active->deselectItem();
+            curr = curr > 0 ? curr - 1 : m_player1Active->getItemCount() - 1;
+            m_player1Active->setSelectedItemByIndex(curr);
+        }
+        else if (m_player1Progress == SetupStep::Passive)
+        {
+            int curr = m_player1Inactive->getSelectedItemIndex();
+            m_player1Inactive->deselectItem();
+            curr = curr > 0 ? curr - 1 : m_player1Inactive->getItemCount() - 1;
+            m_player1Inactive->setSelectedItemByIndex(curr);
+        }
+    }
+    if (InputManager::getInstance().isActionJustPressed("switch", 0))
+    {
+        if (m_player1Progress != SetupStep::Finished)
+            m_player1Progress = (SetupStep)(((int)m_player1Progress) + 1);
+    }
+    else if (InputManager::getInstance().isActionJustPressed("ability", 0))
+    {
+        if (m_player1Progress != SetupStep::Active)
+            m_player1Progress = (SetupStep)(((int)m_player1Progress) - 1);
+    }
 }
 
 void PaddleSetupState::handleButtons2()
 {
     if (InputManager::getInstance().isActionJustPressed("down", 1))
     {
-        if (!m_player2ActiveSet)
+        if (m_player2Progress == SetupStep::Active)
         {
             int curr = m_player2Active->getSelectedItemIndex();
             m_player2Active->deselectItem();
@@ -152,7 +153,7 @@ void PaddleSetupState::handleButtons2()
             curr = curr < maxIdx ? curr + 1 : 0;
             m_player2Active->setSelectedItemByIndex(curr);
         }
-        else
+        else if (m_player2Progress == SetupStep::Passive)
         {
             int curr = m_player2Inactive->getSelectedItemIndex();
             m_player2Inactive->deselectItem();
@@ -163,14 +164,14 @@ void PaddleSetupState::handleButtons2()
     }
     else if (InputManager::getInstance().isActionJustPressed("up", 1))
     {
-        if (!m_player2ActiveSet)
+        if (m_player2Progress == SetupStep::Active)
         {
             int curr = m_player2Active->getSelectedItemIndex();
             m_player2Active->deselectItem();
             curr = curr > 0 ? curr - 1 : m_player2Active->getItemCount() - 1;
             m_player2Active->setSelectedItemByIndex(curr);
         }
-        else
+        else if (m_player2Progress == SetupStep::Passive)
         {
             int curr = m_player2Inactive->getSelectedItemIndex();
             m_player2Inactive->deselectItem();
@@ -178,14 +179,15 @@ void PaddleSetupState::handleButtons2()
             m_player2Inactive->setSelectedItemByIndex(curr);
         }
     }
-    else if (InputManager::getInstance().isActionJustPressed("switch"), 1)
+    else if (InputManager::getInstance().isActionJustPressed("switch", 1))
     {
-        if (!m_player2ActiveSet)
-            m_player2ActiveSet = true;
+        if (m_player2Progress != SetupStep::Finished)
+            m_player2Progress = (SetupStep)(((int)m_player2Progress) + 1);
     }
-    else if (InputManager::getInstance().isActionJustPressed("ability"), 1)
+    else if (InputManager::getInstance().isActionJustPressed("ability", 1))
     {
-        m_player2ActiveSet = false;
+        if (m_player2Progress != SetupStep::Active)
+            m_player2Progress = (SetupStep)(((int)m_player2Progress) - 1);
     }
 }
 
@@ -231,7 +233,7 @@ void PaddleSetupState::sendEvent()
         config1.m_config.at(i).m_paddleIndex = i;
     }
 
-    for (int i = 0; i < 2; ++i)
+    for (int i = 0; i < 3; ++i)
     {
         config2.m_config.at(i).m_ability     = ability2;
         config2.m_config.at(i).m_passive     = passive2;
