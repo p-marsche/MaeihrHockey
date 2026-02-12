@@ -26,7 +26,7 @@ void main()
         y = passiveIdx;
     else if (val == 2)
         y = abilityIdx;
-    else if (val == 3)
+    else if (val == 3 || val == 4)
         y = teamIdx;
 
     vec3 color = texture2D(palette, vec2(x/paletteW, (y+0.5)/paletteH)).rgb;
