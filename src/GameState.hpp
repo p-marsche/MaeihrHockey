@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Config.hpp"
-#include "FinalFrontier/dll_export.hpp"
 
 #include <memory>
 
@@ -10,7 +9,7 @@ namespace mmt_gd
 class GameStateManager;
 class Game;
 
-class FINALFRONTIER_API GameState
+class GameState
 {
 public:
     using Ptr = std::shared_ptr<GameState>;

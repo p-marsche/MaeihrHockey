@@ -6,7 +6,6 @@
 #include "GameObjectEvents.hpp"
 #include "PhysicsManager.hpp"
 #include "PlayerMoveComponent.hpp"
-#include "PlayerShootComponent.hpp"
 #include "SpriteRenderComponent.hpp"
 #include "Tileson.hpp"
 

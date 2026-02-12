@@ -11,7 +11,7 @@
 
 namespace mmt_gd
 {
-class FINALFRONTIER_API MainState final : public GameState
+class MainState final : public GameState
 {
 public:
     MainState(GameStateManager* gameStateManager, Game* game, tgui::Gui* gui, sf::Music& music, int playerCount);
