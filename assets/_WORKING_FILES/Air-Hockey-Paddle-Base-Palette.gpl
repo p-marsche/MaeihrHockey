@@ -1,0 +1,9 @@
+GIMP Palette
+Name: Air Hockey Paddle Base
+Columns: 5
+#
+  0  53  74	Border
+  1 210  74	Passive
+  2   0 240	Active
+  3 219 199	Player
+  4 108 195	Player Dark
