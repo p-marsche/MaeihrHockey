@@ -411,7 +411,7 @@
                  "type":"InvisibleWall",
                  "visible":true,
                  "width":64,
-                 "x":764,
+                 "x":714,
                  "y":0
                 }, 
                 {
@@ -691,7 +691,7 @@
                  "type":"PuckSpawn",
                  "visible":true,
                  "width":0,
-                 "x":732,
+                 "x":682,
                  "y":512
                 }, 
                 {
@@ -727,7 +727,7 @@
                  "type":"PuckSpawn",
                  "visible":true,
                  "width":0,
-                 "x":1188,
+                 "x":1238,
                  "y":512
                 }, 
                 {
@@ -823,7 +823,7 @@
                  "type":"InvisibleWall",
                  "visible":true,
                  "width":64,
-                 "x":1092,
+                 "x":1142,
                  "y":0
                 }],
          "opacity":1,

@@ -21,7 +21,7 @@
 namespace mmt_gd
 {
 int constexpr ROUND_LENGTH               = 180;
-float constexpr GOAL_TIME                = 1.8f;
+float constexpr GOAL_TIME                = 2.5f;
 float constexpr CAMERA_SHAKE_MAGNITUDE_X = 20.f;
 float constexpr CAMERA_SHAKE_MAGNITUDE_Y = 10.f;
 float constexpr CAMERA_SHAKE_DURATION    = 0.5f;
@@ -242,6 +242,21 @@ void MainState::update(const float deltaTime)
 
 void MainState::updateTimer(const float deltaTime)
 {
+
+    if (m_scored)
+    {
+        if (m_goalTime < GOAL_TIME)
+        {
+            m_goalTime += deltaTime;
+            return;
+        }
+        else
+        {
+            m_scored = false;
+            m_guiGroups.at("Goal")->setVisible(false);
+        }
+    }
+
     m_accumulator += deltaTime;
     while (m_accumulator > 1.0f)
     {
@@ -254,17 +269,6 @@ void MainState::updateTimer(const float deltaTime)
         m_guiGroups.at("Scoreboard")->get<tgui::Label>("Timer")->setText(time);
 
         m_accumulator--;
-    }
-
-    if (m_scored)
-    {
-        if (m_goalTime < GOAL_TIME)
-            m_goalTime += deltaTime;
-        else
-        {
-            m_scored = false;
-            m_guiGroups.at("Goal")->setVisible(false);
-        }
     }
 
     if (m_timerSeconds < 1)
