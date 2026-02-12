@@ -83,9 +83,6 @@ void SelectionState::initSprites()
             pos += sf::Vector2f(panel->getSize().x/2.f, panel->getSize().y/2.f);
             sprite.setPosition(pos);
             m_sprites.at(i).at(j) = sprite;
-
-            std::cout << std::endl;
-            std::cout << sprite.getPosition().x << " | " << sprite.getPosition().y << std::endl;
         }
     }
 
@@ -133,8 +130,11 @@ void SelectionState::processPlayerInput(int playerIndex)
 
     if (m_playerReady.at(playerIndex))
     {
-        if (InputManager::getInstance().isActionJustPressed("Pause", playerIndex))
+        if (InputManager::getInstance().isActionJustPressed("dash", playerIndex))
+        {
+            std::cout << playerIndex << std::endl;
             setReadyStatus(playerIndex, false);
+        }
         return;
     }
 
@@ -233,8 +233,6 @@ void SelectionState::drawPaddle(int playerIndex, int paddleIndex, sf::RenderWind
     int passive = static_cast<int>(config.m_passive);
 
     m_previewShader->setUniform("team", playerIndex);
-    std::cout << playerIndex << std::endl;
-    //m_previewShader->setUniform("paddle", paddleIndex);
     m_previewShader->setUniform("ability", active);
     m_previewShader->setUniform("passive", passive);
 
@@ -269,6 +267,9 @@ void SelectionState::exit()
 
 void SelectionState::startMatch()
 {
+    std::string test = PaddleConfig::ActiveToString(m_configs[0].m_config[1].m_ability);
+    std::cout << test << std::endl;
+
     EventBus::getInstance().fireEvent(std::make_shared<PlayerConfigFinishEvent>(m_configs.at(0)));
     EventBus::getInstance().fireEvent(std::make_shared<PlayerConfigFinishEvent>(m_configs.at(1)));
 
