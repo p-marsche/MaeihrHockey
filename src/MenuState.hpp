@@ -22,8 +22,6 @@ public:
 private:
     void handleButtons();
 
-    sf::View m_view;
-
     std::array<tgui::Widget::Ptr, 3> m_buttons;
     int                            m_selectedButton;
 };
