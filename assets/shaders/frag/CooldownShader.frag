@@ -38,7 +38,7 @@ void main()
     vec4 col = vec4(color, mask.a);
     float distSq = uv.y*uv.y + uv.x*uv.x;
     
-    if (distSq > 0.07 && distSq < 0.22)
+    if (distSq > 0.05 && distSq < 0.17)
     {
         if (angle > progress)
         {

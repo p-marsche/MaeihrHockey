@@ -354,8 +354,8 @@ GameObject::Ptr GameObjectFactory::createObject(ObjectFormat& obj)
 
 void GameObjectFactory::addSpriteRenderer(ObjectFormat& obj, GameObject& go, sf::RenderWindow& window)
 {
-    //std::string textureKey = Parser::getTexture(obj);
-    std::string textureKey = "PaddleBase.png";
+    std::string textureKey = Parser::getTexture(obj);
+    /*std::string textureKey = "PaddleBase.png";*/
     AssetManager::getInstance().loadTexture(textureKey, textureKey);
     auto spriteComp = go.addComponent<SpriteRenderComponent>(go,
                                                              window,

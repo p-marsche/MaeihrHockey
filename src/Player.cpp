@@ -20,7 +20,7 @@
 
 namespace mmt_gd
 {
-float constexpr MARKER_PADDLE_RATIO       = 1.4f;
+float constexpr MARKER_PADDLE_RATIO       = 1.8f;
 float constexpr INACTIVE_LINEAR_DAMPENING = 0.1f;
 float constexpr ACTIVE_LINEAR_DAMPENING   = 0.2f;
 float constexpr INACTIVE_RESTITUTION      = 0.9f;
