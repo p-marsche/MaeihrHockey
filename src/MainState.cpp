@@ -103,8 +103,8 @@ void MainState::initGui()
                             groups.at("Goal")->setVisible(false);
                             groups.at("Pause")->setVisible(false);
                         });
-                /*else if (name == "Main Menu")
-                    w->getSignal("Pressed").connect([&manager = m_gameStateManager] { manager->setState("MenuState"); });*/
+                else if (name == "Menu")
+                    w->getSignal("Pressed").connect([&manager = m_gameStateManager] { manager->setState("MenuState"); });
                 else if (name == "Quit")
                     w->getSignal("Pressed").connect([&game = m_game] 
                         { 
@@ -208,6 +208,8 @@ void MainState::init()
     m_music.setLoop(true);
     updateTimer(0.f);
     m_isInit = true;
+
+    m_isPaused = false;
 }
 
 void MainState::addConfig(PlayerConfig config)
@@ -393,6 +395,7 @@ void MainState::pauseGame()
     disableGui();
     m_guiGroups.at("Pause")->setVisible(m_isPaused);
     m_guiGroups.at("Scoreboard")->setVisible(!m_isPaused);
+    m_pauseButtons[0]->setFocused(true);
 }
 
 void MainState::pauseLoop()

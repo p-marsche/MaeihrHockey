@@ -40,8 +40,43 @@ Group.Buttons {
         }
     }
 
-    Button.Quit {
+    Button.Menu {
         Position = (75, 195);
+        Size = (525, 105);
+        Text = "Main Menu";
+        TextSize = 72;
+
+        Renderer {
+            BackgroundColor = #F5F5F5;
+            BackgroundColorDisabled = #E6E6E6;
+            BackgroundColorDown = #BFB8BE;
+            BackgroundColorFocused = #FF131352;
+            BackgroundColorHover = #FFFFFF00;
+            BorderColor = #3C3C3C;
+            BorderColorDisabled = #7D7D7D;
+            BorderColorDown = black;
+            BorderColorFocused = #1E1EB4;
+            BorderColorHover = black;
+            Borders = (1, 1, 1, 1);
+            Font = "..\\fonts\\SourGummy-Bold.ttf";
+            RoundedBorderRadius = 10;
+            TextColor = #3C3C3C;
+            TextColorDisabled = #7D7D7D;
+            TextColorDown = black;
+            TextColorHover = black;
+            TextStyle = Bold;
+            Texture = None;
+            TextureDisabled = None;
+            TextureDown = None;
+            TextureDownFocused = None;
+            TextureDownHover = None;
+            TextureFocused = None;
+            TextureHover = None;
+        }
+    }
+
+    Button.Quit {
+        Position = (75, 345);
         Size = (525, 105);
         Text = Quit;
         TextSize = 72;

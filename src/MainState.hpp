@@ -51,7 +51,7 @@ private:
     std::unordered_map<int, PlayerConfig>   m_config;
     sf::Music&                               m_music;
 
-    std::array<tgui::Widget::Ptr, 2> m_pauseButtons;
+    std::array<tgui::Widget::Ptr, 3> m_pauseButtons;
     int                              m_selectedButton;
     bool                             m_isPaused;
 
