@@ -233,6 +233,7 @@ void SelectionState::drawPaddle(int playerIndex, int paddleIndex, sf::RenderWind
     int passive = static_cast<int>(config.m_passive);
 
     m_previewShader->setUniform("team", playerIndex);
+    std::cout << playerIndex << std::endl;
     //m_previewShader->setUniform("paddle", paddleIndex);
     m_previewShader->setUniform("ability", active);
     m_previewShader->setUniform("passive", passive);

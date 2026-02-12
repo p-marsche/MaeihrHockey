@@ -26,7 +26,7 @@ void main()
     else if (val == 3)
         y = teamIdx;
 
-    vec3 color = texture2D(palette, vec2(x/paletteW, y+0.5)).rgb;
+    vec3 color = texture2D(palette, vec2(x/paletteW, (y+0.5)/paletteH)).rgb;
 
     gl_FragColor = vec4(color, mask.a);
 }
