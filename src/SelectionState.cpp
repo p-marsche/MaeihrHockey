@@ -53,7 +53,9 @@ void SelectionState::initPlayerGui(int playerIndex, int playerPaddles)
         if (subGroup)
         {
             m_labels.at(playerIndex).at(2 * i)     = subGroup->get<tgui::Label>("Active" + tgui::String(idx));
+            m_labels.at(playerIndex).at(2 * i)->getRenderer()->setTextColor(tgui::Color::Black);
             m_labels.at(playerIndex).at(2 * i + 1) = subGroup->get<tgui::Label>("Passive" + tgui::String(idx));
+            m_labels.at(playerIndex).at(2 * i + 1)->getRenderer()->setTextColor(tgui::Color::Black);
         }
         m_labels.at(playerIndex).at(2*playerPaddles) = guiGroup->get<tgui::Label>("Done" + tgui::String(playerIndex+1));
     }
@@ -63,7 +65,7 @@ void SelectionState::initSprites()
 {
     auto panelSize = m_panels.at(0).at(0)->getSize();
     auto& texture = AssetManager::getInstance().getTexture("PaddleBase");
-    auto scale = sf::Vector2f(panelSize.x / texture.getSize().x, panelSize.y / texture.getSize().y);
+    auto scale = sf::Vector2f(0.75*panelSize.x / texture.getSize().x, 0.75*panelSize.y / texture.getSize().y);
     auto  origin = sf::Vector2f(texture.getSize().x / 2.f, texture.getSize().y / 2.f);
 
     for (unsigned int i = 0; i < m_sprites.size(); ++i)
@@ -74,19 +76,26 @@ void SelectionState::initSprites()
             auto& panel = m_panels.at(i).at(j);
             sf::Sprite sprite;
             sprite.setTexture(texture);
+            sprite.setTextureRect(sf::IntRect(0, 0, texture.getSize().x, texture.getSize().y));
             sprite.setOrigin(origin);
             sprite.setScale(scale);
             sf::Vector2f pos = panel->getAbsolutePosition();
             pos += sf::Vector2f(panel->getSize().x/2.f, panel->getSize().y/2.f);
             sprite.setPosition(pos);
             m_sprites.at(i).at(j) = sprite;
+
+            std::cout << std::endl;
+            std::cout << sprite.getPosition().x << " | " << sprite.getPosition().y << std::endl;
         }
     }
 
     m_previewShader = AssetManager::getInstance().getFragmentShader("PreviewShader");
+    m_previewShader->setUniform("palette", AssetManager::getInstance().getTexture("PreviewPalette"));
     m_previewShader->setUniform("team", 0);
     m_previewShader->setUniform("ability", 0);
     m_previewShader->setUniform("passive", 0);
+
+    m_guiGroups.at("Setup")->setVisible(false);
 }
 
 void SelectionState::init()
@@ -121,28 +130,28 @@ void SelectionState::processPlayerInput(int playerIndex)
 
     if (m_playerReady.at(playerIndex))
     {
-        if (InputManager::getInstance().isActionPressed("Pause", playerIndex))
+        if (InputManager::getInstance().isActionPressed(("Pause"), playerIndex))
             setReadyStatus(playerIndex, false);
         return;
     }
 
-    if (InputManager::getInstance().isActionPressed("up", playerIndex))
+    if (InputManager::getInstance().isActionPressed(("up"), playerIndex))
         if (m_focusIndex.at(playerIndex) > 0)
             m_focusIndex.at(playerIndex)--;
-    if (InputManager::getInstance().isActionPressed("down", playerIndex))
+    if (InputManager::getInstance().isActionPressed(("down"), playerIndex))
         if (m_focusIndex.at(playerIndex) < static_cast<int>(m_labels.at(playerIndex).size()-1))
             m_focusIndex.at(playerIndex)++;
 
-    if (InputManager::getInstance().isActionPressed("left", playerIndex))
+    if (InputManager::getInstance().isActionPressed(("left"), playerIndex))
         updateConfig(playerIndex, false);
-    if (InputManager::getInstance().isActionPressed("right", playerIndex))
+    if (InputManager::getInstance().isActionPressed(("right"), playerIndex))
         updateConfig(playerIndex, true);
     if (m_focusIndex.at(playerIndex) == m_labels.size() - 1)
     {
-        if (InputManager::getInstance().isActionJustPressed("switch", playerIndex) && !m_playerReady.at(playerIndex))
+        if (InputManager::getInstance().isActionJustPressed(("switch"), playerIndex) && !m_playerReady.at(playerIndex))
             setReadyStatus(playerIndex, true);
-        else if ((InputManager::getInstance().isActionJustPressed("switch", playerIndex)
-            || InputManager::getInstance().isActionJustPressed("dash", playerIndex))
+        else if ((InputManager::getInstance().isActionJustPressed(("switch"), playerIndex)
+            || InputManager::getInstance().isActionJustPressed(("dash"), playerIndex))
             && m_playerReady.at(playerIndex))
             setReadyStatus(playerIndex, false);
     }
@@ -203,10 +212,15 @@ void SelectionState::updateConfig(int playerIndex, bool right)
 
 void SelectionState::draw()
 {
+    m_guiGroups.at("Setup")->setVisible(true);
     sf::RenderWindow& window = m_game->getWindow();
+
+    m_gui->draw();
     for (unsigned int i = 0; i < m_sprites.size(); ++i)
         for (unsigned int j = 0; j < m_sprites.at(i).size(); ++j)
             drawPaddle(i, j, window);
+
+    m_guiGroups.at("Setup")->setVisible(false);
 }
 
 void SelectionState::drawPaddle(int playerIndex, int paddleIndex, sf::RenderWindow& window)
@@ -215,9 +229,9 @@ void SelectionState::drawPaddle(int playerIndex, int paddleIndex, sf::RenderWind
     int active = static_cast<int>(config.m_ability);
     int passive = static_cast<int>(config.m_passive);
 
-    //m_previewShader->setUniform("team", playerIndex);
-    m_previewShader->setUniform("paddle", paddleIndex);
-    m_previewShader->setUniform("active", active);
+    m_previewShader->setUniform("team", playerIndex);
+    //m_previewShader->setUniform("paddle", paddleIndex);
+    m_previewShader->setUniform("ability", active);
     m_previewShader->setUniform("passive", passive);
 
     window.draw(m_sprites.at(playerIndex).at(paddleIndex), m_previewShader);
@@ -261,8 +275,8 @@ void SelectionState::loadAssets()
 {
     AssetManager::getInstance().loadFragmentShader("PreviewShader", "PreviewShader.frag");
     AssetManager::getInstance().loadTexture("PaddleBase", "PaddleBase.png");
-    AssetManager::getInstance().loadTexture("PaddlePalette", "PaddlePalette.png");
-    AssetManager::getInstance().getTexture("PaddlePalette").setSmooth(false);
+    AssetManager::getInstance().loadTexture("PreviewPalette", "PreviewPalette.png");
+    AssetManager::getInstance().getTexture("PreviewPalette").setSmooth(false);
 }
 
 }

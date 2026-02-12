@@ -1,14 +1,25 @@
+Panel.Background {
+    Size = (1920, 1080);
+
+    Renderer {
+        BackgroundColor = white;
+        BorderColor = black;
+        TextureBackground = None;
+    }
+}
+
 Renderer.1 {
-    BackgroundColor = transparent;
-    BorderColor = #3C3C3C;
+    BackgroundColor = white;
+    BorderColor = #FFFFFF;
     Borders = (0, 0, 0, 0);
-    TextColor = #3C3C3C;
+    TextColor = #FFFFFF;
     TextureBackground = None;
 }
 
 Renderer.2 {
-    BackgroundColor = white;
+    BackgroundColor = transparent;
     BorderColor = black;
+    Borders = (5, 5, 5, 5);
     TextureBackground = None;
 }
 
@@ -16,39 +27,19 @@ Renderer.3 {
 }
 
 Renderer.4 {
-    Texture = "arrowLeft.png" Smooth;
+    Texture = "arrowLeft.png";
     TransparentTexture = false;
 }
 
 Renderer.5 {
-    Texture = "arrowRight.png" Smooth;
-    TransparentTexture = false;
-}
-
-Renderer.6 {
-    Texture = "arrowLeft.png" Smooth;
-    TransparentTexture = false;
-}
-
-Renderer.7 {
-    Texture = "arrowLeft.png" Smooth;
-    TransparentTexture = false;
-}
-
-Renderer.8 {
-    Texture = "arrowRight.png" Smooth;
-    TransparentTexture = false;
-}
-
-Renderer.9 {
-    Texture = "arrowRight.png" Smooth;
+    Texture = "arrowRight.png";
     TransparentTexture = false;
 }
 
 Label.Title {
     AutoSize = true;
     HorizontalAlignment = Center;
-    Position = ((parent.width - width) / 2, 0);
+    Position = ((Background.width - width) / 2, 0);
     Renderer = &1;
     Size = (859.4, 107);
     Text = "Choose your abilities";
@@ -63,6 +54,7 @@ Panel.Panel1 {
 }
 
 Panel.Panel2 {
+	Opacity = 0.5;
     Position = (Panel1.left, (Panel1.top + Panel1.height) + 20);
     Renderer = &2;
     Size = (Panel1.width, Panel1.height);
@@ -126,7 +118,7 @@ Group.Group1 {
     Picture.Picture2 {
         Position = (Active1.left - width, Passive1.top + (height / 2));
         Renderer = &4;
-        Size = (Picture1.width, Active1.height / 2);
+        Size = (Picture1.width, Picture1.height);
     }
 
     Picture.Picture3 {
@@ -165,7 +157,7 @@ Group.Group2 {
 
     Label.Active2 {
         HorizontalAlignment = Center;
-        Position = ((Group1.left + (parent.width / 2)) - (width / 2), Group1.top + (parent.height / 6));
+        Position = ((Group2.left + (parent.width / 2)) - (width / 2), Group2.top + (parent.height / 6));
         Renderer = &1;
         Size = (250, 81);
         Text = Dash;
@@ -175,7 +167,7 @@ Group.Group2 {
 
     Label.Passive2 {
         HorizontalAlignment = Center;
-        Position = ((Group1.left + (parent.width / 2)) - (width / 2), ((Group1.top + parent.height) - height) - (parent.height / 6));
+        Position = ((Group2.left + (parent.width / 2)) - (width / 2), ((Group2.top + parent.height) - height) - (parent.height / 6));
         Renderer = &1;
         Size = (250, 81);
         Text = Normal;
@@ -184,19 +176,27 @@ Group.Group2 {
     }
 
     Picture.Picture4 {
-        Renderer = &6;
+	Position = (Active2.left - width, Active2.top + (height / 2));
+        Renderer = &4;
+        Size = (Active2.height / 2, Active2.height / 2);
     }
 
     Picture.Picture6 {
-        Renderer = &7;
+        Position = (Active2.left - width, Passive2.top + (height / 2));
+        Renderer = &4;
+        Size = (Picture4.width, Picture4.height);
     }
 
     Picture.Picture7 {
-        Renderer = &8;
+        Position = (Active2.left + Active2.width, Picture4.top);
+        Renderer = &5;
+        Size = (Picture4.width, Picture4.height);
     }
 
     Picture.Picture8 {
-        Renderer = &9;
+        Position = (Active2.left + Active2.width, Picture6.top);
+        Renderer = &5;
+        Size = (Picture4.width, Picture4.height);
     }
 }
 
@@ -207,7 +207,7 @@ Group.Group3 {
 
     Label.Active3 {
         HorizontalAlignment = Center;
-        Position = ((Group1.left + (parent.width / 2)) - (width / 2), Group1.top + (parent.height / 6));
+        Position = ((Group3.left + (parent.width / 2)) - (width / 2), Group3.top + (parent.height / 6));
         Renderer = &1;
         Size = (250, 81);
         Text = Dash;
@@ -217,7 +217,7 @@ Group.Group3 {
 
     Label.Passive3 {
         HorizontalAlignment = Center;
-        Position = ((Group1.left + (parent.width / 2)) - (width / 2), ((Group1.top + parent.height) - height) - (parent.height / 6));
+        Position = ((Group3.left + (parent.width / 2)) - (width / 2), ((Group3.top + parent.height) - height) - (parent.height / 6));
         Renderer = &1;
         Size = (250, 81);
         Text = Normal;
@@ -226,19 +226,27 @@ Group.Group3 {
     }
 
     Picture.Picture9 {
-        Renderer = &6;
+	Position = (Active3.left - width, Active3.top + (height / 2));
+        Renderer = &4;
+        Size = (Active3.height / 2, Active3.height / 2);
     }
 
     Picture.Picture10 {
-        Renderer = &7;
+        Position = (Active3.left - width, Passive3.top + (height / 2));
+        Renderer = &4;
+        Size = (Picture9.width, Picture9.height);
     }
 
     Picture.Picture11 {
-        Renderer = &8;
+        Position = (Active3.left + Active3.width, Picture9.top);
+        Renderer = &5;
+        Size = (Picture9.width, Picture9.height);
     }
 
     Picture.Picture12 {
-        Renderer = &9;
+        Position = (Active3.left + Active3.width, Picture10.top);
+        Renderer = &5;
+        Size = (Picture9.width, Picture9.height);
     }
 }
 
@@ -249,7 +257,7 @@ Group.Group4 {
 
     Label.Active4 {
         HorizontalAlignment = Center;
-        Position = ((Group1.left + (parent.width / 2)) - (width / 2), Group1.top + (parent.height / 6));
+        Position = ((Group4.left + (parent.width / 2)) - (width / 2), Group4.top + (parent.height / 6));
         Renderer = &1;
         Size = (250, 81);
         Text = Dash;
@@ -259,7 +267,7 @@ Group.Group4 {
 
     Label.Passive4 {
         HorizontalAlignment = Center;
-        Position = ((Group1.left + (parent.width / 2)) - (width / 2), ((Group1.top + parent.height) - height) - (parent.height / 6));
+        Position = ((Group4.left + (parent.width / 2)) - (width / 2), ((Group4.top + parent.height) - height) - (parent.height / 6));
         Renderer = &1;
         Size = (250, 81);
         Text = Normal;
@@ -268,19 +276,27 @@ Group.Group4 {
     }
 
     Picture.Picture13 {
-        Renderer = &6;
+	Position = (Active4.left - width, Active4.top + (height / 2));
+        Renderer = &4;
+        Size = (Active4.height / 2, Active4.height / 2);
     }
 
     Picture.Picture14 {
-        Renderer = &7;
+        Position = (Active4.left - width, Passive4.top + (height / 2));
+        Renderer = &4;
+        Size = (Picture13.width, Picture13.height);
     }
 
     Picture.Picture15 {
-        Renderer = &8;
+        Position = (Active4.left + Active4.width, Picture13.top);
+        Renderer = &5;
+        Size = (Picture13.width, Picture13.height);
     }
 
     Picture.Picture16 {
-        Renderer = &9;
+        Position = (Active4.left + Active4.width, Picture14.top);
+        Renderer = &5;
+        Size = (Picture13.width, Picture13.height);
     }
 }
 
@@ -291,7 +307,7 @@ Group.Group5 {
 
     Label.Active5 {
         HorizontalAlignment = Center;
-        Position = ((Group1.left + (parent.width / 2)) - (width / 2), Group1.top + (parent.height / 6));
+        Position = ((Group5.left + (parent.width / 2)) - (width / 2), Group5.top + (parent.height / 6));
         Renderer = &1;
         Size = (250, 81);
         Text = Dash;
@@ -301,7 +317,7 @@ Group.Group5 {
 
     Label.Passive5 {
         HorizontalAlignment = Center;
-        Position = ((Group1.left + (parent.width / 2)) - (width / 2), ((Group1.top + parent.height) - height) - (parent.height / 6));
+        Position = ((Group5.left + (parent.width / 2)) - (width / 2), ((Group5.top + parent.height) - height) - (parent.height / 6));
         Renderer = &1;
         Size = (250, 81);
         Text = Normal;
@@ -310,19 +326,28 @@ Group.Group5 {
     }
 
     Picture.Picture17 {
-        Renderer = &6;
+	Position = (Active5.left - width, Active5.top + (height / 2));
+        Renderer = &4;
+        Size = (Active5.height / 2, Active5.height / 2);
+
     }
 
     Picture.Picture18 {
-        Renderer = &7;
+        Position = (Active5.left - width, Passive5.top + (height / 2));
+        Renderer = &4;
+        Size = (Picture17.width, Picture17.height);
     }
 
     Picture.Picture19 {
-        Renderer = &8;
+        Position = (Active5.left + Active5.width, Picture17.top);
+        Renderer = &5;
+        Size = (Picture17.width, Picture17.height);
     }
 
     Picture.Picture20 {
-        Renderer = &9;
+        Position = (Active5.left + Active5.width, Picture18.top);
+        Renderer = &5;
+        Size = (Picture17.width, Picture17.height);
     }
 }
 
@@ -333,7 +358,7 @@ Group.Group6 {
 
     Label.Active6 {
         HorizontalAlignment = Center;
-        Position = ((Group1.left + (parent.width / 2)) - (width / 2), Group1.top + (parent.height / 6));
+        Position = ((Group6.left + (parent.width / 2)) - (width / 2), Group6.top + (parent.height / 6));
         Renderer = &1;
         Size = (250, 81);
         Text = Dash;
@@ -343,7 +368,7 @@ Group.Group6 {
 
     Label.Passive6 {
         HorizontalAlignment = Center;
-        Position = ((Group1.left + (parent.width / 2)) - (width / 2), ((Group1.top + parent.height) - height) - (parent.height / 6));
+        Position = ((Group6.left + (parent.width / 2)) - (width / 2), ((Group6.top + parent.height) - height) - (parent.height / 6));
         Renderer = &1;
         Size = (250, 81);
         Text = Normal;
@@ -352,19 +377,27 @@ Group.Group6 {
     }
 
     Picture.Picture21 {
-        Renderer = &6;
+	Position = (Active6.left - width, Active6.top + (height / 2));
+        Renderer = &4;
+        Size = (Active6.height / 2, Active6.height / 2);
     }
 
     Picture.Picture22 {
-        Renderer = &7;
+        Position = (Active6.left - width, Passive6.top + (height / 2));
+        Renderer = &4;
+        Size = (Picture21.width, Picture21.height);
     }
 
     Picture.Picture23 {
-        Renderer = &8;
+        Position = (Active6.left + Active6.width, Picture21.top);
+        Renderer = &5;
+        Size = (Picture21.width, Picture21.height);
     }
 
     Picture.Picture24 {
-        Renderer = &9;
+        Position = (Active6.left + Active6.width, Picture22.top);
+        Renderer = &5;
+        Size = (Picture21.width, Picture21.height);
     }
 }
 

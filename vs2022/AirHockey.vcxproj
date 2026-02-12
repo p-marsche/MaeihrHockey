@@ -264,6 +264,9 @@
     <None Include="..\src\VectorAlgebra2D.inl" />
     <None Include="..\src\VectorAlgebra3D.inl" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\assets\gui\setup_draft.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
