@@ -5,7 +5,7 @@
 namespace mmt_gd
 {
 
-    std::string PaddleConfig::ActiveToString(PaddleAbility in)
+std::string PaddleConfig::ActiveToString(PaddleAbility in)
 {
     switch (in)
     {
@@ -30,6 +30,7 @@ PaddleAbility PaddleConfig::GetNextActive(PaddleAbility in)
             return PaddleAbility::DASH;
     }
 }
+
 std::string PaddleConfig::PassiveToString(PaddlePassive in)
 {
     switch (in)
@@ -40,6 +41,8 @@ std::string PaddleConfig::PassiveToString(PaddlePassive in)
             return "Bouncy";
         case PaddlePassive::TRAP:
             return "Trap";
+        case PaddlePassive::HEAVY:
+            return "Heavy";
         default:
             return "Invalid";
     }
@@ -54,9 +57,11 @@ PaddlePassive PaddleConfig::GetNextPassive(PaddlePassive in)
         case PaddlePassive::BOUNCY:
             return PaddlePassive::TRAP;
         case PaddlePassive::TRAP:
+            return PaddlePassive::HEAVY;
+        case PaddlePassive::HEAVY:
             return PaddlePassive::NOTHING;
         default:
             return PaddlePassive::NOTHING;
     }
 }
-}
+} // namespace mmt_gd

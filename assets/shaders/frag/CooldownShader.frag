@@ -2,6 +2,8 @@ uniform float progress;
 uniform int team;
 uniform int ability;
 uniform int passive;
+uniform int paletteSizeX;
+uniform int paletteSizeY;
 uniform sampler2D palette;
 uniform sampler2D texture;
 
@@ -15,8 +17,8 @@ void main()
     int val = int(mask.r * 255.0);
 
     // get corresponding position in palette texture (4x3 Texture)
-    float paletteW = 4.0;
-    float paletteH = 3.0;
+    float paletteW = float(paletteSizeX);
+    float paletteH = float(paletteSizeY);
     float x = float(val)+0.5;
     float y = 0.0;
 

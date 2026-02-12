@@ -14,7 +14,8 @@ namespace mmt_gd
 	{
         NOTHING = 0,
 		BOUNCY = 1,
-        TRAP = 2
+        TRAP = 2,
+		HEAVY = 3
 	};
 
 	// paddleIndex = 0, 1, 2

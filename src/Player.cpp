@@ -1,20 +1,21 @@
 #include "stdafx.h"
 
 #include "Player.hpp"
-#include "PlayerMoveComponent.hpp"
-#include "PlayerDashComponent.hpp"
-#include "PlayerEnlargeComponent.hpp"
-#include "NoBouncePassive.hpp"
-#include "NoEffectPassive.hpp"
-#include "HighBouncePassive.hpp"
-#include "RigidBodyComponent.hpp"
 
 #include "AssetManager.hpp"
 #include "ColliderComponent.hpp"
 #include "EventBus.hpp"
 #include "GameObjectEvents.hpp"
 #include "GameObjectFactory.hpp"
+#include "HeavyPassive.hpp"
+#include "HighBouncePassive.hpp"
 #include "InputManager.hpp"
+#include "NoBouncePassive.hpp"
+#include "NoEffectPassive.hpp"
+#include "PlayerDashComponent.hpp"
+#include "PlayerEnlargeComponent.hpp"
+#include "PlayerMoveComponent.hpp"
+#include "RigidBodyComponent.hpp"
 
 #include <sstream>
 
@@ -118,6 +119,8 @@ void Player::setupPaddle(int index, PaddleConfig config)
         m_passiveComps.push_back(std::make_shared<HighBouncePassive>(*go));
     else if (passive == PaddlePassive::TRAP)
         m_passiveComps.push_back(std::make_shared<NoBouncePassive>(*go));
+    else if (passive == PaddlePassive::HEAVY)
+        m_passiveComps.push_back(std::make_shared<HeavyPassive>(*go));
     else if (passive == PaddlePassive::NOTHING)
         m_passiveComps.push_back(std::make_shared<NoEffectPassive>(*go));
     else
@@ -148,6 +151,11 @@ void Player::setupPaddle(int index, PaddleConfig config)
             shader->setUniform("ability", abilityId);
             shader->setUniform("passive", passiveId);
             shader->setUniform("progress", cdProg);
+
+            auto paletteSize = (sf::Vector2i)AssetManager::getInstance().getTexture("PreviewPalette").getSize();
+            shader->setUniform("paletteSizeX", paletteSize.x);
+            shader->setUniform("paletteSizeY", paletteSize.y);
+
             state.shader = shader;
     });
 

@@ -9,12 +9,12 @@ namespace mmt_gd
 class IPlayerPassiveComponent : public IComponent
 {
 public:
-
-    IPlayerPassiveComponent(GameObject& go, PaddlePassive passive) 
-        :IComponent(go) 
-        , m_enabled(false)
-        , m_passive(passive)
-    {}
+    IPlayerPassiveComponent(GameObject& go, PaddlePassive passive) :
+    IComponent(go),
+    m_enabled(false),
+    m_passive(passive)
+    {
+    }
 
     bool virtual init() override
     {
@@ -42,7 +42,7 @@ public:
     }
 
 protected:
-    bool m_enabled;
+    bool          m_enabled;
     PaddlePassive m_passive;
 };
-}
+}; // namespace mmt_gd

@@ -113,6 +113,8 @@ void SelectionState::init()
     m_playerReady.fill(false);
 
     m_isInit = true;
+
+    m_paletteSize = (sf::Vector2i)AssetManager::getInstance().getTexture("PreviewPalette").getSize();
 }
 
 void SelectionState::update(float deltaTime)
@@ -235,6 +237,8 @@ void SelectionState::drawPaddle(int playerIndex, int paddleIndex, sf::RenderWind
     m_previewShader->setUniform("team", playerIndex);
     m_previewShader->setUniform("ability", active);
     m_previewShader->setUniform("passive", passive);
+    m_previewShader->setUniform("paletteSizeX", m_paletteSize.x);
+    m_previewShader->setUniform("paletteSizeY", m_paletteSize.y);
 
     window.draw(m_sprites.at(playerIndex).at(paddleIndex), m_previewShader);
 }
