@@ -10,13 +10,16 @@ namespace mmt_gd
 float constexpr EXTREME_LIN_DAMPENING = 1000.0f;
 
 HeavyPassive::HeavyPassive(GameObject& go) :
-IPlayerPassiveComponent(go, PaddlePassive::TRAP)
+IPlayerPassiveComponent(go, PaddlePassive::HEAVY)
 {
 }
 
 void HeavyPassive::update(float deltaTime)
 {
-    auto body = m_gameObject.getComponent<RigidBodyComponent>()->getB2Body();
-    body->SetLinearDamping(EXTREME_LIN_DAMPENING);
+    if (m_enabled)
+    {
+        auto body = m_gameObject.getComponent<RigidBodyComponent>()->getB2Body();
+        body->SetLinearDamping(EXTREME_LIN_DAMPENING);
+    }
 }
 }; // namespace mmt_gd

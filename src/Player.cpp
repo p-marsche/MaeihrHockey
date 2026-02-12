@@ -151,6 +151,11 @@ void Player::setupPaddle(int index, PaddleConfig config)
             shader->setUniform("ability", abilityId);
             shader->setUniform("passive", passiveId);
             shader->setUniform("progress", cdProg);
+
+            auto paletteSize = (sf::Vector2i)AssetManager::getInstance().getTexture("PreviewPalette").getSize();
+            shader->setUniform("paletteSizeX", paletteSize.x);
+            shader->setUniform("paletteSizeY", paletteSize.y);
+
             state.shader = shader;
     });
 
