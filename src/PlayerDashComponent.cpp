@@ -11,7 +11,7 @@ float constexpr BASE_COOLDOWN = 3.f;
 float constexpr BASE_DASH_FACTOR = 3.f;
 
 PlayerDashComponent::PlayerDashComponent(GameObject& gameObject, RigidBodyComponent& rigidBody, const int playerIndex, sf::Shader* cdShader) :
-IPlayerAbilityComponent(gameObject, rigidBody, playerIndex, BASE_COOLDOWN, cdShader),
+IPlayerAbilityComponent(gameObject, rigidBody, playerIndex, BASE_COOLDOWN, cdShader, PaddleAbility::DASH),
 m_dashFactor(BASE_DASH_FACTOR)
 {
 }

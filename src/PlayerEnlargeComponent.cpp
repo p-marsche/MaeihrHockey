@@ -13,7 +13,7 @@
 
     PlayerEnlargeComponent::PlayerEnlargeComponent(GameObject& gameObject, RigidBodyComponent& rigidBody, 
         ColliderComponent& coll, SpriteRenderComponent& sprite, const int playerIndex, sf::Shader* cdShader) :
-    IPlayerAbilityComponent(gameObject, rigidBody, playerIndex, BASE_COOLDOWN, cdShader),
+    IPlayerAbilityComponent(gameObject, rigidBody, playerIndex, BASE_COOLDOWN, cdShader, PaddleAbility::ENLARGE),
     m_collider(coll),
     m_sprite(sprite),
     m_enlargeFactor(BASE_ENLARGE_FACTOR),

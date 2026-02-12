@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IComponent.hpp"
+#include "PlayerConfig.hpp"
 
 
 namespace mmt_gd
@@ -9,9 +10,10 @@ class IPlayerPassiveComponent : public IComponent
 {
 public:
 
-    IPlayerPassiveComponent(GameObject& go) 
+    IPlayerPassiveComponent(GameObject& go, PaddlePassive passive) 
         :IComponent(go) 
         , m_enabled(false)
+        , m_passive(passive)
     {}
 
     bool virtual init() override
@@ -34,7 +36,13 @@ public:
         m_enabled = enabled;
     }
 
+    PaddlePassive getType()
+    {
+        return m_passive;
+    }
+
 protected:
     bool m_enabled;
+    PaddlePassive m_passive;
 };
 }

@@ -8,7 +8,9 @@ namespace mmt_gd
 {
 float constexpr BASE_FACTOR = 3.f;
 
-HighBouncePassive::HighBouncePassive(GameObject& go) : IPlayerPassiveComponent(go), m_bounceFactor(BASE_FACTOR)
+HighBouncePassive::HighBouncePassive(GameObject& go) 
+    : IPlayerPassiveComponent(go, PaddlePassive::BOUNCY)
+    , m_bounceFactor(BASE_FACTOR)
 {
 }
 

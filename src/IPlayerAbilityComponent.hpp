@@ -2,6 +2,7 @@
 
 #include "IComponent.hpp"
 #include "RigidBodyComponent.hpp"
+#include "PlayerConfig.hpp"
 
 namespace mmt_gd
 {
@@ -11,13 +12,14 @@ class IPlayerAbilityComponent : public IComponent
 public:
     using ptr = std::shared_ptr<IPlayerAbilityComponent>;
 
-    IPlayerAbilityComponent(GameObject& gameObject, RigidBodyComponent& rigidBody, int playerIndex, float cooldown, sf::Shader* cdShader)
+    IPlayerAbilityComponent(GameObject& gameObject, RigidBodyComponent& rigidBody, int playerIndex, float cooldown, sf::Shader* cdShader, PaddleAbility ability)
         : IComponent(gameObject)
         , m_playerIndex(playerIndex)
         , m_rigidBody(rigidBody)
         , m_cdTimer(0.f)
         , m_cooldown(cooldown)
         , m_cdShader(cdShader)
+        , m_ability(ability)
     {
     }
 
@@ -51,10 +53,16 @@ public:
         return m_cdShader;
     }
 
+    PaddleAbility getType()
+    {
+        return m_ability;
+    }
+
 protected:
     int   m_playerIndex;
     float m_cdTimer, m_cooldown;
     sf::Shader* m_cdShader;
+    PaddleAbility m_ability;
 
     RigidBodyComponent& m_rigidBody;
 };

@@ -8,7 +8,7 @@ class NoEffectPassive final : public IPlayerPassiveComponent
 {
 public:
     NoEffectPassive(GameObject& go) :
-        IPlayerPassiveComponent(go)
+        IPlayerPassiveComponent(go, PaddlePassive::NOTHING)
     {
     }
 

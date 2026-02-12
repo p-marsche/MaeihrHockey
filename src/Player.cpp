@@ -135,13 +135,18 @@ void Player::setupPaddle(int index, PaddleConfig config)
         std::cerr << "Ability not found on " << go->getId() << std::endl;
 
     auto abilityComp = m_abilityComps[index];
-    abilityComp->getCdShader()->setUniform("palette", AssetManager::getInstance().getTexture("PaddlePalette"));
-    float idx = static_cast<float>(PADDLE_COUNT*m_playerIndex + index);
-    sprite->registerShaderFuncs([abilityComp, idx](sf::RenderStates& state)
+    abilityComp->getCdShader()->setUniform("palette", AssetManager::getInstance().getTexture("PreviewPalette"));
+    int teamId = m_playerIndex;
+    int abilityId = static_cast<int>(abilityComp->getType());
+    int passiveId = static_cast<int>(m_passiveComps[index]->getType());
+    sprite->registerShaderFuncs([abilityComp, teamId, abilityId, passiveId]
+    (sf::RenderStates& state)
     { 
             float       cdProg = abilityComp->getCooldownProgress(); //cd left in %
             sf::Shader* shader = abilityComp->getCdShader();
-            shader->setUniform("index", idx);
+            shader->setUniform("team", teamId);
+            shader->setUniform("ability", abilityId);
+            shader->setUniform("passive", passiveId);
             shader->setUniform("progress", cdProg);
             state.shader = shader;
     });
