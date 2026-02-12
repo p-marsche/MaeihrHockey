@@ -147,7 +147,7 @@
     <ClInclude Include="..\src\GameObjectFactory.hpp" />
     <ClInclude Include="..\src\GameState.hpp" />
     <ClInclude Include="..\src\HighBouncePassive.hpp" />
-    <ClInclude Include="..\src\HighDensityPassive.hpp" />
+    <ClInclude Include="..\src\NoBouncePassive.hpp" />
     <ClInclude Include="..\src\IPlayerPassiveComponent.hpp" />
     <ClInclude Include="..\src\NoEffectPassive.hpp" />
     <ClInclude Include="..\src\PaddleSetupState.hpp" />
@@ -224,7 +224,7 @@
     <ClCompile Include="..\src\PlayerConfigEvent.cpp" />
     <ClCompile Include="..\src\ResizeEvent.cpp" />
     <ClCompile Include="..\src\HighBouncePassive.cpp" />
-    <ClCompile Include="..\src\HighDensityPassive.cpp" />
+    <ClCompile Include="..\src\NoBouncePassive.cpp" />
     <ClCompile Include="..\src\NoEffectPassive.cpp" />
     <ClCompile Include="..\src\WindowHandler.cpp" />
     <ClCompile Include="..\src\GoalEvent.cpp" />

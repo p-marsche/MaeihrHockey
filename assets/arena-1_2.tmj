@@ -272,6 +272,11 @@
                          "name":"Shape",
                          "type":"string",
                          "value":"Circle"
+                        }, 
+                        {
+                         "name":"Texture",
+                         "type":"string",
+                         "value":"white-circle.png"
                         }],
                  "rotation":0,
                  "type":"PenaltyArea",
@@ -300,6 +305,11 @@
                          "name":"Shape",
                          "type":"string",
                          "value":"Circle"
+                        }, 
+                        {
+                         "name":"Texture",
+                         "type":"string",
+                         "value":"white-circle.png"
                         }],
                  "rotation":0,
                  "type":"PenaltyArea",
@@ -401,7 +411,7 @@
                  "type":"InvisibleWall",
                  "visible":true,
                  "width":64,
-                 "x":864,
+                 "x":764,
                  "y":0
                 }, 
                 {
@@ -511,7 +521,7 @@
                  "type":"Paddle",
                  "visible":true,
                  "width":120,
-                 "x":1184,
+                 "x":1224,
                  "y":432
                 }, 
                 {
@@ -587,7 +597,7 @@
                  "type":"Paddle",
                  "visible":true,
                  "width":120,
-                 "x":1380,
+                 "x":1416,
                  "y":128
                 }, 
                 {
@@ -663,7 +673,7 @@
                  "type":"Paddle",
                  "visible":true,
                  "width":120,
-                 "x":1380,
+                 "x":1416,
                  "y":736
                 }, 
                 {
@@ -681,7 +691,7 @@
                  "type":"PuckSpawn",
                  "visible":true,
                  "width":0,
-                 "x":832,
+                 "x":732,
                  "y":512
                 }, 
                 {
@@ -717,7 +727,7 @@
                  "type":"PuckSpawn",
                  "visible":true,
                  "width":0,
-                 "x":1088,
+                 "x":1188,
                  "y":512
                 }, 
                 {
@@ -813,7 +823,7 @@
                  "type":"InvisibleWall",
                  "visible":true,
                  "width":64,
-                 "x":992,
+                 "x":1092,
                  "y":0
                 }],
          "opacity":1,

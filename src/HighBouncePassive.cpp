@@ -6,33 +6,18 @@
 
 namespace mmt_gd
 {
-float constexpr BASE_FACTOR = 1.5f;
+float constexpr BASE_FACTOR = 3.f;
 
-HighBouncePassive::HighBouncePassive(GameObject& go) 
-    : IPlayerPassiveComponent(go), 
-    m_bounceFactor(BASE_FACTOR),
-    m_bounced(false)
+HighBouncePassive::HighBouncePassive(GameObject& go) : IPlayerPassiveComponent(go), m_bounceFactor(BASE_FACTOR)
 {
 }
 
-void HighBouncePassive::apply()
+void HighBouncePassive::apply(b2Contact& contact)
 {
-    auto bounce = m_gameObject.getComponent<ColliderComponent>()->getFixture()->GetRestitution();
-    bounce *= m_bounceFactor;
-    m_gameObject.getComponent<ColliderComponent>()->getFixture()->SetRestitution(bounce);
-    m_bounced = true;
+    if (m_enabled)
+    {
+        contact.SetRestitution(m_bounceFactor);
+        contact.SetRestitutionThreshold(0.1f);
+    }
 }
-
-void HighBouncePassive::revert()
-{
-    if (!m_bounced)
-        return;
-
-    auto bounce = m_gameObject.getComponent<ColliderComponent>()->getFixture()->GetRestitution();
-    bounce /= m_bounceFactor;
-    m_gameObject.getComponent<ColliderComponent>()->getFixture()->SetRestitution(bounce);
-    m_bounced = false;
-}
-
-
-}
+} // namespace mmt_gd

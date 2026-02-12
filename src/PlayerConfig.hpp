@@ -12,7 +12,7 @@ namespace mmt_gd
 
 	enum PaddlePassive
 	{
-		HEAVY,
+		KILL,
 		BOUNCY,
 		NOTHING
 	};

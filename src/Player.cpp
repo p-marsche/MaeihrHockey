@@ -4,7 +4,7 @@
 #include "PlayerMoveComponent.hpp"
 #include "PlayerDashComponent.hpp"
 #include "PlayerEnlargeComponent.hpp"
-#include "HighDensityPassive.hpp"
+#include "NoBouncePassive.hpp"
 #include "NoEffectPassive.hpp"
 #include "HighBouncePassive.hpp"
 #include "RigidBodyComponent.hpp"
@@ -88,18 +88,7 @@ void Player::startMatch(PlayerConfig config)
     }
 
     setupStartingPaddle();
-    
-    for (auto& p : m_paddles)
-    {
-        auto coll = p->getComponent<ColliderComponent>();
-        coll->registerOnCollisionFunction(
-            [this](ColliderComponent& self, ColliderComponent& other)
-            {
-                GameObject& go  = self.getGameObject();
-                GameObject& go2 = other.getGameObject();
-                this->handleCollision(go, go2);
-            });
-    }
+
     createMarkerSprites();
 }
 
@@ -127,12 +116,14 @@ void Player::setupPaddle(int index, PaddleConfig config)
     auto passive = config.m_passive;
     if (passive == PaddlePassive::BOUNCY)
         m_passiveComps.push_back(std::make_shared<HighBouncePassive>(*go));
-    else if (passive == PaddlePassive::HEAVY)
-        m_passiveComps.push_back(std::make_shared<HighDensityPassive>(*go));
+    else if (passive == PaddlePassive::KILL)
+        m_passiveComps.push_back(std::make_shared<NoBouncePassive>(*go));
     else if (passive == PaddlePassive::NOTHING)
         m_passiveComps.push_back(std::make_shared<NoEffectPassive>(*go));
     else
         std::cerr << "Passive not found on " << go->getId() << std::endl;
+
+    go->addComponent(m_passiveComps[index]);
 
     sf::Shader* cd      = AssetManager::getInstance().getFragmentShader("Cooldown");
     auto ability = config.m_ability;
@@ -157,7 +148,7 @@ void Player::setupPaddle(int index, PaddleConfig config)
 
 
     if (index != 1)
-        m_passiveComps[index]->apply();
+        m_passiveComps[index]->SetEnable(true);
 }
 
 void Player::update(const float deltaTime)
@@ -172,20 +163,6 @@ void Player::update(const float deltaTime)
     for (unsigned int i = 0; i < m_passiveComps.size(); ++i)
         if (i == m_activeIndex)
             return;
-        else if (auto bounce = std::dynamic_pointer_cast<HighBouncePassive>(m_passiveComps[i]))
-            bounce->revert();
-}
-
-void Player::handleCollision(GameObject& go, GameObject& go2)
-{
-    for (unsigned int i = 0; i < m_paddles.size(); ++i)
-    {
-        if (i == m_activeIndex)
-            return;
-        if (m_paddles[i]->getId() == go.getId() && go2.getId() == "Puck")
-            if (auto bounce = std::dynamic_pointer_cast<HighBouncePassive>(m_passiveComps[i]))
-                bounce->apply();
-    }
 }
 
 void Player::addPaddle(GameObject::Ptr go)
@@ -230,7 +207,7 @@ void Player::activatePaddle()
     auto fix2 = go2->getComponent<ColliderComponent>()->getFixture();
     fix2->SetRestitution(ACTIVE_RESTITUTION);
     fix2->SetFilterData(m_activeFilterMask);
-    m_passiveComps[m_activeIndex]->revert();
+    m_passiveComps[m_activeIndex]->SetEnable(false);
 
     m_activePaddleMarker[m_activeIndex]->setVisibility(true);
 }
@@ -248,7 +225,7 @@ void Player::deactivatePaddle()
     auto move = go1->getComponent<PlayerMoveComponent>();
     go1->removeComponent(move);
     go1->removeComponent(m_abilityComps[m_activeIndex]);
-    m_passiveComps[m_activeIndex]->apply();
+    m_passiveComps[m_activeIndex]->SetEnable(true);
 }
 
 void Player::shutdown()

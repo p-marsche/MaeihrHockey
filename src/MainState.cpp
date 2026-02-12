@@ -204,6 +204,7 @@ void MainState::init()
         p->startMatch(m_config.at(p->getplayerIndex()));
 
     m_music.play();
+    m_music.setVolume(25);
     m_music.setLoop(true);
     updateTimer(0.f);
     m_isInit = true;

@@ -8,8 +8,10 @@ namespace mmt_gd
 class IPlayerPassiveComponent : public IComponent
 {
 public:
+
     IPlayerPassiveComponent(GameObject& go) 
         :IComponent(go) 
+        , m_enabled(false)
     {}
 
     bool virtual init() override
@@ -22,15 +24,17 @@ public:
         return;
     }
 
-    void virtual apply()
+    void virtual apply(b2Contact& contact)
     {
         return;
     }
 
-    void virtual revert()
+    void SetEnable(bool enabled)
     {
-        return;
+        m_enabled = enabled;
     }
+
+protected:
+    bool m_enabled;
 };
 }
-

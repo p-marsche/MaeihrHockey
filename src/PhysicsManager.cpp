@@ -2,6 +2,7 @@
 #include "EventBus.hpp"
 #include "GoalEvent.hpp"
 #include "ColliderComponent.hpp"
+#include "IPlayerPassiveComponent.hpp"
 #include "GameObjectManager.hpp"
 #include "PhysicsComponentEvents.hpp"
 #include "RigidBodyComponent.hpp"
@@ -15,10 +16,27 @@ namespace mmt_gd
 const float PhysicsManager::RATIO(30.0F);
 const float PhysicsManager::UNRATIO(1.F / RATIO);
 
-std::shared_ptr<b2World> PhysicsManager::m_world = std::make_shared<b2World>(b2Vec2(0.F, 0.F)); //~0 gravity
+std::shared_ptr<b2World> PhysicsManager::m_world = std::make_shared<b2World>(b2Vec2(0.F, 0.F));
 
 void PhysicsManager::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
 {
+    contact->SetRestitutionThreshold(1.0f);
+    auto* const colliderA = reinterpret_cast<ColliderComponent*>(contact->GetFixtureA()->GetUserData().pointer);
+    auto* const colliderB = reinterpret_cast<ColliderComponent*>(contact->GetFixtureB()->GetUserData().pointer);
+    if (colliderA->getGameObject().getId() == "Puck")
+    {
+        contact->SetRestitutionThreshold(0.0f);
+        IPlayerPassiveComponent* passive = colliderB->getGameObject().getComponent<IPlayerPassiveComponent>().get();
+        if (passive != nullptr)
+            passive->apply(*contact);
+    }
+    else if (colliderB->getGameObject().getId() == "Puck")
+    {
+        contact->SetRestitutionThreshold(0.0f);
+        IPlayerPassiveComponent* passive = colliderA->getGameObject().getComponent<IPlayerPassiveComponent>().get();
+        if (passive != nullptr)
+            passive->apply(*contact);
+    }
 }
 
 void PhysicsManager::BeginContact(b2Contact* contact)
@@ -40,15 +58,6 @@ void PhysicsManager::EndContact(b2Contact* contact)
 
 void PhysicsManager::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
 {
-    //b2Body* bodyA = contact->GetFixtureA()->GetBody();
-    //b2Body* bodyB = contact->GetFixtureB()->GetBody();
-    //b2WorldManifold manifold;
-    //contact->GetWorldManifold(&manifold);
-    //b2Vec2 contactNormal = manifold.normal;
-    //float  impulsMagnitude = impulse->normalImpulses[0];
-
-    //// go A: Impuls = -1 * normal * magnitude
-    //// go B: Impuls = +1 * normal * magnitude
 }
 
 void PhysicsManager::init()

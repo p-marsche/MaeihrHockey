@@ -23,7 +23,6 @@ public:
     void startMatch(PlayerConfig config);
     void update(const float deltaTime);
 	void switchPaddle();
-    void handleCollision(GameObject& go, GameObject& go2);
 
     int getplayerIndex()
     {
