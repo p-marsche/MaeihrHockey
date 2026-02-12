@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#include "PaddleSetupState.hpp"
+#include "OldPaddleSetupState.hpp"
 
 #include "EventBus.hpp"
 #include "Game.hpp"
@@ -12,7 +12,7 @@ namespace mmt_gd
 {
 using namespace std;
 
-void PaddleSetupState::init()
+void OldPaddleSetupState::init()
 {
     PROFILE_FUNCTION();
     //m_guiGroup->setVisible(true);
@@ -64,7 +64,7 @@ void PaddleSetupState::init()
     m_player2Progress = SetupStep::Active;
 }
 
-void PaddleSetupState::update(float delta)
+void OldPaddleSetupState::update(float delta)
 {
     PROFILE_FUNCTION();
 
@@ -78,12 +78,12 @@ void PaddleSetupState::update(float delta)
     }
 }
 
-void PaddleSetupState::draw()
+void OldPaddleSetupState::draw()
 {
     PROFILE_FUNCTION();
 }
 
-void PaddleSetupState::exit()
+void OldPaddleSetupState::exit()
 {
     PROFILE_FUNCTION();
 
@@ -91,7 +91,7 @@ void PaddleSetupState::exit()
     GameState::exit();
 }
 
-void PaddleSetupState::handleButtons1()
+void OldPaddleSetupState::handleButtons1()
 {
     if (InputManager::getInstance().isActionJustPressed("down", 0))
     {
@@ -141,7 +141,7 @@ void PaddleSetupState::handleButtons1()
     }
 }
 
-void PaddleSetupState::handleButtons2()
+void OldPaddleSetupState::handleButtons2()
 {
     if (InputManager::getInstance().isActionJustPressed("down", 1))
     {
@@ -191,7 +191,7 @@ void PaddleSetupState::handleButtons2()
     }
 }
 
-void PaddleSetupState::sendEvent()
+void OldPaddleSetupState::sendEvent()
 {
     PlayerConfig config1;
     PlayerConfig config2;

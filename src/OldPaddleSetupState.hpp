@@ -7,7 +7,7 @@
 
 namespace mmt_gd
 {
-class PaddleSetupState final : public GameState
+class OldPaddleSetupState final : public GameState
 {
 public:
     using GameState::GameState;
