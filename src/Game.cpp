@@ -162,16 +162,18 @@ void Game::update()
 void Game::draw()
 {
     PROFILE_FUNCTION();
+    if (m_windowHandler.m_window.isOpen())
+    {
+        m_windowHandler.m_window.clear(sf::Color::Black);
 
-    m_windowHandler.m_window.clear(sf::Color::Black);
+        m_gameStateManager.draw();
 
-    m_gameStateManager.draw();
+        m_debugDraw->draw(m_windowHandler.m_window);
 
-    m_debugDraw->draw(m_windowHandler.m_window);
+        m_gui.draw();
 
-    m_gui.draw();
-
-    m_windowHandler.m_window.display();
+        m_windowHandler.m_window.display();
+    }
 }
 
 void Game::shutdown() const
