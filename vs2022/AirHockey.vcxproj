@@ -150,7 +150,6 @@
     <ClInclude Include="..\src\NoBouncePassive.hpp" />
     <ClInclude Include="..\src\IPlayerPassiveComponent.hpp" />
     <ClInclude Include="..\src\NoEffectPassive.hpp" />
-    <ClInclude Include="..\src\OldPaddleSetupState.hpp" />
     <ClInclude Include="..\src\PlayerConfig.hpp" />
     <ClInclude Include="..\src\PlayerConfigEvent.hpp" />
     <ClInclude Include="..\src\ResizeEvent.hpp" />
