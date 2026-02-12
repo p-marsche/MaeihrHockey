@@ -24,8 +24,6 @@ void MenuState::init()
         return;
     }
 
-    m_view = m_game->getWindow().getView();
-
     m_isInit = true;
 
     m_selectedButton = 0;
@@ -74,8 +72,6 @@ void MenuState::init()
 void MenuState::update(float delta)
 {
     PROFILE_FUNCTION();
-
-    m_game->getWindow().setView(m_view);
 
     handleButtons();
 }

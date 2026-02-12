@@ -65,10 +65,14 @@
             m_cdTimer -= deltaTime;
             return;
         }
-        else if (m_cdTimer > 0.f && !m_endDuration)
+        else if (m_cdTimer > 0.f)
         {
-            changeSize(false);
-            m_endDuration = true;
+            if (!m_endDuration)
+            {
+                changeSize(false);
+                m_endDuration = true;
+            }
+            m_cdTimer -= deltaTime;
         }
     }
 

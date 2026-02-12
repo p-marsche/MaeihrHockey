@@ -162,12 +162,10 @@ void Player::update(const float deltaTime)
         switchPaddle();
 
     for (unsigned int i = 0; i < m_abilityComps.size(); ++i)
-        if (i == m_activeIndex)
+        if (i != m_activeIndex)
             m_abilityComps[i]->updateInactive(deltaTime);
-
-    for (unsigned int i = 0; i < m_passiveComps.size(); ++i)
-        if (i == m_activeIndex)
-            return;
+        else
+            m_abilityComps[i]->update(deltaTime);
 }
 
 void Player::addPaddle(GameObject::Ptr go)

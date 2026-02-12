@@ -7,7 +7,7 @@
 
 namespace mmt_gd
 {
-class PaddleSetupState final : public GameState
+class OldPaddleSetupState final : public GameState
 {
 public:
     using GameState::GameState;
@@ -20,18 +20,23 @@ public:
     void exit() override;
 
 private:
+    enum class SetupStep
+    {
+        Active,
+        Passive,
+        Finished
+    };
+
     void handleButtons1();
     void handleButtons2();
     void sendEvent();
 
-    sf::View m_view;
+    tgui::ListBox::Ptr m_player1Active;
+    tgui::ListBox::Ptr m_player1Inactive;
+    tgui::ListBox::Ptr m_player2Active;
+    tgui::ListBox::Ptr m_player2Inactive;
 
-    tgui::ListBox::Ptr player1Active;
-    tgui::ListBox::Ptr player1Inactive;
-    tgui::ListBox::Ptr player2Active;
-    tgui::ListBox::Ptr player2Inactive;
-
-    bool player1ActiveSet;
-    bool player2ActiveSet;
+    SetupStep m_player1Progress;
+    SetupStep m_player2Progress;
 };
 } // namespace mmt_gd
