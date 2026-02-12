@@ -130,7 +130,7 @@ void SelectionState::processPlayerInput(int playerIndex)
 
     if (m_playerReady.at(playerIndex))
     {
-        if (InputManager::getInstance().isActionJustPressed("dash", playerIndex))
+        if (InputManager::getInstance().isActionJustPressed("ability", playerIndex))
         {
             std::cout << playerIndex << std::endl;
             setReadyStatus(playerIndex, false);
@@ -154,7 +154,7 @@ void SelectionState::processPlayerInput(int playerIndex)
         if (InputManager::getInstance().isActionJustPressed("switch", playerIndex) && !m_playerReady.at(playerIndex))
             setReadyStatus(playerIndex, true);
         else if ((InputManager::getInstance().isActionJustPressed("switch", playerIndex)
-            || InputManager::getInstance().isActionJustPressed("dash", playerIndex))
+            || InputManager::getInstance().isActionJustPressed("ability", playerIndex))
             && m_playerReady.at(playerIndex))
              setReadyStatus(playerIndex, false);
     }
@@ -267,9 +267,6 @@ void SelectionState::exit()
 
 void SelectionState::startMatch()
 {
-    std::string test = PaddleConfig::ActiveToString(m_configs[0].m_config[1].m_ability);
-    std::cout << test << std::endl;
-
     EventBus::getInstance().fireEvent(std::make_shared<PlayerConfigFinishEvent>(m_configs.at(0)));
     EventBus::getInstance().fireEvent(std::make_shared<PlayerConfigFinishEvent>(m_configs.at(1)));
 
