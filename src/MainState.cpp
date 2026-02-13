@@ -166,7 +166,7 @@ void MainState::init()
 
     // Load tile map
     tson::Tileson tileson;
-    const auto    map = tileson.parse(fs::path("../assets/arena-1_2.tmj"));
+    const auto    map = tileson.parse(fs::path("../assets/arena-v2.tmj"));
     if (map->getStatus() == tson::ParseStatus::OK)
     {
         TileMapLoader::loadTileLayers(map, m_spriteManager);
