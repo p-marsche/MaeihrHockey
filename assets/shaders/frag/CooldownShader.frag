@@ -9,7 +9,7 @@ uniform sampler2D texture;
 
 void main()
 {
-//Palette Swapping
+    //Palette Swapping
     vec4 mask = texture2D(texture, gl_TexCoord[0].xy) * gl_Color;
     float teamIdx = float(team);
     float abilityIdx = float(ability);
@@ -31,7 +31,7 @@ void main()
 
     vec3 color = texture2D(palette, vec2(x/paletteW, (y+0.5)/paletteH)).rgb;
 
-// Cooldown visual
+    // Cooldown visual
     vec2 uv = gl_TexCoord[0].xy - vec2(0.5);
     float angle = -1*atan(uv.x, uv.y) / (2.0 * 3.1415);
     angle += 0.5;

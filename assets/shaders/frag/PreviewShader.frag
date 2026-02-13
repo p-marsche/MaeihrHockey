@@ -8,7 +8,7 @@ uniform sampler2D texture;
 
 void main()
 {
-//Palette Swapping
+    //Palette Swapping
     vec4 mask = texture2D(texture, gl_TexCoord[0].xy) * gl_Color;
     float teamIdx = float(team);
     float abilityIdx = float(ability);
