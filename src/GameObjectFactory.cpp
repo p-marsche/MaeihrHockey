@@ -23,6 +23,8 @@ float constexpr PADDLE_DAMPING     = 0.2f;
 float constexpr PADDLE_RESTITUTION = 0.7f;
 float constexpr PUCK_DAMPING       = 0.05f;
 float constexpr PUCK_RESTITUTION   = 1.f;
+float constexpr ZONE_COLOR_VALUE   = 189.f;
+float constexpr ZONE_COLOR_ALPHA   = 50.f;
 
 void GameObjectFactory::createGameObject(sf::RenderWindow& window, ObjectFormat& obj)
 {
@@ -196,6 +198,16 @@ GameObject::Ptr GameObjectFactory::createNeutralzone(sf::RenderWindow& window, O
 
     auto rigidBody = neutral->addComponent<RigidBodyComponent>(*neutral, b2_staticBody);
 
+    auto& id = neutral->getId();
+    addSpriteRenderer(obj, *neutral, window);
+    auto& sprite = neutral->getComponent<SpriteRenderComponent>()->getSprite();
+    if (id == "MiddleBarrierPlayer2" || id == "LeftGoalInvisibleWall")
+        sprite.setColor(sf::Color(ZONE_COLOR_VALUE, 0.f, 0.f, ZONE_COLOR_ALPHA));
+    else
+    {
+        sprite.setColor(sf::Color(0.f, 0.f, ZONE_COLOR_VALUE, ZONE_COLOR_ALPHA));
+    }
+
     b2FixtureDef fixtureDef = createFixtureDef(obj);
     b2Filter     filter;
     filter.categoryBits = CollisionLayers::FAKE_WALL;
@@ -263,6 +275,16 @@ GameObject::Ptr GameObjectFactory::createPenaltyarea(sf::RenderWindow& window, O
     auto penalty = createObject(obj);
 
     auto rigidBody = penalty->addComponent<RigidBodyComponent>(*penalty, b2_staticBody);
+
+    addSpriteRenderer(obj, *penalty, window);
+    auto& sprite = penalty->getComponent<SpriteRenderComponent>()->getSprite();
+    if (penalty->getId() == "LeftPenaltyArea")
+    {
+        sprite.setRotation(180.f);
+        sprite.setColor(sf::Color(0.f, 0.f, ZONE_COLOR_VALUE, ZONE_COLOR_ALPHA));
+    }
+    else
+        sprite.setColor(sf::Color(ZONE_COLOR_VALUE, 0.f, 0.f, ZONE_COLOR_ALPHA));
 
     b2FixtureDef fixtureDef = createFixtureDef(obj);
     b2Filter     filter;

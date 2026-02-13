@@ -386,8 +386,6 @@ void MainState::loadAssets()
     AssetManager::getInstance().loadTexture("Selected Marker", "selected_marker.png");
     AssetManager::getInstance().loadSoundBuffer("test", "test.wav");
     AssetManager::getInstance().loadFragmentShader("Cooldown", "CooldownShader.frag");
-    AssetManager::getInstance().loadTexture("PaddlePalette", "PaddlePalette.png");
-    AssetManager::getInstance().getTexture("PaddlePalette").setSmooth(false);
 }
 
 void MainState::pauseGame()

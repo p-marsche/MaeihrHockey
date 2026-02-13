@@ -276,7 +276,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"white-circle.png"
+                         "value":"penalty_base.png"
                         }],
                  "rotation":0,
                  "type":"PenaltyArea",
@@ -309,7 +309,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"white-circle.png"
+                         "value":"penalty_base.png"
                         }],
                  "rotation":0,
                  "type":"PenaltyArea",
@@ -342,6 +342,11 @@
                          "name":"Shape",
                          "type":"string",
                          "value":"Box"
+                        }, 
+                        {
+                         "name":"Texture",
+                         "type":"string",
+                         "value":"Neutral_base.png"
                         }],
                  "rotation":0,
                  "type":"InvisibleWall",
@@ -374,6 +379,11 @@
                          "name":"Shape",
                          "type":"string",
                          "value":"Box"
+                        }, 
+                        {
+                         "name":"Texture",
+                         "type":"string",
+                         "value":"Neutral_base.png"
                         }],
                  "rotation":0,
                  "type":"InvisibleWall",
@@ -420,6 +430,43 @@
                  "y":32
                 }, 
                 {
+                 "height":960,
+                 "id":42,
+                 "name":"MiddleBarrierPlayer1",
+                 "properties":[
+                        {
+                         "name":"Density",
+                         "type":"float",
+                         "value":0
+                        }, 
+                        {
+                         "name":"PlayerIndex",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"Sensor",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"Shape",
+                         "type":"string",
+                         "value":"Box"
+                        }, 
+                        {
+                         "name":"Texture",
+                         "type":"string",
+                         "value":"Neutral_base.png"
+                        }],
+                 "rotation":0,
+                 "type":"InvisibleWall",
+                 "visible":true,
+                 "width":32,
+                 "x":1244,
+                 "y":32
+                }, 
+                {
                  "ellipse":true,
                  "height":80,
                  "id":27,
@@ -451,7 +498,8 @@
                  "width":80,
                  "x":920,
                  "y":451.333333333333
-                }, 
+                },
+            
                 {
                  "ellipse":true,
                  "height":120,
@@ -489,8 +537,7 @@
                  "width":120,
                  "x":576,
                  "y":432
-                },
-            
+                }, 
                 {
                  "ellipse":true,
                  "height":120,
@@ -798,43 +845,6 @@
                  "width":1920,
                  "x":0,
                  "y":0
-                }, 
-                {
-                 "height":960,
-                 "id":42,
-                 "name":"MiddleBarrierPlayer1",
-                 "properties":[
-                        {
-                         "name":"Density",
-                         "type":"float",
-                         "value":0
-                        }, 
-                        {
-                         "name":"PlayerIndex",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"Sensor",
-                         "type":"bool",
-                         "value":false
-                        }, 
-                        {
-                         "name":"Shape",
-                         "type":"string",
-                         "value":"Box"
-                        }, 
-                        {
-                         "name":"Texture",
-                         "type":"string",
-                         "value":"Neutral_base.png"
-                        }],
-                 "rotation":0,
-                 "type":"InvisibleWall",
-                 "visible":true,
-                 "width":32,
-                 "x":1244,
-                 "y":32
                 }],
          "opacity":1,
          "type":"objectgroup",
