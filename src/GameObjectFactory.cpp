@@ -79,7 +79,7 @@ GameObject::Ptr GameObjectFactory::createPuck(sf::RenderWindow& window, ObjectFo
     fixtureDef.restitution = PUCK_RESTITUTION;
 
     auto collider = puck->addComponent<ColliderComponent>(*puck, *rigidBody, fixtureDef);
-    sf::SoundBuffer& buffer   = AssetManager::getInstance().getSoundBuffer("test");
+    sf::SoundBuffer& buffer   = AssetManager::getInstance().getSoundBuffer("Puck");
     auto             audio    = puck->addComponent<AudioComponent>(*puck, buffer);
 
     collider->registerOnCollisionFunction(
@@ -135,6 +135,16 @@ GameObject::Ptr GameObjectFactory::createPaddle(sf::RenderWindow& window, Object
     fixtureDef.restitution = PADDLE_RESTITUTION;
 
     auto collider = paddle->addComponent<ColliderComponent>(*paddle, *rigidBody, fixtureDef);
+    sf::SoundBuffer& buffer   = AssetManager::getInstance().getSoundBuffer("Paddle");
+    auto             audio    = paddle->addComponent<AudioComponent>(*paddle, buffer);
+    audio->setVolume(20.f);
+
+    collider->registerOnCollisionFunction(
+        [audio](ColliderComponent& self, ColliderComponent& other) 
+        { 
+            if (other.getGameObject().getId() != "Puck")
+                audio->playSound(); 
+        });
 
     if (!paddle->init())
     {
@@ -169,27 +179,27 @@ GameObject::Ptr GameObjectFactory::createWall(sf::RenderWindow& window, ObjectFo
 
     auto collider = wall->addComponent<ColliderComponent>(*wall, *rigidBody, fixtureDef);
 
+    float dir = 0.f;
+    if (TsonPropertyReader::getName(obj) == "TopWall")
+        dir = (-1.0 * WALL_KNOCKBACK);
+    else if (TsonPropertyReader::getName(obj) == "BottomWall")
+        dir = WALL_KNOCKBACK;
+
+    collider->registerOnCollisionFunction(
+        [dir](ColliderComponent& self, ColliderComponent& other)
+        {
+            if (!(other.getGameObject().getId() == "Puck"))
+                return;
+            auto vel = other.getBody().getB2Body()->GetLinearVelocity();
+            other.getBody().getB2Body()->SetLinearVelocity(b2Vec2(vel.x, vel.y + dir));
+        });
+
     if (!wall->init())
     {
         sf::err() << "Could not initialize wall \n";
     }
 
     EventBus::getInstance().fireEvent(std::make_shared<GameObjectCreateEvent>(wall));
-
-    float dir = 0.f;
-    if (TsonPropertyReader::getName(obj) == "TopWall") 
-        dir = (-1.0 * WALL_KNOCKBACK);
-    else if (TsonPropertyReader::getName(obj) == "BottomWall") 
-        dir = WALL_KNOCKBACK;
-
-    collider->registerOnCollisionFunction(
-        [dir](ColliderComponent& self, ColliderComponent& other)
-        { 
-            if (!(other.getGameObject().getId() == "Puck"))
-                return;
-            auto vel = other.getBody().getB2Body()->GetLinearVelocity();
-            other.getBody().getB2Body()->SetLinearVelocity(b2Vec2(vel.x, vel.y+dir)); 
-        });
 
     return wall;
 }

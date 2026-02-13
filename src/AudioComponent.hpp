@@ -5,6 +5,7 @@
 
 namespace mmt_gd
 {
+float constexpr BASE_VOLUME = 50.f;
 	class AudioComponent : public IComponent
 	{
 	public:
@@ -12,6 +13,7 @@ namespace mmt_gd
 			: IComponent(go)
 			, m_sound(buffer)
 		{
+            m_sound.setVolume(BASE_VOLUME);
 		}
 
 		void playSound() 
@@ -27,6 +29,11 @@ namespace mmt_gd
 		virtual void update(float deltaTime)
 		{
             return;
+		}
+
+		void setVolume(float vol)
+		{
+            m_sound.setVolume(vol);
 		}
 
 	private:

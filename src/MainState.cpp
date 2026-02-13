@@ -387,7 +387,8 @@ void MainState::updateCamera()
 void MainState::loadAssets()
 {
     AssetManager::getInstance().loadTexture("Selected Marker", "selected_marker.png");
-    AssetManager::getInstance().loadSoundBuffer("test", "test.wav");
+    AssetManager::getInstance().loadSoundBuffer("Puck", "test.wav");
+    AssetManager::getInstance().loadSoundBuffer("Paddle", "paddlebounce.ogg");
     AssetManager::getInstance().loadFragmentShader("Cooldown", "CooldownShader.frag");
 }
 
