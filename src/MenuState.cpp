@@ -50,7 +50,7 @@ void MenuState::init()
                 std::string name = btn->getWidgetName().toStdString();
 
                 if (name == "Start")
-                    w->getSignal("Pressed").connect([&manager = m_gameStateManager] { manager->setState("SelectionState"); });
+                    w->getSignal("Pressed").connect([&manager = m_gameStateManager] { manager->setState("ControlsState"); });
                /* else if (name == "Settings")
                     w->getSignal("Pressed").connect(
                         [&manager = m_gameStateManager] { manager->setState("SettingsMenuState"); });*/

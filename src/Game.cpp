@@ -3,6 +3,7 @@
 #include "Game.hpp"
 
 #include "AssetManager.hpp"
+#include "ControlsState.hpp"
 #include "CreditsState.hpp"
 #include "DebugDraw.hpp"
 #include "InputManager.hpp"
@@ -118,6 +119,7 @@ bool Game::init()
     AssetManager::getInstance().loadMusic("music", "music2.ogg");
     sf::Music& mainmusic = AssetManager::getInstance().getMusic("music");
     m_gameStateManager.registerState("MenuState", make_shared<MenuState>(&m_gameStateManager, this, gui));
+    m_gameStateManager.registerState("ControlsState", make_shared<ControlsState>(&m_gameStateManager, this, gui));
     m_gameStateManager.registerState("SelectionState", make_shared<SelectionState>(&m_gameStateManager, this, gui));
     m_gameStateManager.registerState("MainState", make_shared<MainState>(&m_gameStateManager, this, gui, mainmusic, 2));
     m_gameStateManager.registerState("Credits", make_shared<CreditsState>(&m_gameStateManager, this, gui));
