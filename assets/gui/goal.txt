@@ -10,7 +10,7 @@ Picture.Picture1 {
 
 Label.Label2 {
     AutoSize = true;
-    Position = (667.1, 448.5);
+    Position = (((Picture1.left + (Picture1.width / 2)) - (width / 2)) - 10, 448.5);
     Size = (565.8, 203);
     Text = "GOAL!";
     TextSize = 150;
@@ -27,7 +27,7 @@ Label.Label2 {
 
 Label.Label3 {
     AutoSize = true;
-    Position = (687.1, 428.5);
+    Position = (((Picture1.left + (Picture1.width / 2)) - (width / 2)) + 10, 428.5);
     Size = (565.8, 203);
     Text = "GOAL!";
     TextSize = 150;

@@ -20,7 +20,7 @@
 
 namespace mmt_gd
 {
-int constexpr ROUND_LENGTH               = 180;
+int constexpr ROUND_LENGTH               = 5;
 float constexpr GOAL_TIME                = 2.5f;
 float constexpr CAMERA_SHAKE_MAGNITUDE_X = 20.f;
 float constexpr CAMERA_SHAKE_MAGNITUDE_Y = 10.f;
@@ -289,6 +289,8 @@ void MainState::updateTimer(const float deltaTime)
                 winner = "Player2 wins!";
 
             m_guiGroups.at("End")->get<tgui::Label>("Label1")->setText(tgui::String(winner));
+            m_guiGroups.at("End")->get<tgui::Label>("Label2")->setText(tgui::String(winner));
+            m_guiGroups.at("End")->get<tgui::Label>("Label3")->setText(tgui::String(winner));
             m_guiGroups.at("End")->setVisible(true);
             m_guiGroups.at("Scoreboard")->setVisible(false);
 
