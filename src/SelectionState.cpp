@@ -274,6 +274,8 @@ void SelectionState::startMatch()
     EventBus::getInstance().fireEvent(std::make_shared<PlayerConfigFinishEvent>(m_configs.at(0)));
     EventBus::getInstance().fireEvent(std::make_shared<PlayerConfigFinishEvent>(m_configs.at(1)));
 
+    AssetManager::getInstance().getMusic("Menu Music").stop();
+
     m_gameStateManager->setState("MainState");
 }
 

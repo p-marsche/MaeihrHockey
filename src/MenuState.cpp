@@ -3,6 +3,7 @@
 
 #include "MenuState.hpp"
 
+#include "AssetManager.hpp"
 #include "Game.hpp"
 #include "GameStateManager.hpp"
 #include "InputManager.hpp"
@@ -22,6 +23,7 @@ void MenuState::init()
     {
         m_guiGroups[UI_GROUP_NAME]->setVisible(true);
         m_buttons[m_selectedButton]->setFocused(true);
+        AssetManager::getInstance().getMusic("Menu Music").play();
         return;
     }
 
@@ -68,6 +70,12 @@ void MenuState::init()
         }
         m_buttons[m_selectedButton]->setFocused(true);
     }
+
+    AssetManager::getInstance().loadMusic("Menu Music", "menumusic.mp3");
+    auto& music = AssetManager::getInstance().getMusic("Menu Music");
+    music.play();
+    music.setVolume(25);
+    music.setLoop(true);
 }
 
 void MenuState::update(float delta)
