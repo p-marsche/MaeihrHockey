@@ -211,6 +211,8 @@ void MainState::init()
     m_isInit = true;
 
     m_isPaused = false;
+
+    m_goalSound = sf::Sound(AssetManager::getInstance().getSoundBuffer("Goal"));
 }
 
 void MainState::addConfig(PlayerConfig config)
@@ -311,6 +313,8 @@ void MainState::handleGoal(int playerIndex)
     m_scored   = true;
     m_goalTime = 0.f;
     m_guiGroups.at("Goal")->setVisible(true);
+
+    m_goalSound.play();
 }
 
 int MainState::updateScore(int sideIndex)
@@ -389,6 +393,7 @@ void MainState::loadAssets()
     AssetManager::getInstance().loadTexture("Selected Marker", "selected_marker.png");
     AssetManager::getInstance().loadSoundBuffer("Puck", "test.wav");
     AssetManager::getInstance().loadSoundBuffer("Paddle", "paddlebounce.ogg");
+    AssetManager::getInstance().loadSoundBuffer("Goal", "stadium_cheer.wav");
     AssetManager::getInstance().loadFragmentShader("Cooldown", "CooldownShader.frag");
 }
 

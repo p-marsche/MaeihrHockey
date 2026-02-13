@@ -50,7 +50,8 @@ private:
     bool                                    m_scored;
     ITransformAnimation::Ptr                m_cameraShake;
     std::unordered_map<int, PlayerConfig>   m_config;
-    sf::Music&                               m_music;
+    sf::Music&                              m_music;
+    sf::Sound                              m_goalSound;
 
     std::array<tgui::Widget::Ptr, 3> m_pauseButtons;
     int                              m_selectedButton;
