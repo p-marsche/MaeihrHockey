@@ -289,6 +289,8 @@ void MainState::updateTimer(const float deltaTime)
                 winner = "Player2 wins!";
 
             m_guiGroups.at("End")->get<tgui::Label>("Label1")->setText(tgui::String(winner));
+            m_guiGroups.at("End")->get<tgui::Label>("Label2")->setText(tgui::String(winner));
+            m_guiGroups.at("End")->get<tgui::Label>("Label3")->setText(tgui::String(winner));
             m_guiGroups.at("End")->setVisible(true);
             m_guiGroups.at("Scoreboard")->setVisible(false);
 
