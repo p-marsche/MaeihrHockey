@@ -1,3 +1,23 @@
+Renderer.1 {
+    BackgroundColor = transparent;
+    BorderColor = black;
+    Borders = (5, 5, 5, 5);
+    TextureBackground = None;
+}
+
+Renderer.2 {
+}
+
+Renderer.3 {
+    Texture = "arrowLeft.png";
+    TransparentTexture = false;
+}
+
+Renderer.4 {
+    Texture = "arrowRight.png";
+    TransparentTexture = false;
+}
+
 Panel.Background {
     Size = (1920, 1080);
 
@@ -8,118 +28,104 @@ Panel.Background {
     }
 }
 
-Renderer.1 {
-    BackgroundColor = white;
-    BorderColor = #FFFFFF;
-    Borders = (0, 0, 0, 0);
-    Font = "../fonts/SourGummy-Regular.ttf";
-    TextColor = #FFFFFF;
-    TextureBackground = None;
-}
-
-Renderer.2 {
-    BackgroundColor = transparent;
-    BorderColor = black;
-    Borders = (5, 5, 5, 5);
-    TextureBackground = None;
-}
-
-Renderer.3 {
-}
-
-Renderer.4 {
-    Texture = "arrowLeft.png";
-    TransparentTexture = false;
-}
-
-Renderer.5 {
-    Texture = "arrowRight.png";
-    TransparentTexture = false;
-}
-
 Panel.Panel1 {
     Position = (100, (title.top + title.height) + 100);
-    Renderer = &2;
+    Renderer = &1;
     Size = (250, 250);
 }
 
 Panel.Panel2 {
-	Opacity = 0.5;
     Position = (Panel1.left, (Panel1.top + Panel1.height) + 20);
-    Renderer = &2;
+    Renderer = &1;
     Size = (Panel1.width, Panel1.height);
 }
 
 Panel.Panel3 {
     Position = (Panel1.left, (Panel2.top + Panel2.height) + 20);
-    Renderer = &2;
+    Renderer = &1;
     Size = (Panel1.width, Panel1.height);
 }
 
 Panel.Panel4 {
     Position = ((parent.width - width) - 100, Panel1.top);
-    Renderer = &2;
+    Renderer = &1;
     Size = (Panel1.width, Panel1.height);
 }
 
 Panel.Panel5 {
     Position = (Panel4.left, Panel2.top);
-    Renderer = &2;
+    Renderer = &1;
     Size = (Panel4.width, Panel4.height);
 }
 
 Panel.Panel6 {
     Position = (Panel4.left, Panel3.top);
-    Renderer = &2;
+    Renderer = &1;
     Size = (Panel4.width, Panel4.height);
 }
 
 Group.Group1 {
     Position = ((Panel1.left + Panel1.width) + 50, Panel1.top);
-    Renderer = &3;
+    Renderer = &2;
     Size = (500, Panel1.height);
 
     Label.Active1 {
         HorizontalAlignment = Center;
         Position = ((Group1.left + (parent.width / 2)) - (width / 2), Group1.top + (parent.height / 6));
-        Renderer = &1;
         Size = (250, 81);
         Text = Dash;
         TextSize = 50;
         VerticalAlignment = Center;
+
+        Renderer {
+            BackgroundColor = white;
+            BorderColor = #FFFFFF;
+            Borders = (0, 0, 0, 0);
+            Font = "../fonts/Audiowide-Regular.ttf";
+            TextColor = #FFFFFF;
+            TextureBackground = None;
+        }
     }
 
     Label.Passive1 {
         HorizontalAlignment = Center;
         Position = ((Group1.left + (parent.width / 2)) - (width / 2), ((Group1.top + parent.height) - height) - (parent.height / 6));
-        Renderer = &1;
         Size = (250, 81);
         Text = Normal;
         TextSize = 50;
         VerticalAlignment = Center;
+
+        Renderer {
+            BackgroundColor = white;
+            BorderColor = #FFFFFF;
+            Borders = (0, 0, 0, 0);
+            Font = "../fonts/Audiowide-Regular.ttf";
+            TextColor = #FFFFFF;
+            TextureBackground = None;
+        }
     }
 
     Picture.Picture1 {
         Position = (Active1.left - width, Active1.top + (height / 2));
-        Renderer = &4;
+        Renderer = &3;
         Size = (Active1.height / 2, Active1.height / 2);
     }
 
     Picture.Picture2 {
         Position = (Active1.left - width, Passive1.top + (height / 2));
-        Renderer = &4;
+        Renderer = &3;
         Size = (Picture1.width, Picture1.height);
     }
 
     Picture.Picture3 {
         Position = (Active1.left + Active1.width, Picture1.top);
-        Renderer = &5;
+        Renderer = &4;
         Size = (Picture1.width, Picture1.height);
     }
 
     Picture.Picture5 {
         Position = (Active1.left + Active1.width, Picture2.top);
-        Renderer = &5;
+        Renderer = &4;
         Size = (Picture1.width, Picture1.height);
     }
 }
@@ -127,7 +133,7 @@ Group.Group1 {
 Label.Done1 {
     AutoSize = true;
     Position = ((Group3.left + (Group3.width / 2)) - (width / 2), (Panel3.top + Panel3.height) + 30);
-    Size = (183.6, 91);
+    Size = (195.8, 92);
     Text = Done;
     TextSize = 60;
 
@@ -135,7 +141,7 @@ Label.Done1 {
         BackgroundColor = transparent;
         BorderColor = #3C3C3C;
         Borders = (5, 5, 5, 5);
-        Font = "../fonts/SourGummy-Regular.ttf";
+        Font = "../fonts/Audiowide-Regular.ttf";
         TextColor = #3C3C3C;
         TextureBackground = None;
     }
@@ -143,251 +149,330 @@ Label.Done1 {
 
 Group.Group2 {
     Position = ((Panel1.left + Panel1.width) + 50, Panel2.top);
-    Renderer = &3;
+    Renderer = &2;
     Size = (500, Panel1.height);
 
     Label.Active2 {
         HorizontalAlignment = Center;
         Position = ((Group2.left + (parent.width / 2)) - (width / 2), Group2.top + (parent.height / 6));
-        Renderer = &1;
         Size = (250, 81);
         Text = Dash;
         TextSize = 50;
         VerticalAlignment = Center;
+
+        Renderer {
+            BackgroundColor = white;
+            BorderColor = #FFFFFF;
+            Borders = (0, 0, 0, 0);
+            Font = "../fonts/Audiowide-Regular.ttf";
+            TextColor = #FFFFFF;
+            TextureBackground = None;
+        }
     }
 
     Label.Passive2 {
         HorizontalAlignment = Center;
         Position = ((Group2.left + (parent.width / 2)) - (width / 2), ((Group2.top + parent.height) - height) - (parent.height / 6));
-        Renderer = &1;
         Size = (250, 81);
         Text = Normal;
         TextSize = 50;
         VerticalAlignment = Center;
+
+        Renderer {
+            BackgroundColor = white;
+            BorderColor = #FFFFFF;
+            Borders = (0, 0, 0, 0);
+            Font = "../fonts/Audiowide-Regular.ttf";
+            TextColor = #FFFFFF;
+            TextureBackground = None;
+        }
     }
 
     Picture.Picture4 {
-	Position = (Active2.left - width, Active2.top + (height / 2));
-        Renderer = &4;
+        Position = (Active2.left - width, Active2.top + (height / 2));
+        Renderer = &3;
         Size = (Active2.height / 2, Active2.height / 2);
     }
 
     Picture.Picture6 {
         Position = (Active2.left - width, Passive2.top + (height / 2));
-        Renderer = &4;
+        Renderer = &3;
         Size = (Picture4.width, Picture4.height);
     }
 
     Picture.Picture7 {
         Position = (Active2.left + Active2.width, Picture4.top);
-        Renderer = &5;
+        Renderer = &4;
         Size = (Picture4.width, Picture4.height);
     }
 
     Picture.Picture8 {
         Position = (Active2.left + Active2.width, Picture6.top);
-        Renderer = &5;
+        Renderer = &4;
         Size = (Picture4.width, Picture4.height);
     }
 }
 
 Group.Group3 {
     Position = ((Panel1.left + Panel1.width) + 50, Panel3.top);
-    Renderer = &3;
+    Renderer = &2;
     Size = (500, Panel1.height);
 
     Label.Active3 {
         HorizontalAlignment = Center;
         Position = ((Group3.left + (parent.width / 2)) - (width / 2), Group3.top + (parent.height / 6));
-        Renderer = &1;
         Size = (250, 81);
         Text = Dash;
         TextSize = 50;
         VerticalAlignment = Center;
+
+        Renderer {
+            BackgroundColor = white;
+            BorderColor = #FFFFFF;
+            Borders = (0, 0, 0, 0);
+            Font = "../fonts/Audiowide-Regular.ttf";
+            TextColor = #FFFFFF;
+            TextureBackground = None;
+        }
     }
 
     Label.Passive3 {
         HorizontalAlignment = Center;
         Position = ((Group3.left + (parent.width / 2)) - (width / 2), ((Group3.top + parent.height) - height) - (parent.height / 6));
-        Renderer = &1;
         Size = (250, 81);
         Text = Normal;
         TextSize = 50;
         VerticalAlignment = Center;
+
+        Renderer {
+            BackgroundColor = white;
+            BorderColor = #FFFFFF;
+            Borders = (0, 0, 0, 0);
+            Font = "../fonts/Audiowide-Regular.ttf";
+            TextColor = #FFFFFF;
+            TextureBackground = None;
+        }
     }
 
     Picture.Picture9 {
-	Position = (Active3.left - width, Active3.top + (height / 2));
-        Renderer = &4;
+        Position = (Active3.left - width, Active3.top + (height / 2));
+        Renderer = &3;
         Size = (Active3.height / 2, Active3.height / 2);
     }
 
     Picture.Picture10 {
         Position = (Active3.left - width, Passive3.top + (height / 2));
-        Renderer = &4;
+        Renderer = &3;
         Size = (Picture9.width, Picture9.height);
     }
 
     Picture.Picture11 {
         Position = (Active3.left + Active3.width, Picture9.top);
-        Renderer = &5;
+        Renderer = &4;
         Size = (Picture9.width, Picture9.height);
     }
 
     Picture.Picture12 {
         Position = (Active3.left + Active3.width, Picture10.top);
-        Renderer = &5;
+        Renderer = &4;
         Size = (Picture9.width, Picture9.height);
     }
 }
 
 Group.Group4 {
     Position = ((Panel4.left - width) - 50, Panel4.top);
-    Renderer = &3;
+    Renderer = &2;
     Size = (500, Panel1.height);
 
     Label.Active4 {
         HorizontalAlignment = Center;
         Position = ((Group4.left + (parent.width / 2)) - (width / 2), Group4.top + (parent.height / 6));
-        Renderer = &1;
         Size = (250, 81);
         Text = Dash;
         TextSize = 50;
         VerticalAlignment = Center;
+
+        Renderer {
+            BackgroundColor = white;
+            BorderColor = #FFFFFF;
+            Borders = (0, 0, 0, 0);
+            Font = "../fonts/Audiowide-Regular.ttf";
+            TextColor = #FFFFFF;
+            TextureBackground = None;
+        }
     }
 
     Label.Passive4 {
         HorizontalAlignment = Center;
         Position = ((Group4.left + (parent.width / 2)) - (width / 2), ((Group4.top + parent.height) - height) - (parent.height / 6));
-        Renderer = &1;
         Size = (250, 81);
         Text = Normal;
         TextSize = 50;
         VerticalAlignment = Center;
+
+        Renderer {
+            BackgroundColor = white;
+            BorderColor = #FFFFFF;
+            Borders = (0, 0, 0, 0);
+            Font = "../fonts/Audiowide-Regular.ttf";
+            TextColor = #FFFFFF;
+            TextureBackground = None;
+        }
     }
 
     Picture.Picture13 {
-	Position = (Active4.left - width, Active4.top + (height / 2));
-        Renderer = &4;
+        Position = (Active4.left - width, Active4.top + (height / 2));
+        Renderer = &3;
         Size = (Active4.height / 2, Active4.height / 2);
     }
 
     Picture.Picture14 {
         Position = (Active4.left - width, Passive4.top + (height / 2));
-        Renderer = &4;
+        Renderer = &3;
         Size = (Picture13.width, Picture13.height);
     }
 
     Picture.Picture15 {
         Position = (Active4.left + Active4.width, Picture13.top);
-        Renderer = &5;
+        Renderer = &4;
         Size = (Picture13.width, Picture13.height);
     }
 
     Picture.Picture16 {
         Position = (Active4.left + Active4.width, Picture14.top);
-        Renderer = &5;
+        Renderer = &4;
         Size = (Picture13.width, Picture13.height);
     }
 }
 
 Group.Group5 {
     Position = (Group4.left, Panel5.top);
-    Renderer = &3;
+    Renderer = &2;
     Size = (500, Panel1.height);
 
     Label.Active5 {
         HorizontalAlignment = Center;
         Position = ((Group5.left + (parent.width / 2)) - (width / 2), Group5.top + (parent.height / 6));
-        Renderer = &1;
         Size = (250, 81);
         Text = Dash;
         TextSize = 50;
         VerticalAlignment = Center;
+
+        Renderer {
+            BackgroundColor = white;
+            BorderColor = #FFFFFF;
+            Borders = (0, 0, 0, 0);
+            Font = "../fonts/Audiowide-Regular.ttf";
+            TextColor = #FFFFFF;
+            TextureBackground = None;
+        }
     }
 
     Label.Passive5 {
         HorizontalAlignment = Center;
         Position = ((Group5.left + (parent.width / 2)) - (width / 2), ((Group5.top + parent.height) - height) - (parent.height / 6));
-        Renderer = &1;
         Size = (250, 81);
         Text = Normal;
         TextSize = 50;
         VerticalAlignment = Center;
+
+        Renderer {
+            BackgroundColor = white;
+            BorderColor = #FFFFFF;
+            Borders = (0, 0, 0, 0);
+            Font = "../fonts/Audiowide-Regular.ttf";
+            TextColor = #FFFFFF;
+            TextureBackground = None;
+        }
     }
 
     Picture.Picture17 {
-	Position = (Active5.left - width, Active5.top + (height / 2));
-        Renderer = &4;
+        Position = (Active5.left - width, Active5.top + (height / 2));
+        Renderer = &3;
         Size = (Active5.height / 2, Active5.height / 2);
-
     }
 
     Picture.Picture18 {
         Position = (Active5.left - width, Passive5.top + (height / 2));
-        Renderer = &4;
+        Renderer = &3;
         Size = (Picture17.width, Picture17.height);
     }
 
     Picture.Picture19 {
         Position = (Active5.left + Active5.width, Picture17.top);
-        Renderer = &5;
+        Renderer = &4;
         Size = (Picture17.width, Picture17.height);
     }
 
     Picture.Picture20 {
         Position = (Active5.left + Active5.width, Picture18.top);
-        Renderer = &5;
+        Renderer = &4;
         Size = (Picture17.width, Picture17.height);
     }
 }
 
 Group.Group6 {
     Position = ((Panel4.left - width) - 50, Panel6.top);
-    Renderer = &3;
+    Renderer = &2;
     Size = (500, Panel1.height);
 
     Label.Active6 {
         HorizontalAlignment = Center;
         Position = ((Group6.left + (parent.width / 2)) - (width / 2), Group6.top + (parent.height / 6));
-        Renderer = &1;
         Size = (250, 81);
         Text = Dash;
         TextSize = 50;
         VerticalAlignment = Center;
+
+        Renderer {
+            BackgroundColor = white;
+            BorderColor = #FFFFFF;
+            Borders = (0, 0, 0, 0);
+            Font = "../fonts/Audiowide-Regular.ttf";
+            TextColor = #FFFFFF;
+            TextureBackground = None;
+        }
     }
 
     Label.Passive6 {
         HorizontalAlignment = Center;
         Position = ((Group6.left + (parent.width / 2)) - (width / 2), ((Group6.top + parent.height) - height) - (parent.height / 6));
-        Renderer = &1;
         Size = (250, 81);
         Text = Normal;
         TextSize = 50;
         VerticalAlignment = Center;
+
+        Renderer {
+            BackgroundColor = white;
+            BorderColor = #FFFFFF;
+            Borders = (0, 0, 0, 0);
+            Font = "../fonts/Audiowide-Regular.ttf";
+            TextColor = #FFFFFF;
+            TextureBackground = None;
+        }
     }
 
     Picture.Picture21 {
-	Position = (Active6.left - width, Active6.top + (height / 2));
-        Renderer = &4;
+        Position = (Active6.left - width, Active6.top + (height / 2));
+        Renderer = &3;
         Size = (Active6.height / 2, Active6.height / 2);
     }
 
     Picture.Picture22 {
         Position = (Active6.left - width, Passive6.top + (height / 2));
-        Renderer = &4;
+        Renderer = &3;
         Size = (Picture21.width, Picture21.height);
     }
 
     Picture.Picture23 {
         Position = (Active6.left + Active6.width, Picture21.top);
-        Renderer = &5;
+        Renderer = &4;
         Size = (Picture21.width, Picture21.height);
     }
 
     Picture.Picture24 {
         Position = (Active6.left + Active6.width, Picture22.top);
-        Renderer = &5;
+        Renderer = &4;
         Size = (Picture21.width, Picture21.height);
     }
 }
@@ -395,7 +480,7 @@ Group.Group6 {
 Label.Done2 {
     AutoSize = true;
     Position = ((Group6.left + (Group6.width / 2)) - (width / 2), (Panel3.top + Panel3.height) + 30);
-    Size = (183.6, 91);
+    Size = (195.8, 92);
     Text = Done;
     TextSize = 60;
 
@@ -403,7 +488,7 @@ Label.Done2 {
         BackgroundColor = transparent;
         BorderColor = #3C3C3C;
         Borders = (5, 5, 5, 5);
-        Font = "../fonts/SourGummy-Regular.ttf";
+        Font = "../fonts/Audiowide-Regular.ttf";
         TextColor = #3C3C3C;
         TextureBackground = None;
     }
