@@ -1,3 +1,4 @@
+//This code was made for the Multimedia Project 2a for the Multimedia Technology class at Fachhochschule Salzburg, by Pascal Veselka & Pascal Marsche
 #pragma once
 
 #include "IEvent.hpp"
@@ -26,7 +27,7 @@ public:
     static EventBus& getInstance();
 
     /**
-     * \brief´Add/remove event listeners
+     * \briefï¿½Add/remove event listeners
      * Be careful:
      * Due to the usage of std::function, multiple additions of the
      * same function to the m_listener cannot be checked.

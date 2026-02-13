@@ -1,3 +1,4 @@
+//This code was made for the Multimedia Project 2a for the Multimedia Technology class at Fachhochschule Salzburg, by Pascal Veselka & Pascal Marsche
 #pragma once
 
 #if _DEBUG && false ///< Set true for leak detection with file names and line numbers

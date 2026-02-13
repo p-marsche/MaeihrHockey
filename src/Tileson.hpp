@@ -1,3 +1,4 @@
+//This code was made for the Multimedia Project 2a for the Multimedia Technology class at Fachhochschule Salzburg, by Pascal Veselka & Pascal Marsche
 ///
 /// T I L E S O N   V E R S I O N   1 . 4 . 0
 /// ------------------------------------------------
