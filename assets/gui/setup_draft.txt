@@ -12,6 +12,7 @@ Renderer.1 {
     BackgroundColor = white;
     BorderColor = #FFFFFF;
     Borders = (0, 0, 0, 0);
+    Font = "../fonts/SourGummy-Regular.ttf";
     TextColor = #FFFFFF;
     TextureBackground = None;
 }
@@ -36,19 +37,8 @@ Renderer.5 {
     TransparentTexture = false;
 }
 
-Label.Title {
-    AutoSize = true;
-    HorizontalAlignment = Center;
-    Position = ((Background.width - width) / 2, 0);
-    Renderer = &1;
-    Size = (859.4, 107);
-    Text = "Choose your abilities";
-    TextSize = 80;
-    VerticalAlignment = Center;
-}
-
 Panel.Panel1 {
-    Position = (100, (title.top + title.height) + 20);
+    Position = (100, (title.top + title.height) + 100);
     Renderer = &2;
     Size = (250, 250);
 }
@@ -67,7 +57,7 @@ Panel.Panel3 {
 }
 
 Panel.Panel4 {
-    Position = ((parent.width - width) - 100, (title.top + title.height) + 20);
+    Position = ((parent.width - width) - 100, Panel1.top);
     Renderer = &2;
     Size = (Panel1.width, Panel1.height);
 }
@@ -145,6 +135,7 @@ Label.Done1 {
         BackgroundColor = transparent;
         BorderColor = #3C3C3C;
         Borders = (5, 5, 5, 5);
+        Font = "../fonts/SourGummy-Regular.ttf";
         TextColor = #3C3C3C;
         TextureBackground = None;
     }
@@ -412,6 +403,7 @@ Label.Done2 {
         BackgroundColor = transparent;
         BorderColor = #3C3C3C;
         Borders = (5, 5, 5, 5);
+        Font = "../fonts/SourGummy-Regular.ttf";
         TextColor = #3C3C3C;
         TextureBackground = None;
     }
