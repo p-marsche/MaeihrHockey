@@ -137,6 +137,15 @@ GameObject::Ptr GameObjectFactory::createPaddle(sf::RenderWindow& window, Object
         sf::err() << "Could not initialize paddle \n";
     }
 
+    collider->registerOnCollisionFunction([]
+    (ColliderComponent& self, ColliderComponent& other) 
+        { 
+            if (other.getGameObject().getId() == "LeftPenaltyArea")
+                other.getBody().getB2Body()->ApplyLinearImpulseToCenter(b2Vec2(10.f, 0.f), true);
+            else if (other.getGameObject().getId() == "RightPenaltyArea")
+                other.getBody().getB2Body()->ApplyLinearImpulseToCenter(b2Vec2(-10.f, 0.f), true);
+        });
+
     EventBus::getInstance().fireEvent(std::make_shared<GameObjectCreateEvent>(paddle));
 
     return paddle;
@@ -363,9 +372,10 @@ void GameObjectFactory::addSpriteRenderer(ObjectFormat& obj, GameObject& go, sf:
                                                              "GameObjects",
                                                              sf::IntRect(0, 0, 0, 0));
     auto  textureSize = AssetManager::getInstance().getTexture(textureKey).getSize();
-    float scale       = Parser::getSize(obj).x / textureSize.x;
+    float scaleX       = Parser::getSize(obj).x / textureSize.x;
+    float scaleY      = Parser::getSize(obj).y / textureSize.y;
     spriteComp->getSprite().setOrigin(textureSize.x / 2.f, textureSize.y / 2.f);
-    spriteComp->setScale(scale, scale);
+    spriteComp->setScale(scaleX, scaleY);
 }
 
 b2FixtureDef GameObjectFactory::createFixtureDef(ObjectFormat& obj)

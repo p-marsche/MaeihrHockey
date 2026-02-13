@@ -383,7 +383,7 @@
                  "y":320
                 }, 
                 {
-                 "height":1024,
+                 "height":960,
                  "id":25,
                  "name":"MiddleBarrierPlayer2",
                  "properties":[
@@ -406,13 +406,18 @@
                          "name":"Shape",
                          "type":"string",
                          "value":"Box"
+                        }, 
+                        {
+                         "name":"Texture",
+                         "type":"string",
+                         "value":"Neutral_base.png"
                         }],
                  "rotation":0,
                  "type":"InvisibleWall",
                  "visible":true,
-                 "width":64,
-                 "x":714,
-                 "y":0
+                 "width":32,
+                 "x":644,
+                 "y":32
                 }, 
                 {
                  "ellipse":true,
@@ -691,7 +696,7 @@
                  "type":"PuckSpawn",
                  "visible":true,
                  "width":0,
-                 "x":682,
+                 "x":600,
                  "y":512
                 }, 
                 {
@@ -727,7 +732,7 @@
                  "type":"PuckSpawn",
                  "visible":true,
                  "width":0,
-                 "x":1238,
+                 "x":1320,
                  "y":512
                 }, 
                 {
@@ -795,7 +800,7 @@
                  "y":0
                 }, 
                 {
-                 "height":1024,
+                 "height":960,
                  "id":42,
                  "name":"MiddleBarrierPlayer1",
                  "properties":[
@@ -818,13 +823,18 @@
                          "name":"Shape",
                          "type":"string",
                          "value":"Box"
+                        }, 
+                        {
+                         "name":"Texture",
+                         "type":"string",
+                         "value":"Neutral_base.png"
                         }],
                  "rotation":0,
                  "type":"InvisibleWall",
                  "visible":true,
-                 "width":64,
-                 "x":1142,
-                 "y":0
+                 "width":32,
+                 "x":1244,
+                 "y":32
                 }],
          "opacity":1,
          "type":"objectgroup",
