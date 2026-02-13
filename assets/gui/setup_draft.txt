@@ -139,10 +139,10 @@ Label.Done1 {
 
     Renderer {
         BackgroundColor = transparent;
-        BorderColor = #3C3C3C;
+        BorderColor = #000000;
         Borders = (5, 5, 5, 5);
         Font = "../fonts/Audiowide-Regular.ttf";
-        TextColor = #3C3C3C;
+        TextColor = #000000;
         TextureBackground = None;
     }
 }
@@ -486,10 +486,10 @@ Label.Done2 {
 
     Renderer {
         BackgroundColor = transparent;
-        BorderColor = #3C3C3C;
+        BorderColor = #000000;
         Borders = (5, 5, 5, 5);
         Font = "../fonts/Audiowide-Regular.ttf";
-        TextColor = #3C3C3C;
+        TextColor = #000000;
         TextureBackground = None;
     }
 }
