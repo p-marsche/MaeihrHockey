@@ -20,7 +20,7 @@
 
 namespace mmt_gd
 {
-int constexpr ROUND_LENGTH               = 5;
+int constexpr ROUND_LENGTH               = 180;
 float constexpr GOAL_TIME                = 2.5f;
 float constexpr CAMERA_SHAKE_MAGNITUDE_X = 20.f;
 float constexpr CAMERA_SHAKE_MAGNITUDE_Y = 10.f;
