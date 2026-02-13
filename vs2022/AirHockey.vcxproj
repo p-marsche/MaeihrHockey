@@ -60,17 +60,17 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)..\bin\</OutDir>
     <IntDir>$(SolutionDir)..\tmp\$(Platform)\$(Configuration)\</IntDir>
-    <TargetName>$(ProjectName)-$(PlatformShortName)-$(Configuration)</TargetName>
+    <TargetName>Maeihr Hockey</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)..\bin\</OutDir>
     <IntDir>$(SolutionDir)..\tmp\$(Platform)\$(Configuration)\</IntDir>
-    <TargetName>$(ProjectName)-$(PlatformShortName)-$(Configuration)</TargetName>
+    <TargetName>Maeihr Hockey</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>$(ProjectName)-$(PlatformShortName)-$(Configuration)</TargetName>
+    <TargetName>Maeihr Hockey</TargetName>
     <IntDir>$(SolutionDir)..\tmp\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)..\bin\</OutDir>
   </PropertyGroup>
@@ -267,6 +267,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\assets\gui\setup_draft.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
