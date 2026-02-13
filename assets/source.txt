@@ -6,5 +6,8 @@ no License
 
 
 2200UI-pack (HumbleBundle)
+Advanced Cyberpunk Gui (HumbleBundle)
 
 Gerald's Keys (https://gerald-burke.itch.io/geralds-keys  --  CC0/free to use)
+
+Font: SourGummy Regular, SIL Open Fonts License (https://fonts.google.com/specimen/Sour+Gummy/license)
