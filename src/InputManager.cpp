@@ -37,13 +37,13 @@ void InputManager::process(const sf::Event& event)
                                                                             (int)event.joystickButton.button}]
                                         .lock()] = false;
             break;
-        case sf::Event::JoystickConnected:
+        /*case sf::Event::JoystickConnected:
             std::cout << "Joystick connected " << event.joystickConnect.joystickId << " ("
                       << sf::Joystick::getButtonCount(0) << " buttons)" << std::endl;
             break;
         case sf::Event::JoystickDisconnected:
             std::cout << "Joystick disconnected " << event.joystickConnect.joystickId << std::endl;
-            break;
+            break;*/
         default:
             break;
     }
@@ -63,8 +63,8 @@ void InputManager::bind(const std::string& action, const sf::Keyboard::Key keyCo
             .emplace(action, new Action(action, playerIdx));
     m_actionBinding[playerIdx][action]->addInput(keyCode);
 
-    if (isKeyBound(keyCode))
-        std::clog << "WARNING: Double control binding. Removed old binding.";
+    /*if (isKeyBound(keyCode))
+        std::clog << "WARNING: Double control binding. Removed old binding.";*/
     m_keyToAction[keyCode] = m_actionBinding[playerIdx][action];
 }
 
@@ -77,8 +77,8 @@ void InputManager::bind(const std::string& action, const int joystickButton, con
         m_actionBinding[playerIdx].emplace(action, new Action(action, playerIdx));
     m_actionBinding[playerIdx][action]->addInput(btn);
 
-    if (isJoystickButtonBound(btn))
-        std::clog << "WARNING: Double control binding. Removed old binding.";
+    /*if (isJoystickButtonBound(btn))
+        std::clog << "WARNING: Double control binding. Removed old binding.";*/
     m_joystickButtonToAction[btn] = m_actionBinding[playerIdx][action];
 }
 
@@ -91,8 +91,8 @@ void InputManager::bind(const std::string& action, const JoystickMap::Direction 
         m_actionBinding[playerIdx].emplace(action, new Action(action, playerIdx));
     m_actionBinding[playerIdx][action]->addInput(axis);
 
-    if (isJoystickAxisBound(axis))
-        std::clog << "WARNING: Double control binding. Removed old binding.";
+    /*if (isJoystickAxisBound(axis))
+        std::clog << "WARNING: Double control binding. Removed old binding.";*/
     m_joystickAxisToAction[axis] = m_actionBinding[playerIdx][action];
 }
 

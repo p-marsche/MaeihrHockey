@@ -134,7 +134,6 @@ void SelectionState::processPlayerInput(int playerIndex)
     {
         if (InputManager::getInstance().isActionJustPressed("ability", playerIndex))
         {
-            std::cout << playerIndex << std::endl;
             setReadyStatus(playerIndex, false);
         }
         return;

@@ -174,6 +174,9 @@ void Player::update(const float deltaTime)
             m_abilityComps[i]->updateInactive(deltaTime);
         else
             m_abilityComps[i]->update(deltaTime);
+
+    auto& paddleScale = m_paddles[m_activeIndex]->getComponent<SpriteRenderComponent>()->getSprite().getScale();
+    m_activePaddleMarker[m_activeIndex]->setScale(MARKER_PADDLE_RATIO * paddleScale);
 }
 
 void Player::addPaddle(GameObject::Ptr go)
