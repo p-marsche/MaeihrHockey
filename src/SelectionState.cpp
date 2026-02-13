@@ -66,7 +66,7 @@ void SelectionState::initSprites()
 {
     auto panelSize = m_panels.at(0).at(0)->getSize();
     auto& texture = AssetManager::getInstance().getTexture("PaddleBase");
-    auto scale = sf::Vector2f(0.75*panelSize.x / texture.getSize().x, 0.75*panelSize.y / texture.getSize().y);
+    auto scale = sf::Vector2f(0.75f*panelSize.x / texture.getSize().x, 0.75f*panelSize.y / texture.getSize().y);
     auto  origin = sf::Vector2f(texture.getSize().x / 2.f, texture.getSize().y / 2.f);
 
     for (unsigned int i = 0; i < m_sprites.size(); ++i)

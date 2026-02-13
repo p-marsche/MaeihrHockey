@@ -1,3 +1,4 @@
+
 //This code was made for the Multimedia Project 2a for the Multimedia Technology class at Fachhochschule Salzburg, by Pascal Veselka & Pascal Marsche
 #include "stdafx.h"
 
@@ -19,13 +20,13 @@ namespace mmt_gd
 {
 using Parser = TsonPropertyReader;
 
-float constexpr WALL_KNOCKBACK     = 0.1f;
-float constexpr PADDLE_DAMPING     = 0.2f;
-float constexpr PADDLE_RESTITUTION = 0.7f;
-float constexpr PUCK_DAMPING       = 0.05f;
-float constexpr PUCK_RESTITUTION   = 1.f;
-float constexpr ZONE_COLOR_VALUE   = 189.f;
-float constexpr ZONE_COLOR_ALPHA   = 50.f;
+float constexpr WALL_KNOCKBACK         = 0.1f;
+float constexpr PADDLE_DAMPING         = 0.2f;
+float constexpr PADDLE_RESTITUTION     = 0.7f;
+float constexpr PUCK_DAMPING           = 0.05f;
+float constexpr PUCK_RESTITUTION       = 1.f;
+int constexpr ZONE_COLOR_VALUE         = 189;
+int constexpr ZONE_COLOR_ALPHA         = 50;
 
 void GameObjectFactory::createGameObject(sf::RenderWindow& window, ObjectFormat& obj)
 {
@@ -203,10 +204,10 @@ GameObject::Ptr GameObjectFactory::createNeutralzone(sf::RenderWindow& window, O
     addSpriteRenderer(obj, *neutral, window);
     auto& sprite = neutral->getComponent<SpriteRenderComponent>()->getSprite();
     if (id == "MiddleBarrierPlayer2" || id == "LeftGoalInvisibleWall")
-        sprite.setColor(sf::Color(ZONE_COLOR_VALUE, 0.f, 0.f, ZONE_COLOR_ALPHA));
+        sprite.setColor(sf::Color(ZONE_COLOR_VALUE, 0, 0, ZONE_COLOR_ALPHA));
     else
     {
-        sprite.setColor(sf::Color(0.f, 0.f, ZONE_COLOR_VALUE, ZONE_COLOR_ALPHA));
+        sprite.setColor(sf::Color(0, 0, ZONE_COLOR_VALUE, ZONE_COLOR_ALPHA));
     }
 
     b2FixtureDef fixtureDef = createFixtureDef(obj);
@@ -282,10 +283,10 @@ GameObject::Ptr GameObjectFactory::createPenaltyarea(sf::RenderWindow& window, O
     if (penalty->getId() == "LeftPenaltyArea")
     {
         sprite.setRotation(180.f);
-        sprite.setColor(sf::Color(0.f, 0.f, ZONE_COLOR_VALUE, ZONE_COLOR_ALPHA));
+        sprite.setColor(sf::Color(0, 0, ZONE_COLOR_VALUE, ZONE_COLOR_ALPHA));
     }
     else
-        sprite.setColor(sf::Color(ZONE_COLOR_VALUE, 0.f, 0.f, ZONE_COLOR_ALPHA));
+        sprite.setColor(sf::Color(ZONE_COLOR_VALUE, 0, 0, ZONE_COLOR_ALPHA));
 
     b2FixtureDef fixtureDef = createFixtureDef(obj);
     b2Filter     filter;
