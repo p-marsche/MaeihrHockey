@@ -17,7 +17,7 @@ public:
     struct Config
     {
         sf::Vector2i m_resolution{1920, 1080};
-        std::string  m_windowName = "AirHockey";
+        std::string  m_windowName = "Maeihr Hockey";
     };
 
     Config& getConfig()

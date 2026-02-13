@@ -1,5 +1,8 @@
 #pragma once
 
+
+namespace mmt_gd
+{
 class WindowHandler
 {
 public:
@@ -19,4 +22,6 @@ private:
     int         m_height;
 
     tgui::Gui* m_gui;
+    sf::Image  m_icon;
 };
+} // namespace mmt_gd

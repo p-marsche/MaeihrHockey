@@ -1,9 +1,12 @@
 #include "stdafx.h"
 
+#include "AssetManager.hpp"
 #include "EventBus.hpp"
 #include "ResizeEvent.hpp"
 #include "WindowHandler.hpp"
 
+namespace mmt_gd
+{
 void WindowHandler::init(std::string title, int width, int height, tgui::Gui* gui, int initialScaling)
 {
     m_title        = title;
@@ -54,8 +57,9 @@ void WindowHandler::resizeWindow()
 void WindowHandler::createWindow(sf::VideoMode mode, int style)
 {
     m_window.create(mode, m_title, style);
-    //Image icon = AssetManager.Instance.GetImage("Window Icon");
-    //m_window.SetIcon(icon.Size.X, icon.Size.Y, icon.Pixels);
+    AssetManager::getInstance().loadImage("Icon", "iconbase.png");
+    sf::Image& icon = AssetManager::getInstance().getImage("Icon");
+    m_window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
     sf::View view = sf::View(sf::Vector2f(m_width / 2.f, m_height / 2.f), sf::Vector2f(m_width, m_height));
     view.setViewport(sf::FloatRect(0, 0, 1, 1));
     m_window.setView(view);
@@ -63,3 +67,4 @@ void WindowHandler::createWindow(sf::VideoMode mode, int style)
     m_window.setMouseCursorVisible(false);
     m_window.setFramerateLimit(120);
 }
+} // namespace mmt_gd

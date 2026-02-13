@@ -127,6 +127,9 @@ bool Game::init()
     //
     m_windowHandler.init(m_config.m_windowName, m_config.m_resolution.x, m_config.m_resolution.y, gui);
     m_gui.setTarget(m_windowHandler.m_window);
+    AssetManager::getInstance().loadImage("Icon", "iconbase.png");
+    sf::Image& icon = AssetManager::getInstance().getImage("Icon");
+    getWindow().setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
     m_inputManager->setRenderWindow(&m_windowHandler.m_window);
     m_inputManager->bind("fullscreen", sf::Keyboard::F11);
